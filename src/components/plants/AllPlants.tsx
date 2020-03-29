@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
-import { PlantCard, PlantResourceType } from './PlantCard';
+import { PlantCard } from './PlantCard';
+import { PlantResourceType } from '../../generatedTypes';
 
 interface Plant {
   rank: number;

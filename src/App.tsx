@@ -1,11 +1,24 @@
-import React from 'react';
+import React from "react";
+import { ToastContainer } from "react-toastify";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 import { Game } from "./components/Game";
+import { AllPlants } from "./components/plants/AllPlants";
+import "react-toastify/dist/ReactToastify.css";
+import "semantic-ui-css/semantic.min.css";
+
+
 
 export const App: React.FC = () => {
   return (
     <Container>
-      <Game />
+      <ToastContainer />
+      <Router>
+        <Switch>
+          <Route path="/game/:gameId" children={<Game />} />
+          <Route path="/all-plants" children={<AllPlants />}></Route>
+        </Switch>
+      </Router>
     </Container>
   );
 }

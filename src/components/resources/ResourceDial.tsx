@@ -1,35 +1,43 @@
 import React from "react";
 import styled from "styled-components";
-import { ResourceType, resourceColors } from "../constants";
-import ResourceIcon from "./ResourceIcon";
-
-const getResourceCost = (
-  quantity: number,
-  resourceType: ResourceType
-): number => {  
-  if (resourceType === "uranium") {
-    return quantity < 5 ? 18 - 2 * quantity : 13 - quantity;
-  }
-
-  return 8 - Math.floor((quantity - 1) / 3);
-};
+import { ResourceType, resourceColors, getSecondaryResourceColor } from "../../constants";
+import { ResourceIcon } from "./ResourceIcon";
+import { getSingleResourceCost } from "../../logic/resources";
+import { PlantResourceType } from "../../generatedTypes";
+import { Incrementer } from "./Incrementer";
 
 interface ResourceDialProps {
   resourceType: ResourceType;
   era: number;
   inStock: number;
+  inCart: number;
+  setInCart: (inCart: number) => void;
+  restockRates: number[];
+  showIncrementor: boolean;
+  disablePlus: boolean;
 }
 
-export const ResourceDial: React.FC<ResourceDialProps> = ({ resourceType, era, inStock }) => {
+export const ResourceDial: React.FC<ResourceDialProps> = ({
+  resourceType,
+  era,
+  inStock,
+  restockRates,
+  inCart,
+  setInCart,
+  showIncrementor,
+  disablePlus
+}) => {
   const numDivisions = resourceType === "uranium" ? 12 : 8;
   const maxStock = resourceType === "uranium" ? 12 : 24;
   const ratio = inStock / maxStock;
+  const ratioAdjusted = (inStock - inCart) / maxStock;
 
   const innerR = 0.75;
   const outerR = 1;
   const startAngle = -Math.PI / 4;
   const endAngle = 5 * Math.PI / 4;
   const ratioAngle = startAngle + ratio * (endAngle - startAngle);
+  const ratioAdjustedAngle = startAngle + ratioAdjusted * (endAngle - startAngle);
 
   const drawArc = (angle: number, color: string) => {
     const innerStartX = innerR * Math.cos(startAngle);
@@ -63,14 +71,30 @@ export const ResourceDial: React.FC<ResourceDialProps> = ({ resourceType, era, i
   return (
     <Container>
       <IconAndPrice>
-        <ResourceIcon type={resourceType} />
+        <ResourceIcon type={resourceType.toUpperCase() as PlantResourceType} />
         <Dot />
-        <Price>${getResourceCost(inStock, resourceType)}</Price>
+        <Price><span className="dollar">$</span>{getSingleResourceCost(inStock - inCart, resourceType)}</Price>
       </IconAndPrice>
+      <RestockRates>
+        {restockRates.reduce((acc, rate, idx) => {
+          acc.push(<span key={idx} className={idx + 1 === era ? "era-on" : "era-off"}>+{rate}</span>);
+          if (idx < 2) {
+            acc.push(<span key={`${idx}s`}>{` / `}</span>);
+          }
+
+          return acc;
+        }, [])}
+      </RestockRates>
+      <ActionPanel>
+        {showIncrementor && (
+          <Incrementer value={inCart} setValue={setInCart} disablePlus={disablePlus} />
+        )}
+      </ActionPanel>
       <SvgContainer>
         <svg width="100%" height="100%" viewBox="-1 -1 2 2">
-          {drawArc(endAngle, "#ddd")}
-          {drawArc(ratioAngle, resourceColors[resourceType])}
+          {drawArc(endAngle, "#bbb")}
+          {drawArc(ratioAngle, getSecondaryResourceColor(resourceType.toUpperCase() as PlantResourceType))}
+          {drawArc(ratioAdjustedAngle, resourceColors[resourceType.toUpperCase() as PlantResourceType])}
           {Array(numDivisions).fill(true).map((_, i) => {
             if (i === 0) {
               return null;
@@ -91,8 +115,8 @@ export const ResourceDial: React.FC<ResourceDialProps> = ({ resourceType, era, i
 }
 
 const Container = styled.div`
-  height: 100px;
-  width: 100px;
+  height: 88px;
+  width: 88px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -111,20 +135,44 @@ const SvgContainer = styled.div`
 `;
   
 const IconAndPrice = styled.div`
-  padding: 20px;
-  height: 25%;
+  padding-top: 16px;
+  padding-bottom: 2px;
+  height: 40px;
   display: flex;
   align-items: center;
+
+  .dollar {
+    font-size: 12px;
+    vertical-align: super;
+  }
 `;
 
 const Price = styled.div`
-  font-size: 24px;
+  font-size: 20px;
+  display: flex;
 `;
 
 const Dot = styled.div`
-  height: 5px;
-  width: 5px;
-  border-radius: 5px;
-  margin: 0 5px;
+  height: 3px;
+  width: 3px;
+  border-radius: 3px;
+  margin: 0 3px;
   background-color: black;
+`;
+
+const RestockRates = styled.div`
+  font-size: 8px;
+
+  color: #999;
+
+  .era-on {
+    color: black;
+  }
+`;
+
+const ActionPanel = styled.div`
+  position: relative;
+  top: 4px;
+  height: 16px;
+  z-index: 1;
 `;
