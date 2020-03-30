@@ -5,16 +5,20 @@ import { getMainDefinition } from 'apollo-utilities';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-client';
 
+const isProd = process.env.NODE_ENV === "production";
+
+const url = isProd ? "terrawatts2.herokuapp.com" : "192.168.1.174:4000"
+
 const cache = new InMemoryCache();
 
 // Create an http link:
 const httpLink = new HttpLink({
-  uri: 'http://192.168.1.174:4000'
+  uri: `http://${url}`
 });
 
 // Create a WebSocket link:
 const wsLink = new WebSocketLink({
-  uri: `ws://192.168.1.174:4000/graphql`,
+  uri: `ws://${url}/graphql`,
   options: {
     reconnect: true
   }
