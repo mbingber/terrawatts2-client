@@ -47,8 +47,6 @@ export const GameMap: React.FC<MapProps> = ({ cityCart }) => {
     return null;
   }
 
-  console.log("cities", data.fetchMap.cities.map(({ name, lat, lng }) => ({ name, lat, lng })));
-
   const { center, minZoom, maxZoom } = getMapConfig(game.map.name);
   
   return (
