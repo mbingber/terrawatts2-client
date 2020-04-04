@@ -13,9 +13,10 @@ interface PlantMarketProps {
 export const PlantMarket: React.FC<PlantMarketProps> = ({ plantCart }) => {
   const game = useGame();
   const actionOnMe = useActionOnMe(ActionType.PUT_UP_PLANT);
+  const isAvailable = (idx: number) => idx > 3 || game.era === 3;
 
   const handlePlantClick = (plantInstance: Game_plantMarket, idx: number) => () => {
-    if (actionOnMe && idx > 3) {
+    if (actionOnMe && isAvailable(idx)) {
       if (plantCart.selectedPlantInstance && plantInstance.id === plantCart.selectedPlantInstance.id) {
         plantCart.setSelectedPlantInstance(null);
       } else {
@@ -30,7 +31,7 @@ export const PlantMarket: React.FC<PlantMarketProps> = ({ plantCart }) => {
         <DeckCount>({game.deckCount})</DeckCount>
         {game.plantMarket.slice().reverse().map((plantInstance, idx) => (
           <PlantContainer
-            available={idx > 3 || game.era === 3}
+            available={isAvailable(idx)}
             isSelected={plantCart.selectedPlantInstance && plantCart.selectedPlantInstance.plant.rank === plantInstance.plant.rank}
             actionOnMe={actionOnMe} 
             key={plantInstance.id}
