@@ -30,7 +30,7 @@ export const PlantMarket: React.FC<PlantMarketProps> = ({ plantCart }) => {
         <DeckCount>({game.deckCount})</DeckCount>
         {game.plantMarket.slice().reverse().map((plantInstance, idx) => (
           <PlantContainer
-            available={idx > 3}
+            available={idx > 3 || game.era === 3}
             isSelected={plantCart.selectedPlantInstance && plantCart.selectedPlantInstance.plant.rank === plantInstance.plant.rank}
             actionOnMe={actionOnMe} 
             key={plantInstance.id}
