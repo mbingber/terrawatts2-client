@@ -28,15 +28,6 @@ export const PowerUpPanel: React.FC<PowerUpPanelProps> = ({ powerCart }) => {
 
   const hasResources = hasEnoughResources(powerCart.plants, me.resources);
   const hybridChoices = hasResources ? getHybridChoices(powerCart.plants, me.resources) : [];
-  // const hybridChoices = [{
-  //   coal: 3, oil: 0
-  // }, {
-  //   coal: 2, oil: 1
-  // }, {
-  //   coal: 1, oil: 2
-  // }, {
-  //   coal: 0, oil: 3
-  // }];
 
   const [hybridChoiceIdx, setHybridChoiceIdx] = React.useState<number>(0);
 

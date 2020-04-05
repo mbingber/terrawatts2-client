@@ -47,7 +47,7 @@ export const GameMap: React.FC<MapProps> = ({ cityCart }) => {
     return null;
   }
 
-  const { center, minZoom, maxZoom } = getMapConfig(game.map.name);
+  const { center, minZoom, maxZoom, maxBounds } = getMapConfig(game.map.name);
   
   return (
     <Container>
@@ -56,6 +56,7 @@ export const GameMap: React.FC<MapProps> = ({ cityCart }) => {
         zoom={minZoom}
         minZoom={minZoom}
         maxZoom={maxZoom}
+        maxBounds={maxBounds}
         attributionControl={false}
         zoomControl={false}
         zoomSnap={0.25}

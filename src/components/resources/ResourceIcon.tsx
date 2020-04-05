@@ -17,7 +17,7 @@ export const ResourceIcon: React.FC<ResourceIconProps> = ({ type, withColor }) =
           withColor={withColor}
           src={require("../../assets/resources/coal.png")}
         />
-        <div>/</div>
+        <div className="slash">/</div>
         <Image 
           type={PlantResourceType.OIL}
           withColor={withColor}
@@ -47,4 +47,9 @@ const HybridContainer = styled.div`
   align-items: center;
   height: 60%;
   font-size: 60%;
+
+  .slash {
+    font-size: 120%;
+    font-weight: bold;
+  }
 `;

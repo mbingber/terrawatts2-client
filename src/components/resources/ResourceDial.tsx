@@ -67,13 +67,21 @@ export const ResourceDial: React.FC<ResourceDialProps> = ({
       />
     );
   };
+
+  const amountForCost = inStock - inCart;
   
   return (
     <Container>
       <IconAndPrice>
         <ResourceIcon type={resourceType.toUpperCase() as PlantResourceType} />
         <Dot />
-        <Price><span className="dollar">$</span>{getSingleResourceCost(inStock - inCart, resourceType)}</Price>
+        <Price>
+          {amountForCost > 0 ? (
+            <><span className="dollar">$</span>{getSingleResourceCost(amountForCost, resourceType)}</>
+          ) : (
+            <>--</>
+          )}
+        </Price>
       </IconAndPrice>
       <RestockRates>
         {restockRates.reduce((acc, rate, idx) => {
