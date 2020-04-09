@@ -25,27 +25,25 @@ export const useGameSubscription = () => {
   const { subscribeToMore } = useQuery<GetGame, GetGameVariables>(GAME_QUERY, {
     variables: { id: gameId }
   });
-
-  const subscribe = subscribeToMore<GameUpdated, GameUpdatedVariables>({
-    document: GAME_SUBSCRIPTION,
-    variables: { id: gameId },
-    updateQuery: (prev, { subscriptionData }) => {
-      if (
-        !subscriptionData ||
-        !subscriptionData.data ||
-        !subscriptionData.data.gameUpdated
-      ) {
-        return prev;
-      }
-
-      return {
-        ...prev,
-        ...subscriptionData.data.gameUpdated
-      }
-    }
-  });
-
+  
   useEffect(() => {
-    subscribe();
+    subscribeToMore<GameUpdated, GameUpdatedVariables>({
+      document: GAME_SUBSCRIPTION,
+      variables: { id: gameId },
+      updateQuery: (prev, { subscriptionData }) => {
+        if (
+          !subscriptionData ||
+          !subscriptionData.data ||
+          !subscriptionData.data.gameUpdated
+        ) {
+          return prev;
+        }
+  
+        return {
+          ...prev,
+          ...subscriptionData.data.gameUpdated
+        }
+      }
+    });
   }, []);
 }
