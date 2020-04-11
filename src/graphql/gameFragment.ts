@@ -18,6 +18,7 @@ export const GameFragment = gql`
       user {
         id
         username
+        we
       }
       color
       money

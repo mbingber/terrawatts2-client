@@ -2,6 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { PlantCard } from "./PlantCard";
 import { useGame } from "../../hooks/useGame";
+import { useMe } from "../../hooks/useMe";
 import { useActionOnMe } from "../../hooks/useActionOnMe";
 import { ActionType, Game_plantMarket } from "../../generatedTypes";
 import { PlantCart } from "../../hooks/usePlantCart";
@@ -12,6 +13,7 @@ interface PlantMarketProps {
 
 export const PlantMarket: React.FC<PlantMarketProps> = ({ plantCart }) => {
   const game = useGame();
+  const me = useMe();
   const actionOnMe = useActionOnMe(ActionType.PUT_UP_PLANT);
   const isAvailable = (idx: number) => idx > 3 || game.era === 3;
 
@@ -37,7 +39,7 @@ export const PlantMarket: React.FC<PlantMarketProps> = ({ plantCart }) => {
             key={plantInstance.id}
             onClick={handlePlantClick(plantInstance, idx)}
           >
-            <PlantCard {...plantInstance.plant} height={36} />
+            <PlantCard {...plantInstance.plant} height={36} we={me.user.we} />
           </PlantContainer>
         ))}
       </Plants>

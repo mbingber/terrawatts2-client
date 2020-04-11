@@ -104,6 +104,7 @@ export const PlayerBox: React.FC<PlayerBoxProps> = ({ player, powerCart, discard
                   <PlantCard
                     height={32}
                     {...plant.plant}
+                    we={me.user.we}
                   />
                 </PlantContainer>
               ) : (

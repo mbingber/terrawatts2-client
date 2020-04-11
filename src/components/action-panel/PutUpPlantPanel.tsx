@@ -53,7 +53,7 @@ export const PutUpPlantPanel: React.FC<PutUpPlantPanelProps> = ({ plantCart }) =
     <Container>
       <div className="heading">Choose a power plant</div>
       {selectedPlantInstance ? (
-        <PlantCard {...selectedPlantInstance.plant} height={32} />
+        <PlantCard {...selectedPlantInstance.plant} height={32} we={me.user.we} />
       ) : (
         <PlantFrame />
       )}

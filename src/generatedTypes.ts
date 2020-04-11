@@ -14,6 +14,7 @@ export interface BidOnPlant_bidOnPlant_map {
 export interface BidOnPlant_bidOnPlant_playerOrder_user {
   id: string;
   username: string;
+  we: boolean;
 }
 
 export interface BidOnPlant_bidOnPlant_playerOrder_resources {
@@ -204,6 +205,7 @@ export interface BuyCities_buyCities_map {
 export interface BuyCities_buyCities_playerOrder_user {
   id: string;
   username: string;
+  we: boolean;
 }
 
 export interface BuyCities_buyCities_playerOrder_resources {
@@ -395,6 +397,7 @@ export interface BuyResources_buyResources_map {
 export interface BuyResources_buyResources_playerOrder_user {
   id: string;
   username: string;
+  we: boolean;
 }
 
 export interface BuyResources_buyResources_playerOrder_resources {
@@ -586,6 +589,7 @@ export interface DiscardPlant_discardPlant_map {
 export interface DiscardPlant_discardPlant_playerOrder_user {
   id: string;
   username: string;
+  we: boolean;
 }
 
 export interface DiscardPlant_discardPlant_playerOrder_resources {
@@ -777,6 +781,7 @@ export interface GetGame_getGame_map {
 export interface GetGame_getGame_playerOrder_user {
   id: string;
   username: string;
+  we: boolean;
 }
 
 export interface GetGame_getGame_playerOrder_resources {
@@ -965,6 +970,7 @@ export interface GameUpdated_gameUpdated_map {
 export interface GameUpdated_gameUpdated_playerOrder_user {
   id: string;
   username: string;
+  we: boolean;
 }
 
 export interface GameUpdated_gameUpdated_playerOrder_resources {
@@ -1222,6 +1228,7 @@ export interface PowerUp_powerUp_map {
 export interface PowerUp_powerUp_playerOrder_user {
   id: string;
   username: string;
+  we: boolean;
 }
 
 export interface PowerUp_powerUp_playerOrder_resources {
@@ -1413,6 +1420,7 @@ export interface PutUpPlant_putUpPlant_map {
 export interface PutUpPlant_putUpPlant_playerOrder_user {
   id: string;
   username: string;
+  we: boolean;
 }
 
 export interface PutUpPlant_putUpPlant_playerOrder_resources {
@@ -1604,6 +1612,7 @@ export interface Game_map {
 export interface Game_playerOrder_user {
   id: string;
   username: string;
+  we: boolean;
 }
 
 export interface Game_playerOrder_resources {

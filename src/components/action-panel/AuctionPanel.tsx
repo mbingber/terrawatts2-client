@@ -115,7 +115,7 @@ export const AuctionPanel: React.FC<AuctionPanelProps> = () => {
           {auctionOrder.map(drawSector)}
         </svg>
         <PlantSpacer>
-          <PlantCard height={28} {...auction.plant.plant} />
+          <PlantCard height={28} {...auction.plant.plant} we={me.user.we} />
         </PlantSpacer>
       </SvgContainer>
       {auctionOrder[0].id === me.id && (

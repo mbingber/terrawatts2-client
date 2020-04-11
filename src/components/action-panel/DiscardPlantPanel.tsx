@@ -83,7 +83,7 @@ export const DiscardPlantPanel: React.FC<DiscardPlantPanelProps> = ({ discardCar
     <Container>
       <div className="heading">Discard a power plant</div>
       {selectedPlant ? (
-        <PlantCard {...selectedPlant.plant} height={32}/>
+        <PlantCard {...selectedPlant.plant} height={32} we={me.user.we} />
       ) : (
         <PlantFrame />
       )}

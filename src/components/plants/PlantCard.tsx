@@ -16,6 +16,7 @@ interface PlantCardProps {
   resourceBurn: number;
   numCities: number;
   height: number;
+  we: boolean;
 }
 
 export const PlantCard: React.FC<PlantCardProps> = (props) => {
@@ -110,7 +111,7 @@ const Container = styled.div<PlantCardProps>`
 `;
 
 const ResourceStack = styled.div<PlantCardProps>`
-  display: flex;
+  display: ${({ we, resourceType }) => resourceType === PlantResourceType.WIND && !we ? "none" : "flex"};
   flex-direction: column;
   height: ${({ height }) => height * 0.9}px;
   justify-content: center;

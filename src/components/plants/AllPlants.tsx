@@ -67,7 +67,7 @@ const plants: Plant[] = [
 export const AllPlants: React.FC = () => {
   return (
     <Container>
-      {plants.map((plant) => <PlantCard key={plant.rank} {...plant} height={50} />)}
+      {plants.map((plant) => <PlantCard key={plant.rank} {...plant} height={50} we />)}
     </Container>
   );
 }
