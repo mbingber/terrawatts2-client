@@ -15,7 +15,7 @@ export const PlantMarket: React.FC<PlantMarketProps> = ({ plantCart }) => {
   const game = useGame();
   const me = useMe();
   const actionOnMe = useActionOnMe(ActionType.PUT_UP_PLANT);
-  const isAvailable = (idx: number) => (game.plantMarket.length - idx) < 4 || game.era === 3;
+  const isAvailable = (idx: number) => (game.plantMarket.length - idx) < 5 || game.era === 3;
 
   const handlePlantClick = (plantInstance: Game_plantMarket, idx: number) => () => {
     if (actionOnMe && isAvailable(idx)) {
