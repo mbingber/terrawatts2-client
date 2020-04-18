@@ -9,7 +9,7 @@ import Cookies from "js-cookie";
 
 const isProd = process.env.NODE_ENV === "production";
 
-const url = isProd ? "terrawatts2.herokuapp.com" : "192.168.1.174:4000"
+const url = isProd ? "terrawatts2-server.herokuapp.com" : "192.168.1.174:4000"
 
 const cache = new InMemoryCache();
 
