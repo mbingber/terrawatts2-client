@@ -11,12 +11,15 @@ import { usePlantCart } from "../hooks/usePlantCart";
 import { useResourceCart } from "../hooks/useResourceCart";
 import { usePowerCart } from "../hooks/usePowerCart";
 import { useDiscardCart } from "../hooks/useDiscardCart";
+import { useMe } from "../hooks/useMe";
+import { SpectatorNotification } from "./auth/SpectatorNotification";
 
 interface GameProps {
 
 }
 
 export const Game: React.FC<GameProps> = () => {
+  const me = useMe();
   const game = useGame();
   useGameSubscription();
   const plantCart = usePlantCart();
@@ -29,6 +32,7 @@ export const Game: React.FC<GameProps> = () => {
   
   return (
     <Container>
+      {!me && <SpectatorNotification gameId={game.id} />}
       <LeftColumn>
         <GameMap cityCart={cityCart} />
         <PlayerBoxContainer>
@@ -62,6 +66,7 @@ export const Game: React.FC<GameProps> = () => {
 const Container = styled.div`
   height: 100%;
   display: flex;
+  position: relative;
 `;
 
 const LeftColumn = styled.div`

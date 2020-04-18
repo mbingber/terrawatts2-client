@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "semantic-ui-css/semantic.min.css";
 import { Signup } from "./components/auth/Signup";
 import { LoginForm } from "./components/auth/Login";
+import { Home } from "./components/home/Home";
 
 
 
@@ -21,7 +22,7 @@ export const App: React.FC = () => {
           <Route path="/login" children={<LoginForm />} />
           <Route path="/game/:gameId" children={<Game />} />
           {/* <Route path="/all-plants" children={<AllPlants />}></Route> */}
-          <Route path="/" children={<div>Home</div>} />
+          <Route path="/" children={<Home />} />
         </Switch>
       </Router>
     </Container>
