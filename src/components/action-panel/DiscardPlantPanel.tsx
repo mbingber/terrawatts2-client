@@ -73,8 +73,7 @@ export const DiscardPlantPanel: React.FC<DiscardPlantPanelProps> = ({ discardCar
     discardPlant({
       variables: {
         gameId: game.id,
-        meId: me.id,
-        plantInstanceId: selectedPlant.id
+        plantInstanceId: +selectedPlant.id
       }
     })
   };
@@ -83,7 +82,7 @@ export const DiscardPlantPanel: React.FC<DiscardPlantPanelProps> = ({ discardCar
     <Container>
       <div className="heading">Discard a power plant</div>
       {selectedPlant ? (
-        <PlantCard {...selectedPlant.plant} height={32} we={me.user.we} />
+        <PlantCard {...selectedPlant.plant} height={32} we={me && me.user.we} />
       ) : (
         <PlantFrame />
       )}
@@ -100,7 +99,7 @@ export const DiscardPlantPanel: React.FC<DiscardPlantPanelProps> = ({ discardCar
       <div className="btn-container">
         <Button
           primary
-          disabled={!selectedPlant || loading}
+          disabled={!me || !selectedPlant || loading}
           loading={loading}
           onClick={handleSubmit}
         >Discard</Button>

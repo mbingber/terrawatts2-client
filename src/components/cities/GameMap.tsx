@@ -82,7 +82,7 @@ export const GameMap: React.FC<MapProps> = ({ cityCart }) => {
               era={game.era}
               players={game.playerOrder}
               isSelected={cityCart.cityInstanceIds.includes(cityInstance.id)}
-              selectedColor={me.color}
+              selectedColor={me && me.color}
               tempPositions={tempPositions}
             />
           )

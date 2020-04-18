@@ -1,16 +1,19 @@
-import { useLocation } from "react-router";
 import { useGame } from "./useGame";
-import { Game_playerOrder } from "../generatedTypes";
+import { Game_playerOrder, GetCurrentUser } from "../generatedTypes";
+import { useQuery } from "@apollo/react-hooks";
+import { GET_CURRENT_USER_QUERY } from "../graphql/getCurrentUser";
 
 export const useMe = (): Game_playerOrder => {
-  const query = new URLSearchParams(useLocation().search);
-  const game = useGame();
+  // const query = new URLSearchParams(useLocation().search);
+  const { loading, error, data } = useQuery<GetCurrentUser>(GET_CURRENT_USER_QUERY);
 
-  if (!game) {
+  const game = useGame();
+  
+  if (!game || loading || error || !data || !data.getCurrentUser) {
     return null;
   }
 
-  const username = query.get("me");
+  const { id } = data.getCurrentUser;
 
-  return game.playerOrder.find((player) => player.user.username === username);
-}
+  return game.playerOrder.find((player) => player.user.id === id) || null;
+};

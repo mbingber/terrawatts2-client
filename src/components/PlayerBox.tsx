@@ -47,7 +47,7 @@ export const PlayerBox: React.FC<PlayerBoxProps> = ({ player, powerCart, discard
       owned: player.resources[resourceType as ResourceType],
     }));
 
-  const isPlantSelectable = (powerActionOnMe || discardActionOnMe) && me.id === player.id;
+  const isPlantSelectable = (powerActionOnMe || discardActionOnMe) && me && me.id === player.id;
 
   const isPlantSelected = (plant: Game_plantMarket): boolean => {
     if (powerActionOnMe) {
@@ -62,9 +62,9 @@ export const PlayerBox: React.FC<PlayerBoxProps> = ({ player, powerCart, discard
   }
 
   const handlePlantClick = (plant: Game_plantMarket): void => {
-    if (powerActionOnMe && me.id === player.id) {
+    if (powerActionOnMe && me && me.id === player.id) {
       powerCart.togglePlant(plant);
-    } else if (discardActionOnMe && me.id === player.id) {
+    } else if (discardActionOnMe && me && me.id === player.id) {
       discardCart.togglePlant(plant);
     }
   }
@@ -75,7 +75,7 @@ export const PlayerBox: React.FC<PlayerBoxProps> = ({ player, powerCart, discard
         {plantEvent.plant ? `Bought the ${plantEvent.plant.plant.rank}` : "Passed"}
       </PlantEventNotifier>}
       <Name>
-        {`${player.user.username}${player.id === me.id ? " (you)" : ""}`}
+        {`${player.user.username}${me && player.id === me.id ? " (you)" : ""}`}
       </Name>
       <MoneyAndCities is2P={is2P}>
         <NumberStrikethrough>
@@ -104,7 +104,7 @@ export const PlayerBox: React.FC<PlayerBoxProps> = ({ player, powerCart, discard
                   <PlantCard
                     height={32}
                     {...plant.plant}
-                    we={me.user.we}
+                    we={me && me.user.we}
                   />
                 </PlantContainer>
               ) : (

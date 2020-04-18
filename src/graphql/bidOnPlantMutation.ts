@@ -2,8 +2,8 @@ import gql from "graphql-tag";
 import { GameFragment } from "./gameFragment";
 
 export const BID_ON_PLANT_MUTATION = gql`
-  mutation BidOnPlant($gameId: ID!, $meId: ID!, $bid: Int) {
-    bidOnPlant(gameId: $gameId, meId: $meId, bid: $bid) {
+  mutation BidOnPlant($gameId: ID!, $bid: Int) {
+    bidOnPlant(gameId: $gameId, bid: $bid) {
       ...Game
     }
   }

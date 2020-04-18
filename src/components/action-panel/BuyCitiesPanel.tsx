@@ -54,7 +54,6 @@ export const BuyCitiesPanel: React.FC<BuyCitiesPanelProps> = ({ cityCart }) => {
     buyCities({
       variables: {
         gameId: game.id,
-        meId: me.id,
         cityInstanceIds: cityCart.cityInstanceIds,
         cost
       }
@@ -72,7 +71,7 @@ export const BuyCitiesPanel: React.FC<BuyCitiesPanelProps> = ({ cityCart }) => {
           primary={cityNames.length > 0}
           secondary={cityNames.length === 0}
           onClick={handleSubmit}
-          disabled={!actionOnMe || cost > me.money || loading}
+          disabled={!me || !actionOnMe || cost > me.money || loading}
           loading={loading}
         >{buttonText}</Button>
       </ButtonContainer>

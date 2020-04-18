@@ -39,7 +39,7 @@ export const PlantMarket: React.FC<PlantMarketProps> = ({ plantCart }) => {
             key={plantInstance.id}
             onClick={handlePlantClick(plantInstance, idx)}
           >
-            <PlantCard {...plantInstance.plant} height={36} we={me.user.we} />
+            <PlantCard {...plantInstance.plant} height={36} we={me && me.user.we} />
           </PlantContainer>
         ))}
       </Plants>

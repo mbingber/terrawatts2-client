@@ -43,7 +43,6 @@ export const PowerUpPanel: React.FC<PowerUpPanelProps> = ({ powerCart }) => {
     powerUp({
       variables: {
         gameId: id,
-        meId: me.id,
         plantInstanceIds: powerCart.plants.map((p) => p.id),
         hybridChoice
       }

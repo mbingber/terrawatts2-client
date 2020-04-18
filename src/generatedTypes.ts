@@ -186,7 +186,6 @@ export interface BidOnPlant {
 
 export interface BidOnPlantVariables {
   gameId: string;
-  meId: string;
   bid?: number | null;
 }
 
@@ -377,7 +376,6 @@ export interface BuyCities {
 
 export interface BuyCitiesVariables {
   gameId: string;
-  meId: string;
   cityInstanceIds: string[];
   cost: number;
 }
@@ -569,9 +567,30 @@ export interface BuyResources {
 
 export interface BuyResourcesVariables {
   gameId: string;
-  meId: string;
   resources: ResourcesInput;
   cost: number;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: CreateUser
+// ====================================================
+
+export interface CreateUser_createUser {
+  id: string;
+}
+
+export interface CreateUser {
+  createUser: CreateUser_createUser | null;
+}
+
+export interface CreateUserVariables {
+  username: string;
+  password: string;
+  we: boolean;
 }
 
 
@@ -761,8 +780,7 @@ export interface DiscardPlant {
 
 export interface DiscardPlantVariables {
   gameId: string;
-  meId: string;
-  plantInstanceId: string;
+  plantInstanceId: number;
   fossilFuelDiscard?: HybridChoiceInput | null;
 }
 
@@ -1166,11 +1184,49 @@ export interface GetCityCostHelperVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetCurrentUser
+// ====================================================
+
+export interface GetCurrentUser_getCurrentUser {
+  id: string;
+  username: string;
+}
+
+export interface GetCurrentUser {
+  getCurrentUser: GetCurrentUser_getCurrentUser | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetRevenues
 // ====================================================
 
 export interface GetRevenues {
   getRevenues: number[];
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: Login
+// ====================================================
+
+export interface Login_login {
+  token: string | null;
+}
+
+export interface Login {
+  login: Login_login;
+}
+
+export interface LoginVariables {
+  username: string;
+  password: string;
 }
 
 
@@ -1400,7 +1456,6 @@ export interface PowerUp {
 
 export interface PowerUpVariables {
   gameId: string;
-  meId: string;
   plantInstanceIds: string[];
   hybridChoice?: HybridChoiceInput | null;
 }
@@ -1592,8 +1647,7 @@ export interface PutUpPlant {
 
 export interface PutUpPlantVariables {
   gameId: string;
-  meId: string;
-  plantInstanceId?: string | null;
+  plantInstanceId?: number | null;
   bid?: number | null;
 }
 

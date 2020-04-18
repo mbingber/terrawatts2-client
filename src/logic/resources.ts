@@ -55,6 +55,10 @@ export const getResourceCapacity = (
 }
 
 const canFitResources = (player: Game_playerOrder, purchase: Resources, market: Resources): boolean => {
+  if (!player) {
+    return false;
+  }
+  
   const totalCost = getTotalResourceCost(market, purchase);
 
   if (totalCost > player.money) {

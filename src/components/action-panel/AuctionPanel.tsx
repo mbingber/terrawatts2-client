@@ -28,7 +28,7 @@ export const AuctionPanel: React.FC<AuctionPanelProps> = () => {
     }
   }, [bid, auction.bid]);
   
-  const { clockwiseOrder = 0 } = players.find((p) => p.id === me.id) || {};
+  const { clockwiseOrder = 0 } = me && players.find((p) => p.id === me.id) || {};
 
   const getRelativeOrder = (p: Game_playerOrder) =>
     (p.clockwiseOrder + players.length - clockwiseOrder) % players.length;
@@ -54,7 +54,6 @@ export const AuctionPanel: React.FC<AuctionPanelProps> = () => {
     bidOnPlant({
       variables: {
         gameId: id,
-        meId: me.id,
         bid: isPass ? null : bid
       }
     });
@@ -93,7 +92,7 @@ export const AuctionPanel: React.FC<AuctionPanelProps> = () => {
             Z
           `}
         />
-        {(index > 0 || auctionOrder[0].id !== me.id) && (
+        {(!me || index > 0 || auctionOrder[0].id !== me.id) && (
           <g transform={`translate(${xName}, ${yName}) rotate(${textRotation})`}>
             <text x={0} y={0} textAnchor="middle" style={{ fontSize: "0.125" }}>{name}</text>
           </g>
@@ -115,10 +114,10 @@ export const AuctionPanel: React.FC<AuctionPanelProps> = () => {
           {auctionOrder.map(drawSector)}
         </svg>
         <PlantSpacer>
-          <PlantCard height={28} {...auction.plant.plant} we={me.user.we} />
+          <PlantCard height={28} {...auction.plant.plant} we={me && me.user.we} />
         </PlantSpacer>
       </SvgContainer>
-      {auctionOrder[0].id === me.id && (
+      {me && auctionOrder[0].id === me.id && (
         <BidForm>
           <div>
             <Input type="number" step={1} min={auction.bid + 1} value={bid || ""} onChange={handleInputChange} />
@@ -126,14 +125,14 @@ export const AuctionPanel: React.FC<AuctionPanelProps> = () => {
           <Button.Group>
             <Button
               primary
-              disabled={!actionOnMe || bid <= auction.bid || bid > me.money || loading}
+              disabled={!me || !actionOnMe || bid <= auction.bid || bid > me.money || loading}
               loading={loading && !isPassState}
               onClick={() => handleBidSubmit()}
             >Bid</Button>
             <Button.Or />
             <Button 
               secondary
-              disabled={!actionOnMe || loading}
+              disabled={!me || !actionOnMe || loading}
               loading={loading && isPassState}
               onClick={() => handleBidSubmit(true)}
             >Pass</Button>

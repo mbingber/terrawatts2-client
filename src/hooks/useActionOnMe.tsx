@@ -6,6 +6,10 @@ export const useActionOnMe = (actionType: ActionType): boolean => {
   const game = useGame();
   const me = useMe();
 
+  if (!me) {
+    return false;
+  }
+
   if (game.auction && actionType === ActionType.BID_ON_PLANT) {
     return game.auction.activePlayer.id === me.id;
   }

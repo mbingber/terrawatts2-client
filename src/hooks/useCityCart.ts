@@ -20,7 +20,7 @@ export const useCityCart = (): CityCart => {
   const [cityInstanceIds, setCityCart] = useState<string[]>([]);
 
   const addToCart = (id: string): void => {
-    if (game.phase !== Phase.CITY) {
+    if (!me || game.phase !== Phase.CITY) {
       return;
     }
 

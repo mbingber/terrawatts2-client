@@ -42,8 +42,7 @@ export const PutUpPlantPanel: React.FC<PutUpPlantPanelProps> = ({ plantCart }) =
     putUpPlant({
       variables: {
         gameId: game.id,
-        meId: me.id,
-        plantInstanceId,
+        plantInstanceId: +plantInstanceId,
         bid: isPass ? null : Math.ceil(bid)
       }
     });
