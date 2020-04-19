@@ -203,6 +203,8 @@ export interface BidOnPlant_bidOnPlant {
   auction: BidOnPlant_bidOnPlant_auction | null;
   plantPhaseEvents: BidOnPlant_bidOnPlant_plantPhaseEvents[];
   plantRankBought: number;
+  era2Start: number;
+  gameEnd: number;
   restockRates: BidOnPlant_bidOnPlant_restockRates;
 }
 
@@ -419,6 +421,8 @@ export interface BuyCities_buyCities {
   auction: BuyCities_buyCities_auction | null;
   plantPhaseEvents: BuyCities_buyCities_plantPhaseEvents[];
   plantRankBought: number;
+  era2Start: number;
+  gameEnd: number;
   restockRates: BuyCities_buyCities_restockRates;
 }
 
@@ -636,6 +640,8 @@ export interface BuyResources_buyResources {
   auction: BuyResources_buyResources_auction | null;
   plantPhaseEvents: BuyResources_buyResources_plantPhaseEvents[];
   plantRankBought: number;
+  era2Start: number;
+  gameEnd: number;
   restockRates: BuyResources_buyResources_restockRates;
 }
 
@@ -875,6 +881,8 @@ export interface DiscardPlant_discardPlant {
   auction: DiscardPlant_discardPlant_auction | null;
   plantPhaseEvents: DiscardPlant_discardPlant_plantPhaseEvents[];
   plantRankBought: number;
+  era2Start: number;
+  gameEnd: number;
   restockRates: DiscardPlant_discardPlant_restockRates;
 }
 
@@ -1092,6 +1100,8 @@ export interface GetGame_getGame {
   auction: GetGame_getGame_auction | null;
   plantPhaseEvents: GetGame_getGame_plantPhaseEvents[];
   plantRankBought: number;
+  era2Start: number;
+  gameEnd: number;
   restockRates: GetGame_getGame_restockRates;
 }
 
@@ -1307,6 +1317,8 @@ export interface GameUpdated_gameUpdated {
   auction: GameUpdated_gameUpdated_auction | null;
   plantPhaseEvents: GameUpdated_gameUpdated_plantPhaseEvents[];
   plantRankBought: number;
+  era2Start: number;
+  gameEnd: number;
   restockRates: GameUpdated_gameUpdated_restockRates;
 }
 
@@ -1629,6 +1641,8 @@ export interface PowerUp_powerUp {
   auction: PowerUp_powerUp_auction | null;
   plantPhaseEvents: PowerUp_powerUp_plantPhaseEvents[];
   plantRankBought: number;
+  era2Start: number;
+  gameEnd: number;
   restockRates: PowerUp_powerUp_restockRates;
 }
 
@@ -1846,6 +1860,8 @@ export interface PutUpPlant_putUpPlant {
   auction: PutUpPlant_putUpPlant_auction | null;
   plantPhaseEvents: PutUpPlant_putUpPlant_plantPhaseEvents[];
   plantRankBought: number;
+  era2Start: number;
+  gameEnd: number;
   restockRates: PutUpPlant_putUpPlant_restockRates;
 }
 
@@ -2063,6 +2079,8 @@ export interface Game {
   auction: Game_auction | null;
   plantPhaseEvents: Game_plantPhaseEvents[];
   plantRankBought: number;
+  era2Start: number;
+  gameEnd: number;
   restockRates: Game_restockRates;
 }
 

@@ -10,7 +10,7 @@ import { CityIcon, Arrow } from "./cities/CityIcon";
 interface SummaryBarProps {}
 
 export const SummaryBar: React.FC<SummaryBarProps> = () => {
-  const { era, turn, phase } = useGame();
+  const { era, turn, phase, era2Start, gameEnd } = useGame();
 
   const phaseText = `${phase[0]}${phase.slice(1).toLowerCase()}`;
 
@@ -22,6 +22,8 @@ export const SummaryBar: React.FC<SummaryBarProps> = () => {
       <div>Era {era}</div>
       <div>Turn {turn}</div>
       <div>{phaseText} Phase</div>
+      <div>Era 2 start: {era2Start} <CityIcon color="black" height={16} empty /></div>
+      <div>Game end: {gameEnd} <CityIcon color="black" height={16} empty /></div>
       <div>
         <Modal
           trigger={<Button icon><Icon name="dollar" /></Button>}
@@ -59,6 +61,10 @@ const Container = styled.div`
     border-left: 1px solid black;
     display: flex;
     align-items: center;
+
+    svg {
+      margin-left: 2px;
+    }
   }
 
   > div:first-child {

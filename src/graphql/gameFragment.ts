@@ -102,6 +102,8 @@ export const GameFragment = gql`
       }
     }
     plantRankBought
+    era2Start
+    gameEnd
     restockRates {
       era1 {
         coal
