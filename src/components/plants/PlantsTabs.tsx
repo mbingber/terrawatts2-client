@@ -20,7 +20,7 @@ export const PlantsTabs: React.FC<PlantsTabsProps> = ({ plantCart }) => {
 
   if (era3Plants.length) {
     panes.push({
-      menuItem: "Era III",
+      menuItem: "Era 3",
       render: () => <PlantList plants={era3Plants} />
     })
   }
