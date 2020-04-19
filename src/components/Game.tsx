@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { GameMap } from "./cities/GameMap";
 import { ResourceMarket } from "./resources/ResourceMarket";
-import { PlantMarket } from "./plants/PlantMarket";
+import { PlantsTabs } from "./plants/PlantsTabs";
 import { PlayerBox } from "./PlayerBox";
 import { useGame, useGameSubscription } from "../hooks/useGame";
 import { useCityCart } from "../hooks/useCityCart";
@@ -49,7 +49,7 @@ export const Game: React.FC<GameProps> = () => {
       <RightColumn>
         <PlantResourceContainer>
           <ResourceMarket resourceCart={resourceCart} />
-          <PlantMarket plantCart={plantCart} />
+          <PlantsTabs plantCart={plantCart} />
         </PlantResourceContainer>
         <ActionPanel
           plantCart={plantCart}

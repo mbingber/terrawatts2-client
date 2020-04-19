@@ -45,6 +45,18 @@ export const GameFragment = gql`
         ...Plant
       }
     }
+    discardedPlants {
+      id
+      plant {
+        ...Plant
+      }
+    }
+    era3Plants {
+      id
+      plant {
+        ...Plant
+      }
+    }
     cities {
       id
       city {

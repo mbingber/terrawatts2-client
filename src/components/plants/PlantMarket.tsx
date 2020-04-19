@@ -1,11 +1,9 @@
 import React from "react";
-import styled, { css } from "styled-components";
-import { PlantCard } from "./PlantCard";
 import { useGame } from "../../hooks/useGame";
-import { useMe } from "../../hooks/useMe";
 import { useActionOnMe } from "../../hooks/useActionOnMe";
 import { ActionType, Game_plantMarket } from "../../generatedTypes";
 import { PlantCart } from "../../hooks/usePlantCart";
+import { PlantList } from "./PlantList";
 
 interface PlantMarketProps {
   plantCart: PlantCart;
@@ -13,7 +11,6 @@ interface PlantMarketProps {
 
 export const PlantMarket: React.FC<PlantMarketProps> = ({ plantCart }) => {
   const game = useGame();
-  const me = useMe();
   const actionOnMe = useActionOnMe(ActionType.PUT_UP_PLANT);
   const isAvailable = (idx: number) => (game.plantMarket.length - idx) < 5 || game.era === 3;
 
@@ -28,60 +25,11 @@ export const PlantMarket: React.FC<PlantMarketProps> = ({ plantCart }) => {
   }
   
   return (
-    <Container actionOnMe={actionOnMe}>
-      <Plants>
-        <DeckCount>({game.deckCount})</DeckCount>
-        {game.plantMarket.slice().reverse().map((plantInstance, idx) => (
-          <PlantContainer
-            available={isAvailable(idx)}
-            isSelected={plantCart.selectedPlantInstance && plantCart.selectedPlantInstance.plant.rank === plantInstance.plant.rank}
-            actionOnMe={actionOnMe} 
-            key={plantInstance.id}
-            onClick={handlePlantClick(plantInstance, idx)}
-          >
-            <PlantCard {...plantInstance.plant} height={36} we={me && me.user.we} />
-          </PlantContainer>
-        ))}
-      </Plants>
-    </Container>
+    <PlantList
+      plants={game.plantMarket.slice().reverse()}
+      isAvailable={isAvailable}
+      hoverable={actionOnMe}
+      handlePlantClick={handlePlantClick}
+    />
   );
 }
-
-const Container = styled.div<{ actionOnMe: boolean }>`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 160px;
-  background-color: #ddd;
-`;
-
-const Plants = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-left:
-`;
-
-const PlantContainer = styled.div<{ available: boolean; actionOnMe: boolean; isSelected: boolean; }>`
-  margin-bottom: 2px;
-  opacity: ${({ available }) => available ? "1" : "0.5"};
-  border: 1px solid #eee;
-  border-radius: 3px;
-
-  ${({ available, actionOnMe }) => available && actionOnMe ? css`
-    :hover {
-      border: 1px solid black;
-      cursor: pointer;
-    }
-  ` : ""}
-`;
-
-const DeckCount = styled.div`
-  border: 1px solid black;
-  height: 36px;
-  width: 108px;
-  margin-bottom: 4px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;

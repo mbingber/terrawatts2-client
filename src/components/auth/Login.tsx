@@ -42,6 +42,7 @@ export const LoginForm: React.FC<LoginFormProps> = () => {
           placeholder="Password"
           value={password}
           onChange={e => setPassword(e.target.value)}
+          error={errored}
         />
         <ButtonGroup>
           <Button
