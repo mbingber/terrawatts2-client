@@ -13,6 +13,7 @@ import { usePowerCart } from "../hooks/usePowerCart";
 import { useDiscardCart } from "../hooks/useDiscardCart";
 import { useMe } from "../hooks/useMe";
 import { SpectatorNotification } from "./auth/SpectatorNotification";
+import { SummaryBar } from "./SummaryBar";
 
 interface GameProps {
 
@@ -32,6 +33,7 @@ export const Game: React.FC<GameProps> = () => {
   
   return (
     <Container>
+      {<SummaryBar />}
       {!me && <SpectatorNotification gameId={game.id} />}
       <LeftColumn>
         <GameMap cityCart={cityCart} />

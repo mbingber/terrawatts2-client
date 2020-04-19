@@ -30,7 +30,7 @@ export const SpectatorNotification: React.FC<SpectatorNotificationProps> = ({ ga
 const Container = styled.div`
   position: absolute;
   background-color: #ccc;
-  z-index: 9000;
+  z-index: 9001;
   left: 0;
   top: 0;
   width: 240px;
