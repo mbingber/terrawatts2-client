@@ -6,6 +6,7 @@ import { Game_plantMarket } from "../../generatedTypes";
 
 interface PlantListProps {
   plants: Game_plantMarket[];
+  emptyPlantInstanceIds?: string[];
   isAvailable?: (idx: number) => boolean;
   hoverable?: boolean;
   handlePlantClick?: (plant: Game_plantMarket, index: number) => () => void;
@@ -16,6 +17,7 @@ export const PlantList: React.FC<PlantListProps> = ({
   isAvailable = () => true,
   hoverable = false,
   handlePlantClick = () => () => null,
+  emptyPlantInstanceIds = [],
 }) => {
   const me = useMe();
 
@@ -37,7 +39,11 @@ export const PlantList: React.FC<PlantListProps> = ({
             key={plantInstance.id}
             onClick={handlePlantClick(plantInstance, idx)}
           >
-            <PlantCard {...plantInstance.plant} height={height} we={me && me.user.we} />
+            {emptyPlantInstanceIds.includes(plantInstance.id) ? (
+              <PlantFrame height={height} />
+            ) : (
+              <PlantCard {...plantInstance.plant} height={height} we={me && me.user.we} />
+            )}
           </PlantContainer>
         ))}
       </Plants>
@@ -72,4 +78,11 @@ const PlantContainer = styled.div<{ available: boolean; hoverable: boolean }>`
       cursor: pointer;
     }
   ` : ""}
+`;
+
+const PlantFrame = styled.div<{ height: number }>`
+    height: ${({ height }) => height}px;
+    width: ${({ height }) => height * 3}px;
+    border: 1px solid black;
+    border-radius: 3px;
 `;

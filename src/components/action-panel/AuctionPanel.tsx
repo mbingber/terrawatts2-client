@@ -26,7 +26,7 @@ export const AuctionPanel: React.FC<AuctionPanelProps> = () => {
     if (auction.bid >= bid) {
       setBid(auction.bid + 1);
     }
-  }, [bid, auction.bid]);
+  }, [auction.bid]);
   
   const { clockwiseOrder = 0 } = me && players.find((p) => p.id === me.id) || {};
 
@@ -122,14 +122,13 @@ export const AuctionPanel: React.FC<AuctionPanelProps> = () => {
           <div>
             <Input type="number" step={1} min={auction.bid + 1} value={bid || ""} onChange={handleInputChange} />
           </div>
-          <Button.Group>
+          <Button.Group vertical>
             <Button
               primary
               disabled={!me || !actionOnMe || bid <= auction.bid || bid > me.money || loading}
               loading={loading && !isPassState}
               onClick={() => handleBidSubmit()}
             >Bid</Button>
-            <Button.Or />
             <Button 
               secondary
               disabled={!me || !actionOnMe || loading}
