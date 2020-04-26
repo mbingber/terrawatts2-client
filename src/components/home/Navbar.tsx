@@ -10,13 +10,13 @@ import Cookies from "js-cookie";
 export const Navbar: React.FC = () => {
   useKeepMeOnline();
   
-  const { loading, error, data, refetch } = useQuery<GetCurrentUser>(GET_CURRENT_USER_QUERY);
+  const { loading, error, data } = useQuery<GetCurrentUser>(GET_CURRENT_USER_QUERY);
 
   const isLoggedIn = !loading && !error && data && data.getCurrentUser;
 
   const logout = () => {
     Cookies.remove("access_token");
-    refetch();
+    window.location.reload();
   }
   
   return (

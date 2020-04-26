@@ -15,8 +15,6 @@ export const Home: React.FC = () => {
   const { data: currentUserData } = useQuery<GetCurrentUser>(GET_CURRENT_USER_QUERY);
   const { data: recentGamesData } = useQuery<GetMyRecentGames>(GET_MY_RECENT_GAMES_QUERY, { pollInterval: 2000 });
   const myName = currentUserData && currentUserData.getCurrentUser && currentUserData.getCurrentUser.username;
-
-  console.log("RECENT GAMES", recentGamesData);
   
   const { data, loading } = useQuery<GetOnlineUsernames>(GET_ONLINE_USERNAMES_QUERY, {
     pollInterval: 2000
