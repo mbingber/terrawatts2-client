@@ -27,6 +27,12 @@ export const LoginForm: React.FC<LoginFormProps> = () => {
       }
     });
   };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && username && password) {
+      handleSubmit();
+    }
+  }
   
   return (
     <Container>
@@ -42,6 +48,7 @@ export const LoginForm: React.FC<LoginFormProps> = () => {
           placeholder="Password"
           value={password}
           onChange={e => setPassword(e.target.value)}
+          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => handleKeyDown(e)}
           error={errored}
         />
         <ButtonGroup>
@@ -61,12 +68,11 @@ export const LoginForm: React.FC<LoginFormProps> = () => {
 }
 
 const Container = styled.div`
-  height: 100%;
+  height: calc(100% - 72px);
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #ddd;
 `;
 
 const Box = styled.div`

@@ -660,6 +660,28 @@ export interface BuyResourcesVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: CreateGame
+// ====================================================
+
+export interface CreateGame_createGame {
+  id: string;
+}
+
+export interface CreateGame {
+  createGame: CreateGame_createGame;
+}
+
+export interface CreateGameVariables {
+  mapName: string;
+  usernames: string[];
+  name?: string | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: CreateUser
 // ====================================================
 
@@ -1369,11 +1391,57 @@ export interface GetCurrentUser {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetMyRecentGames
+// ====================================================
+
+export interface GetMyRecentGames_getMyRecentGames {
+  id: string;
+  name: string | null;
+  players: string[];
+}
+
+export interface GetMyRecentGames {
+  getMyRecentGames: GetMyRecentGames_getMyRecentGames[] | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetOnlineUsernames
+// ====================================================
+
+export interface GetOnlineUsernames {
+  getOnlineUsernames: string[];
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetRevenues
 // ====================================================
 
 export interface GetRevenues {
   getRevenues: number[];
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: KeepMeOnline
+// ====================================================
+
+export interface KeepMeOnline_keepMeOnline {
+  id: string;
+}
+
+export interface KeepMeOnline {
+  keepMeOnline: KeepMeOnline_keepMeOnline | null;
 }
 
 

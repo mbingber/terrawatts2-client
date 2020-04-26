@@ -87,12 +87,11 @@ export const Signup: React.FC<SignupProps> = () => {
 }
 
 const Container = styled.div`
-  height: 100%;
+  height: calc(100% - 72px);
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #ddd;
 `;
 
 const Box = styled.div`

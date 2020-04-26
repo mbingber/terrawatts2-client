@@ -14,12 +14,14 @@ import { useDiscardCart } from "../hooks/useDiscardCart";
 import { useMe } from "../hooks/useMe";
 import { SpectatorNotification } from "./auth/SpectatorNotification";
 import { SummaryBar } from "./SummaryBar";
+import { useKeepMeOnline } from "../hooks/useKeepMeOnline";
 
 interface GameProps {
 
 }
 
 export const Game: React.FC<GameProps> = () => {
+  useKeepMeOnline();
   const me = useMe();
   const game = useGame();
   useGameSubscription();
