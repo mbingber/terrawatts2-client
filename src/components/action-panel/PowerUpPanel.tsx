@@ -38,7 +38,7 @@ export const PowerUpPanel: React.FC<PowerUpPanelProps> = ({ powerCart }) => {
   });
 
   const handleSubmit = () => {
-    const hybridChoice = hybridChoices[hybridChoiceIdx] || null;
+    const hybridChoice = (hybridChoices.length > 1 && hybridChoices[hybridChoiceIdx]) || null;
     
     powerUp({
       variables: {
