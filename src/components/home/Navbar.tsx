@@ -1,6 +1,6 @@
 import React from "react";
 import { Menu, Header } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { GetCurrentUser } from "../../generatedTypes";
 import { GET_CURRENT_USER_QUERY } from "../../graphql/getCurrentUser";
@@ -9,6 +9,7 @@ import Cookies from "js-cookie";
 
 export const Navbar: React.FC = () => {
   useKeepMeOnline();
+  const history = useHistory();
   
   const { loading, error, data } = useQuery<GetCurrentUser>(GET_CURRENT_USER_QUERY);
 
@@ -16,7 +17,7 @@ export const Navbar: React.FC = () => {
 
   const logout = () => {
     Cookies.remove("access_token");
-    window.location.reload();
+    history.push("/login");
   }
   
   return (
