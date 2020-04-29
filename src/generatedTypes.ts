@@ -1380,6 +1380,7 @@ export interface GetCityCostHelperVariables {
 export interface GetCurrentUser_getCurrentUser {
   id: string;
   username: string;
+  preferredColor: Color | null;
 }
 
 export interface GetCurrentUser {
@@ -1941,6 +1942,27 @@ export interface PutUpPlantVariables {
   gameId: string;
   plantInstanceId?: number | null;
   bid?: number | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: SetUserPreferences
+// ====================================================
+
+export interface SetUserPreferences_setUserPreferences {
+  id: string;
+}
+
+export interface SetUserPreferences {
+  setUserPreferences: SetUserPreferences_setUserPreferences;
+}
+
+export interface SetUserPreferencesVariables {
+  preferredColor?: Color | null;
+  we?: boolean | null;
 }
 
 

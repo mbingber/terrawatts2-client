@@ -18,6 +18,7 @@ export const Navbar: React.FC = () => {
   const logout = () => {
     Cookies.remove("access_token");
     history.push("/login");
+    window.location.reload();
   }
   
   return (

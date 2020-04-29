@@ -11,8 +11,18 @@ import { Signup } from "./components/auth/Signup";
 import { LoginForm } from "./components/auth/Login";
 import { Home } from "./components/home/Home";
 import { Navbar } from "./components/home/Navbar";
+import { Profile } from "./components/home/Profile";
+import { useQuery } from "@apollo/react-hooks";
+import { GetCurrentUser } from "./generatedTypes";
+import { GET_CURRENT_USER_QUERY } from "./graphql/getCurrentUser";
 
 export const App: React.FC = () => {
+  const { loading } = useQuery<GetCurrentUser>(GET_CURRENT_USER_QUERY);
+
+  if (loading) {
+    return null;
+  }
+  
   return (
     <Container>
       <ToastContainer />
@@ -23,7 +33,7 @@ export const App: React.FC = () => {
           <Route exact path="/login" children={<LoginForm />} />
           <Route exact path="/game/:gameId" children={<Game />} />
           {/* <Route path="/all-plants" children={<AllPlants />}></Route> */}
-          <Route exact path="/profile" children={() => <div>Profile</div>} />
+          <Route exact path="/profile" children={<Profile />} />
           <Route exact path="/" children={<Home />} />
           <Route children={() => <div>Not found, TODO</div>} />
         </Switch>
