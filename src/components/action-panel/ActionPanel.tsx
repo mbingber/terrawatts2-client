@@ -3,37 +3,28 @@ import styled from "styled-components";
 import { useGame } from "../../hooks/useGame";
 import { useActionOnMe } from "../../hooks/useActionOnMe";
 import { ActionType } from "../../generatedTypes";
-import { PlantCart } from "../../hooks/usePlantCart";
 import { PutUpPlantPanel } from "./PutUpPlantPanel";
 import { AuctionPanel } from "./AuctionPanel";
-import { ResourceCart } from "../../hooks/useResourceCart";
-import { CityCart } from "../../hooks/useCityCart";
 import { BuyResourcesPanel } from "./BuyResourcesPanel";
 import { BuyCitiesPanel } from "./BuyCitiesPanel";
 import { PowerUpPanel } from "./PowerUpPanel";
-import { PowerCart } from "../../hooks/usePowerCart";
 import { WaitingPanel } from "./WaitingPanel";
 import { DiscardPlantPanel } from "./DiscardPlantPanel";
-import { DiscardCart } from "../../hooks/useDiscardCart";
+import { CartsContext } from "../CartsContext";
 
-interface ActionPanelProps {
-  plantCart: PlantCart;
-  resourceCart: ResourceCart;
-  cityCart: CityCart;
-  powerCart: PowerCart;
-  discardCart: DiscardCart;
-}
+interface ActionPanelProps {}
 
-export const ActionPanel: React.FC<ActionPanelProps> = ({ plantCart, resourceCart, cityCart, powerCart, discardCart }) => {
+export const ActionPanel: React.FC<ActionPanelProps> = () => {
   const game = useGame();
   const actionOnMe = useActionOnMe(game.actionType);
+  const carts = React.useContext(CartsContext);
 
   if (!actionOnMe && game.actionType !== ActionType.BID_ON_PLANT) {
     return (<Container><WaitingPanel /></Container>);
   }
 
   if (game.actionType === ActionType.PUT_UP_PLANT) {
-    return (<Container><PutUpPlantPanel plantCart={plantCart} /></Container>);
+    return (<Container><PutUpPlantPanel plantCart={carts.plantCart} /></Container>);
   }
   
   if (game.actionType === ActionType.BID_ON_PLANT) {
@@ -41,19 +32,19 @@ export const ActionPanel: React.FC<ActionPanelProps> = ({ plantCart, resourceCar
   }
 
   if (game.actionType === ActionType.DISCARD_PLANT) {
-    return (<Container><DiscardPlantPanel discardCart={discardCart} /></Container>)
+    return (<Container><DiscardPlantPanel discardCart={carts.discardCart} /></Container>)
   }
   
   if (game.actionType === ActionType.BUY_RESOURCES) {
-    return (<Container><BuyResourcesPanel resourceCart={resourceCart} /></Container>);
+    return (<Container><BuyResourcesPanel resourceCart={carts.resourceCart} /></Container>);
   }
 
   if (game.actionType === ActionType.BUY_CITIES) {
-    return (<Container><BuyCitiesPanel cityCart={cityCart} /></Container>);
+    return (<Container><BuyCitiesPanel cityCart={carts.cityCart} /></Container>);
   }
 
   if (game.actionType === ActionType.POWER_UP) {
-    return (<Container><PowerUpPanel powerCart={powerCart} /></Container>);
+    return (<Container><PowerUpPanel powerCart={carts.powerCart} /></Container>);
   }
 
   return null;

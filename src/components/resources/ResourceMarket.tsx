@@ -7,14 +7,13 @@ import { useActionOnMe } from "../../hooks/useActionOnMe";
 import { ActionType } from "../../generatedTypes";
 import { useMe } from "../../hooks/useMe";
 import { hasPlantForResource, canFitOneMoreResource } from "../../logic/resources";
-import { ResourceCart } from "../../hooks/useResourceCart";
+import { CartsContext } from "../CartsContext";
 
-interface ResourceMarketProps {
-  resourceCart: ResourceCart;
-}
+interface ResourceMarketProps {}
 
-export const ResourceMarket: React.FC<ResourceMarketProps> = ({ resourceCart }) => {
+export const ResourceMarket: React.FC<ResourceMarketProps> = () => {
   const { resourceMarket, era, restockRates } = useGame();
+  const { resourceCart } = React.useContext(CartsContext);
   const me = useMe();
   const actionOnMe = useActionOnMe(ActionType.BUY_RESOURCES);
 

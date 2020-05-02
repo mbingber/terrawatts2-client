@@ -1,10 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { useGame } from "../../hooks/useGame";
-import { useCityCostHelper } from "../../hooks/useCityCostHelper";
 import { useMapData } from "../../hooks/useMapData";
 import { FetchMap_fetchMap_cities, ActionType, BuyCities, BuyCitiesVariables } from "../../generatedTypes";
-import { calculateCityCost } from "../../logic/cities";
 import { useActionOnMe } from "../../hooks/useActionOnMe";
 import { useMe } from "../../hooks/useMe";
 import { useGameMutation } from "../../hooks/useGameMutation";
@@ -20,7 +18,6 @@ export const BuyCitiesPanel: React.FC<BuyCitiesPanelProps> = ({ cityCart }) => {
   const { data } = useMapData();
   const game = useGame();
   const me = useMe();
-  const costHelper = useCityCostHelper();
   const actionOnMe = useActionOnMe(ActionType.BUY_CITIES);
   const [buyCities, { loading }] = useGameMutation<BuyCities, BuyCitiesVariables>(BUY_CITIES_MUTATION, cityCart.clearCart);
 
@@ -45,8 +42,7 @@ export const BuyCitiesPanel: React.FC<BuyCitiesPanelProps> = ({ cityCart }) => {
 
   const cityNames = cityCart.cityInstanceIds.map((id) => cityInstanceToName[id]);
 
-  const cost = calculateCityCost(game, cityCart.cityInstanceIds, costHelper);
-  const displayedCost = cost === null ? "--" : `$${cost}`;
+  const displayedCost = cityCart.cost === null ? "--" : `$${cityCart.cost}`;
 
   const buttonText = cityNames.length ? `Buy for ${displayedCost}` : "Pass on cities";
 
@@ -55,7 +51,7 @@ export const BuyCitiesPanel: React.FC<BuyCitiesPanelProps> = ({ cityCart }) => {
       variables: {
         gameId: game.id,
         cityInstanceIds: cityCart.cityInstanceIds,
-        cost
+        cost: cityCart.cost
       }
     })
   };
@@ -71,7 +67,7 @@ export const BuyCitiesPanel: React.FC<BuyCitiesPanelProps> = ({ cityCart }) => {
           primary={cityNames.length > 0}
           secondary={cityNames.length === 0}
           onClick={handleSubmit}
-          disabled={!me || !actionOnMe || cost > me.money || loading}
+          disabled={!me || !actionOnMe || cityCart.cost > me.money || loading}
           loading={loading}
         >{buttonText}</Button>
       </ButtonContainer>

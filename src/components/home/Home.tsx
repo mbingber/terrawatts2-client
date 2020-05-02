@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Segment, Header, Input, Icon, Button, Card } from "semantic-ui-react";
+import { Segment, Header, Input, Icon, Button, Card, Dropdown } from "semantic-ui-react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { GET_ONLINE_USERNAMES_QUERY } from "../../graphql/getOnlineUsernamesQuery";
 import { GetOnlineUsernames, GetCurrentUser, CreateGame, CreateGameVariables, GetMyRecentGames } from "../../generatedTypes";
@@ -47,12 +47,21 @@ export const Home: React.FC = () => {
     setGamePlayers(gamePlayers.filter((name) => name !== playerName));
   };
 
+  const [selectedMap, setSelectedMap] = React.useState("USA");
+
+  const mapDropdownOptions = ["USA", "Germany"]
+    .map(mapName => ({
+      key: mapName,
+      value: mapName,
+      text: mapName
+    }));
+
   const handleSubmitStartGame = () => {
     startGame({
       variables: {
         name: gameName,
         usernames: gamePlayers,
-        mapName: "USA"
+        mapName: selectedMap
       }
     })
   }
@@ -80,6 +89,13 @@ export const Home: React.FC = () => {
               placeholder="Give it a name"
               value={gameName}
               onChange={e => setGameName(e.target.value)}
+            />
+            <Header size="small">Map</Header>
+            <Dropdown
+              selection
+              options={mapDropdownOptions}
+              defaultValue={selectedMap}
+              onChange={(event, data) => setSelectedMap(data.value as string)}
             />
             <Header size="small">Players</Header>
             {gamePlayers.map((playerName) => (

@@ -7,21 +7,19 @@ import { useMe } from "../hooks/useMe";
 import { ResourceIcon } from "./resources/ResourceIcon";
 import { CityIcon } from "./cities/CityIcon";
 import { useGame } from "../hooks/useGame";
-import { PowerCart } from "../hooks/usePowerCart";
 import { useActionOnMe } from "../hooks/useActionOnMe";
-import { DiscardCart } from "../hooks/useDiscardCart";
+import { CartsContext } from "./CartsContext";
 
 interface PlayerBoxProps {
   player: Game_playerOrder;
-  powerCart: PowerCart;
-  discardCart: DiscardCart;
 }
 
-export const PlayerBox: React.FC<PlayerBoxProps> = ({ player, powerCart, discardCart }) => {
+export const PlayerBox: React.FC<PlayerBoxProps> = ({ player }) => {
   const me = useMe();
   const { cities, playerOrder, plantRankBought, plantPhaseEvents, phase } = useGame();
   const powerActionOnMe = useActionOnMe(ActionType.POWER_UP);
   const discardActionOnMe = useActionOnMe(ActionType.DISCARD_PLANT);
+  const { discardCart, powerCart, cityCart } = React.useContext(CartsContext);
 
   const plantEvent = plantPhaseEvents.find((e) => e.player.id === player.id);
 
@@ -69,6 +67,13 @@ export const PlayerBox: React.FC<PlayerBoxProps> = ({ player, powerCart, discard
     }
   }
 
+  let adjustedMoney = player.money;
+  let adjustedCities = numCities;
+  if (me.id === player.id) {
+    adjustedMoney -= cityCart.cost;
+    adjustedCities += cityCart.cityInstanceIds.length;
+  }
+
   return (
     <Container color={player.color} is2P={is2P}>
       {phase === Phase.PLANT && plantEvent && <PlantEventNotifier color={player.color}>
@@ -78,16 +83,18 @@ export const PlayerBox: React.FC<PlayerBoxProps> = ({ player, powerCart, discard
         {`${player.user.username}${me && player.id === me.id ? " (you)" : ""}`}
       </Name>
       <MoneyAndCities is2P={is2P}>
-        <NumberStrikethrough>
+        <NumberStrikethrough struck={adjustedMoney !== player.money}>
             <div>${player.money}</div>
-            <div>{/* TODO */}</div>
+            <div>
+              {adjustedMoney !== player.money ? `${adjustedMoney < 0 ? "-" : ""}$${Math.abs(adjustedMoney)}` : ""}
+            </div>
         </NumberStrikethrough>
-        <NumberStrikethrough>
+        <NumberStrikethrough struck={adjustedCities !== numCities}>
             <div>
               <span>{numCities}</span>
               <span className="house-icon"><CityIcon color={playerColors[player.color]} /></span>
             </div>
-            <div />
+            <div>{adjustedCities !== numCities ? adjustedCities : ""}</div>
           </NumberStrikethrough>
       </MoneyAndCities>
       <BottomSection is2P={is2P}>
@@ -239,8 +246,18 @@ const Name = styled.div`
   }
 `;
 
-const NumberStrikethrough = styled.div`
+const NumberStrikethrough = styled.div<{ struck?: boolean }>`
   padding: 4px;
+
+  ${({ struck }) => struck ? css`
+    > div:first-child {
+      text-decoration: line-through;
+    }
+  ` : ''}
+
+  > div:nth-child(2) {
+    color: red;
+  }
 
   > div {
     margin-bottom: 4px;

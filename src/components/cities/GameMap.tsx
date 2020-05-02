@@ -9,14 +9,12 @@ import { useGame } from "../../hooks/useGame";
 import { CityMarker } from "./CityMarker";
 import { useMapData } from "../../hooks/useMapData";
 import { useMe } from "../../hooks/useMe";
-import { CityCart } from "../../hooks/useCityCart";
 import { getMapConfig } from "./mapConfig";
+import { CartsContext } from "../CartsContext";
 
 const tileUrl = `https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=${process.env.REACT_APP_MAPBOX_API_KEY}`;
 
-interface MapProps {
-  cityCart: CityCart;
-}
+interface MapProps {}
 
 const tempPositions: Record<string, [number, number]> = {
   // Phoenix: [33.4, -112],
@@ -24,9 +22,10 @@ const tempPositions: Record<string, [number, number]> = {
   // "New York": [41.7, -73.5]
 };
 
-export const GameMap: React.FC<MapProps> = ({ cityCart }) => {
+export const GameMap: React.FC<MapProps> = () => {
   const game = useGame();
   const me = useMe();
+  const { cityCart } = React.useContext(CartsContext);
   
   const { data } = useMapData();
 

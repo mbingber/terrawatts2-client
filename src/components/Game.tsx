@@ -5,16 +5,12 @@ import { ResourceMarket } from "./resources/ResourceMarket";
 import { PlantsTabs } from "./plants/PlantsTabs";
 import { PlayerBox } from "./PlayerBox";
 import { useGame, useGameSubscription } from "../hooks/useGame";
-import { useCityCart } from "../hooks/useCityCart";
 import { ActionPanel } from "./action-panel/ActionPanel";
-import { usePlantCart } from "../hooks/usePlantCart";
-import { useResourceCart } from "../hooks/useResourceCart";
-import { usePowerCart } from "../hooks/usePowerCart";
-import { useDiscardCart } from "../hooks/useDiscardCart";
 import { useMe } from "../hooks/useMe";
 import { SpectatorNotification } from "./auth/SpectatorNotification";
 import { SummaryBar } from "./SummaryBar";
 import { useKeepMeOnline } from "../hooks/useKeepMeOnline";
+import { CartsContextProvider } from "./CartsContext";
 
 interface GameProps {
 
@@ -25,45 +21,34 @@ export const Game: React.FC<GameProps> = () => {
   const me = useMe();
   const game = useGame();
   useGameSubscription();
-  const plantCart = usePlantCart();
-  const resourceCart = useResourceCart();
-  const cityCart = useCityCart();
-  const powerCart = usePowerCart();
-  const discardCart = useDiscardCart();
 
   if (!game) return null;
   
   return (
-    <Container>
-      {<SummaryBar />}
-      {!me && <SpectatorNotification gameId={game.id} />}
-      <LeftColumn>
-        <GameMap cityCart={cityCart} />
-        <PlayerBoxContainer>
-          {game.playerOrder.map((player) => (
-            <PlayerBox
-              key={player.id}
-              player={player}
-              powerCart={powerCart}
-              discardCart={discardCart}
-            />
-          ))}
-        </PlayerBoxContainer>
-      </LeftColumn>
-      <RightColumn>
-        <PlantResourceContainer>
-          <ResourceMarket resourceCart={resourceCart} />
-          <PlantsTabs plantCart={plantCart} />
-        </PlantResourceContainer>
-        <ActionPanel
-          plantCart={plantCart}
-          resourceCart={resourceCart}
-          cityCart={cityCart}
-          powerCart={powerCart}
-          discardCart={discardCart}
-        />
-      </RightColumn>
-    </Container>
+    <CartsContextProvider>
+      <Container>
+        {<SummaryBar />}
+        {!me && <SpectatorNotification gameId={game.id} />}
+        <LeftColumn>
+          <GameMap />
+          <PlayerBoxContainer>
+            {game.playerOrder.map((player) => (
+              <PlayerBox
+                key={player.id}
+                player={player}
+              />
+            ))}
+          </PlayerBoxContainer>
+        </LeftColumn>
+        <RightColumn>
+          <PlantResourceContainer>
+            <ResourceMarket />
+            <PlantsTabs />
+          </PlantResourceContainer>
+          <ActionPanel />
+        </RightColumn>
+      </Container>
+    </CartsContextProvider>
   );
 }
 

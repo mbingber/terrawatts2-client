@@ -21,11 +21,6 @@ export const Connections: React.FC<ConnectionsProps> = ({ cityLookup, connection
       {connections.map((connection) => {
         const cities = connection.cities.map(({ id }) => cityLookup[id]);
 
-        // const midpoint = {
-        //   lat: 0.5 * (cities[0].lat + cities[1].lat),
-        //   lng: 0.5 * (cities[0].lng + cities[1].lng)
-        // };
-
         const midpoint = {
           lat: 0.5 * (getLat(cities[0]) + getLat(cities[1])),
           lng: 0.5 * (getLng(cities[0]) + getLng(cities[1]))
@@ -36,12 +31,23 @@ export const Connections: React.FC<ConnectionsProps> = ({ cityLookup, connection
             <Polyline
               positions={cities.map(c => ({ lat: getLat(c), lng: getLng(c) }))}
               color="#333"
-              weight={2}
+              weight={3}
+              dashArray="20"
+              lineCap="butt"
+            />
+            <Polyline
+              positions={cities.map(c => ({ lat: getLat(c), lng: getLng(c) }))}
+              color="#bbb"
+              weight={3}
+              dashArray="20"
+              dashOffset="20"
+              lineCap="butt"
             />
             <Marker
               position={midpoint}
               icon={divIcon({
                 html: renderToString(<ConnectionBubble>{connection.cost}</ConnectionBubble>),
+                iconSize: [20, 20]
               })}
             />
           </div>
@@ -52,12 +58,12 @@ export const Connections: React.FC<ConnectionsProps> = ({ cityLookup, connection
 }
 
 const ConnectionBubble = styled.div`
-  height: 16px;
-  width: 16px;
-  border-radius: 16px;
+  height: 20px;
+  width: 20px;
+  border-radius: 20px;
   background-color: #333;
   color: #ddd;
-  font-size: 10px;
+  font-size: 12px;
   text-align: center;
   font-weight: bold;
   display: flex;

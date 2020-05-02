@@ -6,16 +6,14 @@ import { useGame } from "../../hooks/useGame";
 import { PlantMarket } from "./PlantMarket";
 import { PlantList } from "./PlantList";
 
-interface PlantsTabsProps {
-  plantCart: PlantCart;
-}
+interface PlantsTabsProps {}
 
-export const PlantsTabs: React.FC<PlantsTabsProps> = ({ plantCart }) => {
+export const PlantsTabs: React.FC<PlantsTabsProps> = () => {
   const { deckCount, discardedPlants, era3Plants } = useGame();
 
   const panes = [{
     menuItem: `Market (${deckCount})`,
-    render: () => <PlantMarket plantCart={plantCart} />
+    render: () => <PlantMarket />
   }];
 
   if (era3Plants.length) {
