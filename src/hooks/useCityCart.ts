@@ -60,7 +60,7 @@ export const useCityCart = (): CityCart => {
 
   const clearCart = (): void => setCityCart([]);
 
-  const cost = calculateCityCost(game, cityInstanceIds, costHelper);
+  const cost = calculateCityCost(game, me, cityInstanceIds, costHelper);
 
   useEffect(() => {
     // if cities get bought by someone else, we might need to remove it from the cart

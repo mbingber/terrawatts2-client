@@ -1,7 +1,8 @@
-import { Game } from "../generatedTypes";
+import { Game, Game_playerOrder } from "../generatedTypes";
 
 export const calculateCityCost = (
   game: Game,
+  me: Game_playerOrder,
   cart: string[],
   costHelper: Record<number, Record<number, number>>
 ): number => {
@@ -17,7 +18,7 @@ export const calculateCityCost = (
 
   const network: string[] = game.cities
     .filter((cityInstance) =>
-      cityInstance.players.some(p => p.id === game.activePlayer.id)
+      cityInstance.players.some(p => p.id === me.id)
     ).map((cityInstance) => cityInstance.city.id);
 
   let connectionCost = 0;
