@@ -32,7 +32,7 @@ export const SummaryBar: React.FC<SummaryBarProps> = () => {
           <Modal.Content>
             <InnerModal>
               {revenues.map((money, numPowered) => (
-                <PowerInfo>
+                <PowerInfo key={money}>
                   <CityIcon color="black" empty height={40} number={numPowered} strokeWidth={0.5} />
                   <Arrow />
                   <div>${money}</div>

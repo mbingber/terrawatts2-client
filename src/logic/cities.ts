@@ -6,7 +6,7 @@ export const calculateCityCost = (
   cart: string[],
   costHelper: Record<number, Record<number, number>>
 ): number => {
-  if (!costHelper) {
+  if (!costHelper || !me) {
     return null;
   }
 

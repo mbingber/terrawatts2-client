@@ -69,7 +69,7 @@ export const PlayerBox: React.FC<PlayerBoxProps> = ({ player }) => {
 
   let adjustedMoney = player.money;
   let adjustedCities = numCities;
-  if (me.id === player.id) {
+  if (me && me.id === player.id) {
     adjustedMoney -= cityCart.cost;
     adjustedCities += cityCart.cityInstanceIds.length;
   }
