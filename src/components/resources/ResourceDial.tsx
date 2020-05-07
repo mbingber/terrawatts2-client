@@ -68,6 +68,23 @@ export const ResourceDial: React.FC<ResourceDialProps> = ({
     );
   };
 
+  const drawLine = (key: string, angle: number, isMinor: boolean = false) => {
+    const x1 = innerR * Math.cos(angle);
+    const y1 = innerR * Math.sin(angle);
+    const outerRForLine = isMinor ? innerR + 0.7 * (outerR - innerR) : outerR;
+    const x2 = outerRForLine * Math.cos(angle);
+    const y2 = outerRForLine * Math.sin(angle);
+
+    return (
+      <path
+        key={key}
+        d={`M${x1} ${y1} L ${x2} ${y2}`}
+        stroke="black"
+        strokeWidth={isMinor ? 0.01 : 0.05}
+      />
+    );
+  }
+
   const amountForCost = inStock - inCart;
   
   return (
@@ -103,19 +120,21 @@ export const ResourceDial: React.FC<ResourceDialProps> = ({
           {drawArc(endAngle, "#bbb")}
           {drawArc(ratioAngle, getSecondaryResourceColor(resourceType.toUpperCase() as PlantResourceType))}
           {drawArc(ratioAdjustedAngle, resourceColors[resourceType.toUpperCase() as PlantResourceType])}
-          {Array(numDivisions).fill(true).map((_, i) => {
-            if (i === 0) {
-              return null;
-            }
-            
-            const angle = startAngle + (endAngle - startAngle) / numDivisions * i;
-            const x1 = innerR * Math.cos(angle);
-            const y1 = innerR * Math.sin(angle);
-            const x2 = outerR * Math.cos(angle);
-            const y2 = outerR * Math.sin(angle);
+          {Array(numDivisions).fill(true).reduce((acc, _, i) => {
+            const groupAngle = (endAngle - startAngle) / numDivisions;
+            const angle = startAngle + groupAngle * i;
 
-            return <path key={i} d={`M${x1} ${y1} L ${x2} ${y2}`} stroke="black" strokeWidth={0.025} />
-          })}
+            if (i > 0) {
+              acc.push(drawLine(`${i}_0`, angle));
+            }
+
+            if (resourceType !== "uranium") {
+              acc.push(drawLine(`${i}_1`, angle + groupAngle / 3, true));
+              acc.push(drawLine(`${i}_2`, angle + 2 * groupAngle / 3, true));
+            }
+
+            return acc;
+          }, [])}
         </svg>
       </SvgContainer>
     </Container>
