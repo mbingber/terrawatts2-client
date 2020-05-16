@@ -16,6 +16,11 @@ const configs: Record<string, MapConfig> = {
     center: [51, 10.5],
     minZoom: 6,
     maxZoom: 8.5,
+  },
+  Italy: {
+    center: [42, 12.5],
+    minZoom: 6,
+    maxZoom: 8.5,
   }
 };
 
