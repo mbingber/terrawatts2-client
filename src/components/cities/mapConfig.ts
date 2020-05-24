@@ -20,12 +20,12 @@ const configs: Record<string, MapConfig> = {
   Italy: {
     center: [42, 12.5],
     minZoom: 6,
-    maxZoom: 8.5,
+    maxZoom: 9,
   },
   Seattle: {
     center: [47.6062, -122.3321],
     minZoom: 12,
-    maxZoom: 12,
+    maxZoom: 14,
   }
 };
 
