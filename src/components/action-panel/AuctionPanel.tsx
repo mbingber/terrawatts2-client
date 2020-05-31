@@ -8,7 +8,7 @@ import { useMe } from "../../hooks/useMe";
 import { useActionOnMe } from "../../hooks/useActionOnMe";
 import { BID_ON_PLANT_MUTATION } from "../../graphql/bidOnPlantMutation";
 import { useGameMutation } from "../../hooks/useGameMutation";
-import { Button, Input } from "semantic-ui-react";
+import { Button, Input, Checkbox } from "semantic-ui-react";
 
 interface AuctionPanelProps {}
 
@@ -21,12 +21,27 @@ export const AuctionPanel: React.FC<AuctionPanelProps> = () => {
   const [isPassState, setIsPass] = React.useState<boolean>(false);
 
   const [bid, setBid] = React.useState<number>(auction.bid + 1);
+  const [isAutobid, setAutobid] = React.useState(false);
 
+  const bidIsDisabled = !me || !actionOnMe || bid <= auction.bid || bid > me.money || loading;
+  
   React.useEffect(() => {
     if (auction.bid >= bid) {
       setBid(auction.bid + 1);
+      setAutobid(false);
     }
   }, [auction.bid]);
+
+  React.useEffect(() => {
+    if (!bidIsDisabled && isAutobid && auction.bid < bid) {
+      bidOnPlant({
+        variables: {
+          gameId: id,
+          bid: auction.bid + 1
+        },
+      })
+    }
+  });
   
   const { clockwiseOrder = 0 } = me && players.find((p) => p.id === me.id) || {};
 
@@ -119,13 +134,14 @@ export const AuctionPanel: React.FC<AuctionPanelProps> = () => {
       </SvgContainer>
       {me && auctionOrder[0].id === me.id && (
         <BidForm>
+          <Checkbox label="Autobid" checked={isAutobid} onClick={() => setAutobid(!isAutobid)} />
           <div>
             <Input type="number" step={1} min={auction.bid + 1} value={bid || ""} onChange={handleInputChange} />
           </div>
           <Button.Group vertical>
             <Button
               primary
-              disabled={!me || !actionOnMe || bid <= auction.bid || bid > me.money || loading}
+              disabled={bidIsDisabled}
               loading={loading && !isPassState}
               onClick={() => handleBidSubmit()}
             >Bid</Button>
