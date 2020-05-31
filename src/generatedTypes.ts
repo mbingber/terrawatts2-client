@@ -86,6 +86,18 @@ export interface BidOnPlant_bidOnPlant_era3Plants {
   plant: BidOnPlant_bidOnPlant_era3Plants_plant;
 }
 
+export interface BidOnPlant_bidOnPlant_possibleDeck_plant {
+  rank: number;
+  resourceType: PlantResourceType;
+  resourceBurn: number;
+  numCities: number;
+}
+
+export interface BidOnPlant_bidOnPlant_possibleDeck {
+  id: string;
+  plant: BidOnPlant_bidOnPlant_possibleDeck_plant;
+}
+
 export interface BidOnPlant_bidOnPlant_cities_city {
   id: string;
 }
@@ -198,6 +210,7 @@ export interface BidOnPlant_bidOnPlant {
   plantMarket: BidOnPlant_bidOnPlant_plantMarket[];
   discardedPlants: BidOnPlant_bidOnPlant_discardedPlants[];
   era3Plants: BidOnPlant_bidOnPlant_era3Plants[];
+  possibleDeck: BidOnPlant_bidOnPlant_possibleDeck[];
   cities: BidOnPlant_bidOnPlant_cities[];
   resourceMarket: BidOnPlant_bidOnPlant_resourceMarket;
   auction: BidOnPlant_bidOnPlant_auction | null;
@@ -302,6 +315,18 @@ export interface BuyCities_buyCities_era3Plants_plant {
 export interface BuyCities_buyCities_era3Plants {
   id: string;
   plant: BuyCities_buyCities_era3Plants_plant;
+}
+
+export interface BuyCities_buyCities_possibleDeck_plant {
+  rank: number;
+  resourceType: PlantResourceType;
+  resourceBurn: number;
+  numCities: number;
+}
+
+export interface BuyCities_buyCities_possibleDeck {
+  id: string;
+  plant: BuyCities_buyCities_possibleDeck_plant;
 }
 
 export interface BuyCities_buyCities_cities_city {
@@ -416,6 +441,7 @@ export interface BuyCities_buyCities {
   plantMarket: BuyCities_buyCities_plantMarket[];
   discardedPlants: BuyCities_buyCities_discardedPlants[];
   era3Plants: BuyCities_buyCities_era3Plants[];
+  possibleDeck: BuyCities_buyCities_possibleDeck[];
   cities: BuyCities_buyCities_cities[];
   resourceMarket: BuyCities_buyCities_resourceMarket;
   auction: BuyCities_buyCities_auction | null;
@@ -521,6 +547,18 @@ export interface BuyResources_buyResources_era3Plants_plant {
 export interface BuyResources_buyResources_era3Plants {
   id: string;
   plant: BuyResources_buyResources_era3Plants_plant;
+}
+
+export interface BuyResources_buyResources_possibleDeck_plant {
+  rank: number;
+  resourceType: PlantResourceType;
+  resourceBurn: number;
+  numCities: number;
+}
+
+export interface BuyResources_buyResources_possibleDeck {
+  id: string;
+  plant: BuyResources_buyResources_possibleDeck_plant;
 }
 
 export interface BuyResources_buyResources_cities_city {
@@ -635,6 +673,7 @@ export interface BuyResources_buyResources {
   plantMarket: BuyResources_buyResources_plantMarket[];
   discardedPlants: BuyResources_buyResources_discardedPlants[];
   era3Plants: BuyResources_buyResources_era3Plants[];
+  possibleDeck: BuyResources_buyResources_possibleDeck[];
   cities: BuyResources_buyResources_cities[];
   resourceMarket: BuyResources_buyResources_resourceMarket;
   auction: BuyResources_buyResources_auction | null;
@@ -786,6 +825,18 @@ export interface DiscardPlant_discardPlant_era3Plants {
   plant: DiscardPlant_discardPlant_era3Plants_plant;
 }
 
+export interface DiscardPlant_discardPlant_possibleDeck_plant {
+  rank: number;
+  resourceType: PlantResourceType;
+  resourceBurn: number;
+  numCities: number;
+}
+
+export interface DiscardPlant_discardPlant_possibleDeck {
+  id: string;
+  plant: DiscardPlant_discardPlant_possibleDeck_plant;
+}
+
 export interface DiscardPlant_discardPlant_cities_city {
   id: string;
 }
@@ -898,6 +949,7 @@ export interface DiscardPlant_discardPlant {
   plantMarket: DiscardPlant_discardPlant_plantMarket[];
   discardedPlants: DiscardPlant_discardPlant_discardedPlants[];
   era3Plants: DiscardPlant_discardPlant_era3Plants[];
+  possibleDeck: DiscardPlant_discardPlant_possibleDeck[];
   cities: DiscardPlant_discardPlant_cities[];
   resourceMarket: DiscardPlant_discardPlant_resourceMarket;
   auction: DiscardPlant_discardPlant_auction | null;
@@ -1003,6 +1055,18 @@ export interface GetGame_getGame_era3Plants_plant {
 export interface GetGame_getGame_era3Plants {
   id: string;
   plant: GetGame_getGame_era3Plants_plant;
+}
+
+export interface GetGame_getGame_possibleDeck_plant {
+  rank: number;
+  resourceType: PlantResourceType;
+  resourceBurn: number;
+  numCities: number;
+}
+
+export interface GetGame_getGame_possibleDeck {
+  id: string;
+  plant: GetGame_getGame_possibleDeck_plant;
 }
 
 export interface GetGame_getGame_cities_city {
@@ -1117,6 +1181,7 @@ export interface GetGame_getGame {
   plantMarket: GetGame_getGame_plantMarket[];
   discardedPlants: GetGame_getGame_discardedPlants[];
   era3Plants: GetGame_getGame_era3Plants[];
+  possibleDeck: GetGame_getGame_possibleDeck[];
   cities: GetGame_getGame_cities[];
   resourceMarket: GetGame_getGame_resourceMarket;
   auction: GetGame_getGame_auction | null;
@@ -1220,6 +1285,18 @@ export interface GameUpdated_gameUpdated_era3Plants_plant {
 export interface GameUpdated_gameUpdated_era3Plants {
   id: string;
   plant: GameUpdated_gameUpdated_era3Plants_plant;
+}
+
+export interface GameUpdated_gameUpdated_possibleDeck_plant {
+  rank: number;
+  resourceType: PlantResourceType;
+  resourceBurn: number;
+  numCities: number;
+}
+
+export interface GameUpdated_gameUpdated_possibleDeck {
+  id: string;
+  plant: GameUpdated_gameUpdated_possibleDeck_plant;
 }
 
 export interface GameUpdated_gameUpdated_cities_city {
@@ -1334,6 +1411,7 @@ export interface GameUpdated_gameUpdated {
   plantMarket: GameUpdated_gameUpdated_plantMarket[];
   discardedPlants: GameUpdated_gameUpdated_discardedPlants[];
   era3Plants: GameUpdated_gameUpdated_era3Plants[];
+  possibleDeck: GameUpdated_gameUpdated_possibleDeck[];
   cities: GameUpdated_gameUpdated_cities[];
   resourceMarket: GameUpdated_gameUpdated_resourceMarket;
   auction: GameUpdated_gameUpdated_auction | null;
@@ -1593,6 +1671,18 @@ export interface PowerUp_powerUp_era3Plants {
   plant: PowerUp_powerUp_era3Plants_plant;
 }
 
+export interface PowerUp_powerUp_possibleDeck_plant {
+  rank: number;
+  resourceType: PlantResourceType;
+  resourceBurn: number;
+  numCities: number;
+}
+
+export interface PowerUp_powerUp_possibleDeck {
+  id: string;
+  plant: PowerUp_powerUp_possibleDeck_plant;
+}
+
 export interface PowerUp_powerUp_cities_city {
   id: string;
 }
@@ -1705,6 +1795,7 @@ export interface PowerUp_powerUp {
   plantMarket: PowerUp_powerUp_plantMarket[];
   discardedPlants: PowerUp_powerUp_discardedPlants[];
   era3Plants: PowerUp_powerUp_era3Plants[];
+  possibleDeck: PowerUp_powerUp_possibleDeck[];
   cities: PowerUp_powerUp_cities[];
   resourceMarket: PowerUp_powerUp_resourceMarket;
   auction: PowerUp_powerUp_auction | null;
@@ -1810,6 +1901,18 @@ export interface PutUpPlant_putUpPlant_era3Plants_plant {
 export interface PutUpPlant_putUpPlant_era3Plants {
   id: string;
   plant: PutUpPlant_putUpPlant_era3Plants_plant;
+}
+
+export interface PutUpPlant_putUpPlant_possibleDeck_plant {
+  rank: number;
+  resourceType: PlantResourceType;
+  resourceBurn: number;
+  numCities: number;
+}
+
+export interface PutUpPlant_putUpPlant_possibleDeck {
+  id: string;
+  plant: PutUpPlant_putUpPlant_possibleDeck_plant;
 }
 
 export interface PutUpPlant_putUpPlant_cities_city {
@@ -1924,6 +2027,7 @@ export interface PutUpPlant_putUpPlant {
   plantMarket: PutUpPlant_putUpPlant_plantMarket[];
   discardedPlants: PutUpPlant_putUpPlant_discardedPlants[];
   era3Plants: PutUpPlant_putUpPlant_era3Plants[];
+  possibleDeck: PutUpPlant_putUpPlant_possibleDeck[];
   cities: PutUpPlant_putUpPlant_cities[];
   resourceMarket: PutUpPlant_putUpPlant_resourceMarket;
   auction: PutUpPlant_putUpPlant_auction | null;
@@ -1954,6 +2058,7 @@ export interface PutUpPlantVariables {
 
 export interface SetUserPreferences_setUserPreferences {
   id: string;
+  preferredColor: Color | null;
 }
 
 export interface SetUserPreferences {
@@ -2050,6 +2155,18 @@ export interface Game_era3Plants_plant {
 export interface Game_era3Plants {
   id: string;
   plant: Game_era3Plants_plant;
+}
+
+export interface Game_possibleDeck_plant {
+  rank: number;
+  resourceType: PlantResourceType;
+  resourceBurn: number;
+  numCities: number;
+}
+
+export interface Game_possibleDeck {
+  id: string;
+  plant: Game_possibleDeck_plant;
 }
 
 export interface Game_cities_city {
@@ -2164,6 +2281,7 @@ export interface Game {
   plantMarket: Game_plantMarket[];
   discardedPlants: Game_discardedPlants[];
   era3Plants: Game_era3Plants[];
+  possibleDeck: Game_possibleDeck[];
   cities: Game_cities[];
   resourceMarket: Game_resourceMarket;
   auction: Game_auction | null;

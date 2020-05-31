@@ -57,6 +57,12 @@ export const GameFragment = gql`
         ...Plant
       }
     }
+    possibleDeck {
+      id
+      plant {
+        ...Plant
+      }
+    }
     cities {
       id
       city {

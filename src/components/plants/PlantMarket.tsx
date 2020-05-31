@@ -2,7 +2,6 @@ import React from "react";
 import { useGame } from "../../hooks/useGame";
 import { useActionOnMe } from "../../hooks/useActionOnMe";
 import { ActionType, Game_plantMarket } from "../../generatedTypes";
-import { PlantCart } from "../../hooks/usePlantCart";
 import { PlantList } from "./PlantList";
 import { CartsContext } from "../CartsContext";
 

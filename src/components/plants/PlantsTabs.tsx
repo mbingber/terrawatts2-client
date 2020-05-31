@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { PlantCart } from "../../hooks/usePlantCart";
 import { Tab } from "semantic-ui-react";
 import { useGame } from "../../hooks/useGame";
 import { PlantMarket } from "./PlantMarket";
@@ -9,12 +8,19 @@ import { PlantList } from "./PlantList";
 interface PlantsTabsProps {}
 
 export const PlantsTabs: React.FC<PlantsTabsProps> = () => {
-  const { deckCount, discardedPlants, era3Plants } = useGame();
+  const { deckCount, discardedPlants, era3Plants, possibleDeck } = useGame();
 
   const panes = [{
-    menuItem: `Market (${deckCount})`,
+    menuItem: "Market",
     render: () => <PlantMarket />
   }];
+
+  if (possibleDeck.length) {
+    panes.push({
+      menuItem: `Deck (${deckCount})`,
+      render: () => <PlantList plants={possibleDeck} />
+    })
+  }
 
   if (era3Plants.length) {
     panes.push({
@@ -25,7 +31,7 @@ export const PlantsTabs: React.FC<PlantsTabsProps> = () => {
 
   if (discardedPlants.length) {
     panes.push({
-      menuItem: "Discarded",
+      menuItem: "Discard",
       render: () => <PlantList plants={discardedPlants} />
     })
   };
@@ -41,6 +47,8 @@ const Container = styled.div`
   flex: 1;
   background-color: #ddd;
   width: 160px;
+  height: calc(100vh - 208px); // TODO: tied to height of action panel
+  overflow-y: auto;
 
   .item {
     font-size: 10px;
@@ -51,5 +59,11 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     height: 100%;
+  }
+
+  .ui.attached.tabular.menu {
+    background: #ddd;
+    position: fixed;
+    z-index: 1;
   }
 `;

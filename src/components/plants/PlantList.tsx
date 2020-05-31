@@ -21,13 +21,7 @@ export const PlantList: React.FC<PlantListProps> = ({
 }) => {
   const me = useMe();
 
-  let height = 36;
-  if (plants.length > 8) {
-    height = 28;
-  }
-  if (plants.length > 12) {
-    height = 20;
-  }
+  const height = 36;
 
   return (
     <Container>
@@ -56,8 +50,10 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 160px;
+  width: 100%;
   background-color: #ddd;
+  padding-top: 72px;
+  padding-bottom: 24px;
 `;
 
 const Plants = styled.div`
