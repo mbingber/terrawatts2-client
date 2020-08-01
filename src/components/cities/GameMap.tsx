@@ -83,6 +83,7 @@ export const GameMap: React.FC<MapProps> = () => {
               isSelected={cityCart.cityInstanceIds.includes(cityInstance.id)}
               selectedColor={me && me.color}
               tempPositions={tempPositions}
+              hasNuclearPower={game.map.name === 'Northern Europe' && city.region > 2}
             />
           )
         })}}

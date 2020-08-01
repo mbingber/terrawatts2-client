@@ -26,6 +26,11 @@ const configs: Record<string, MapConfig> = {
     center: [47.6062, -122.3321],
     minZoom: 12,
     maxZoom: 14,
+  },
+  ['Northern Europe']: {
+    center: [61.4, 20],
+    minZoom: 5,
+    maxZoom: 8,
   }
 };
 

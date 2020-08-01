@@ -1557,6 +1557,7 @@ export interface FetchMap_fetchMap_cities {
   name: string;
   lat: number;
   lng: number;
+  region: number;
 }
 
 export interface FetchMap_fetchMap_connections_cities {

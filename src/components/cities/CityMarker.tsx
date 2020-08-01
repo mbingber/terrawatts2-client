@@ -16,16 +16,24 @@ interface CityMarkerProps {
   selectedColor: Color;
   onClick: () => void;
   tempPositions: Record<string, [number, number]>;
+  hasNuclearPower: boolean;
 }
 
-export const CityMarker: React.FC<CityMarkerProps> = ({ cityInstance, city, players, era, isSelected, selectedColor, onClick, tempPositions }) => {
+export const CityMarker: React.FC<CityMarkerProps> = ({ cityInstance, city, players, era, isSelected, selectedColor, onClick, tempPositions, hasNuclearPower }) => {
   const colors = cityInstance.players
     .map((player) => (
       players.find((p) => p.id === player.id)
     ))
     .map(p => p ? p.color : Color.BLACK);
 
-  const iconHtml = renderToString(<City city={city} era={era} colors={colors} isSelected={isSelected} selectedColor={selectedColor} />);
+  const iconHtml = renderToString(<City
+    city={city}
+    era={era}
+    colors={colors}
+    isSelected={isSelected}
+    selectedColor={selectedColor}
+    hasNuclearPower={hasNuclearPower}
+  />);
   
   const position = tempPositions[city.name] || [city.lat, city.lng]; // TEMP
 
@@ -44,6 +52,7 @@ interface CityProps {
   colors: Color[];
   isSelected: boolean;
   selectedColor: Color;
+  hasNuclearPower: boolean;
 }
 
 const ex = (
@@ -53,9 +62,9 @@ const ex = (
   </svg>
 );
 
-const City: React.FC<CityProps> = ({ city, era, colors, isSelected, selectedColor }) => {  
+const City: React.FC<CityProps> = ({ city, era, colors, isSelected, selectedColor, hasNuclearPower }) => {  
   return (
-    <Container>
+    <Container redden={hasNuclearPower}>
       <div className="name">{city.name}</div>
       <div className="players">
         {Array(3).fill(true).map((_, idx) => (
@@ -70,12 +79,12 @@ const City: React.FC<CityProps> = ({ city, era, colors, isSelected, selectedColo
   );
 }
 
-const Container = styled.div`
+const Container = styled.div<{ redden: boolean; }>`
   border: 1px solid black;
   height: 32px;
   width: 60px;
   border-radius: 2px;
-  background-color: #333;
+  background-color: ${({ redden }) => redden ? '#642D2D' : '#333'};
 
   .name {
     width: 100%;

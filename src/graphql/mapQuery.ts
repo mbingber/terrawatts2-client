@@ -9,6 +9,7 @@ export const MAP_QUERY = gql`
         name
         lat
         lng
+        region
       }
       connections {
         id
