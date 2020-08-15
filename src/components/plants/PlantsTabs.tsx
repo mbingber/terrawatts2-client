@@ -8,7 +8,7 @@ import { PlantList } from "./PlantList";
 interface PlantsTabsProps {}
 
 export const PlantsTabs: React.FC<PlantsTabsProps> = () => {
-  const { deckCount, discardedPlants, era3Plants, possibleDeck } = useGame();
+  const { deckCount, discardedPlants, era3Plants, possibleDeck, map } = useGame();
 
   const panes = [{
     menuItem: "Market",
@@ -17,7 +17,7 @@ export const PlantsTabs: React.FC<PlantsTabsProps> = () => {
 
   if (possibleDeck.length) {
     panes.push({
-      menuItem: `Deck (${deckCount})`,
+      menuItem: map.name === 'China' ? 'Deck' : `Deck (${deckCount})`,
       render: () => <PlantList plants={possibleDeck} />
     })
   }
