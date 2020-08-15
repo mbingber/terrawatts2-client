@@ -12,7 +12,7 @@ export const PlantMarket: React.FC<PlantMarketProps> = () => {
   const { plantCart } = React.useContext(CartsContext);
   const actionOnMe = useActionOnMe(ActionType.PUT_UP_PLANT);
   const auctionPlantInstanceId = game.auction && game.auction.plant.id;
-  const isAvailable = (idx: number) => (game.plantMarket.length - idx) < 5 || game.era === 3;
+  const isAvailable = (idx: number) => (game.plantMarket.length - idx) < 5 || game.era === 3 || game.map.name === 'China';
 
   const handlePlantClick = (plantInstance: Game_plantMarket, idx: number) => () => {
     if (actionOnMe && isAvailable(idx)) {

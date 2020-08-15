@@ -31,6 +31,11 @@ const configs: Record<string, MapConfig> = {
     center: [61.4, 20],
     minZoom: 5,
     maxZoom: 10,
+  },
+  China: {
+    center: [35.9, 104.2],
+    minZoom: 4.5,
+    maxZoom: 6.5,
   }
 };
 

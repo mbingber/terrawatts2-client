@@ -49,7 +49,7 @@ export const Home: React.FC = () => {
 
   const [selectedMap, setSelectedMap] = React.useState("USA");
 
-  const mapDropdownOptions = ["USA", "Germany", "Italy", "Seattle", "Northern Europe"]
+  const mapDropdownOptions = ["USA", "Germany", "Italy", "Seattle", "Northern Europe", "China"]
     .map(mapName => ({
       key: mapName,
       value: mapName,
