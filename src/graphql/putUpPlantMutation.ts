@@ -1,13 +1,13 @@
 import gql from "graphql-tag";
-import { GameFragment } from "./gameFragment";
+import { GameStateFragment } from "./gameStateFragment";
 
 export const PUT_UP_PLANT_MUTATION = gql`
-  mutation PutUpPlant($gameId: ID!, $plantInstanceId: Int, $bid: Int) {
-    putUpPlant(gameId: $gameId, plantInstanceId: $plantInstanceId, bid: $bid) {
-      ...Game
+  mutation PutUpPlant($gameId: ID!, $plantId: String, $bid: Int) {
+    putUpPlant(gameId: $gameId, plantId: $plantId, bid: $bid) {
+      ...GameState
     }
   }
 
   # Fragments
-  ${GameFragment}
+  ${GameStateFragment}
 `;

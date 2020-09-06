@@ -10,17 +10,17 @@ import { CityIcon, Arrow } from "./cities/CityIcon";
 interface SummaryBarProps {}
 
 export const SummaryBar: React.FC<SummaryBarProps> = () => {
-  const { era, turn, phase, era2Start, gameEnd } = useGame();
+  const { state, era2Start, gameEnd } = useGame();
 
-  const phaseText = `${phase[0]}${phase.slice(1).toLowerCase()}`;
+  const phaseText = `${state.info.phase[0]}${state.info.phase.slice(1).toLowerCase()}`;
 
   const { data } = useQuery<GetRevenues>(GET_REVENUES_QUERY);
   const revenues = data && data.getRevenues ? data.getRevenues.slice(0, -1) : [];
   
   return (
     <Container>
-      <div>Era {era}</div>
-      <div>Turn {turn}</div>
+      <div>Era {state.info.era}</div>
+      <div>Turn {state.info.turn}</div>
       <div>{phaseText} Phase</div>
       <div>Era 2 start: {era2Start} <CityIcon color="black" height={16} empty /></div>
       <div>Game end: {gameEnd} <CityIcon color="black" height={16} empty /></div>

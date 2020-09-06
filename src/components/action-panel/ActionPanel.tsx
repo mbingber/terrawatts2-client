@@ -15,35 +15,35 @@ import { CartsContext } from "../CartsContext";
 interface ActionPanelProps {}
 
 export const ActionPanel: React.FC<ActionPanelProps> = () => {
-  const game = useGame();
-  const actionOnMe = useActionOnMe(game.actionType);
+  const { state: { info: { actionType } } } = useGame();
+  const actionOnMe = useActionOnMe(actionType);
   const carts = React.useContext(CartsContext);
 
-  if (!actionOnMe && game.actionType !== ActionType.BID_ON_PLANT) {
+  if (!actionOnMe && actionType !== ActionType.BID_ON_PLANT) {
     return (<Container><WaitingPanel /></Container>);
   }
 
-  if (game.actionType === ActionType.PUT_UP_PLANT) {
+  if (actionType === ActionType.PUT_UP_PLANT) {
     return (<Container><PutUpPlantPanel plantCart={carts.plantCart} /></Container>);
   }
   
-  if (game.actionType === ActionType.BID_ON_PLANT) {
+  if (actionType === ActionType.BID_ON_PLANT) {
     return (<Container><AuctionPanel /></Container>);
   }
 
-  if (game.actionType === ActionType.DISCARD_PLANT) {
+  if (actionType === ActionType.DISCARD_PLANT) {
     return (<Container><DiscardPlantPanel discardCart={carts.discardCart} /></Container>)
   }
   
-  if (game.actionType === ActionType.BUY_RESOURCES) {
+  if (actionType === ActionType.BUY_RESOURCES) {
     return (<Container><BuyResourcesPanel resourceCart={carts.resourceCart} /></Container>);
   }
 
-  if (game.actionType === ActionType.BUY_CITIES) {
+  if (actionType === ActionType.BUY_CITIES) {
     return (<Container><BuyCitiesPanel cityCart={carts.cityCart} /></Container>);
   }
 
-  if (game.actionType === ActionType.POWER_UP) {
+  if (actionType === ActionType.POWER_UP) {
     return (<Container><PowerUpPanel powerCart={carts.powerCart} /></Container>);
   }
 

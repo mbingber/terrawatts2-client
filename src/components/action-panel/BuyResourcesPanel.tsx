@@ -13,7 +13,7 @@ interface BuyResourcesPanelProps {
 }
 
 export const BuyResourcesPanel: React.FC<BuyResourcesPanelProps> = ({ resourceCart }) => {
-  const { resourceMarket, id } = useGame();
+  const { state: { resourceMarket }, id } = useGame();
   
   const [buyResources, { loading }] = useGameMutation<BuyResources, BuyResourcesVariables>(BUY_RESOURCES_MUTATION);
 

@@ -22,8 +22,8 @@ export const Home: React.FC = () => {
 
   const [startGame, { loading: gameLoading }] = useMutation<CreateGame, CreateGameVariables>(CREATE_GAME_MUTATION, {
     onCompleted: (data) => {
-      if (data && data.createGame && data.createGame.id) {
-        history.push(`/game/${data.createGame.id}`);
+      if (data && data.createGame) {
+        history.push(`/game/${data.createGame}`);
       }
     }
   });

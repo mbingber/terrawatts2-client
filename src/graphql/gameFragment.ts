@@ -1,136 +1,49 @@
 import gql from "graphql-tag";
-import { PlantFragment } from "./plantFragment";
+import { ResourcesFragment } from "./resourcesFragment";
+import { GameStateFragment } from "./gameStateFragment";
 
 export const GameFragment = gql`
   fragment Game on Game {
     id
-    actionType
     map {
+      id
       name
+      cities {
+        id
+        name
+        lat
+        lng
+        region
+      }
+      connections {
+        id
+        cost
+        cities {
+          id
+        }
+      }
     }
     regions
-    turn
-    era
-    phase
-    playerOrder {
-      id
-      clockwiseOrder
-      user {
-        id
-        username
-        we
-      }
-      color
-      money
-      resources {
-        coal
-        oil
-        trash
-        uranium
-      }
-      plants {
-        id
-        plant {
-          ...Plant
-        }
-      }
-    }
-    activePlayer {
-      id
-    }
-    deckCount
-    plantMarket {
-      id
-      plant {
-        ...Plant
-      }
-    }
-    discardedPlants {
-      id
-      plant {
-        ...Plant
-      }
-    }
-    era3Plants {
-      id
-      plant {
-        ...Plant
-      }
-    }
-    possibleDeck {
-      id
-      plant {
-        ...Plant
-      }
-    }
-    cities {
-      id
-      city {
-        id
-      }
-      players {
-        id
-      }
-    }
-    resourceMarket {
-      coal
-      oil
-      trash
-      uranium
-    }
-    auction {
-      id
-      plant {
-        id
-        plant {
-          ...Plant
-        }
-      }
-      bid
-      leadingPlayer {
-        id
-      }
-      activePlayer {
-        id
-      }
-      passedPlayers {
-        id
-      }
-    }
-    plantPhaseEvents {
-      player {
-        id
-      }
-      plant {
-        plant {
-          rank
-        }
-      }
-    }
-    plantRankBought
-    era2Start
-    gameEnd
     restockRates {
       era1 {
-        coal
-        oil
-        trash
-        uranium
+        ...Resources
       }
       era2 {
-        coal
-        oil
-        trash
-        uranium
+        ...Resources
       }
       era3 {
-        coal
-        oil
-        trash
-        uranium
+        ...Resources
       }
+    }
+    era2Start
+    gameEnd
+    cityCostHelper
+    state {
+      ...GameState
     }
   }
 
-  ${PlantFragment}
+  # Fragments
+  ${ResourcesFragment}
+  ${GameStateFragment}
 `;

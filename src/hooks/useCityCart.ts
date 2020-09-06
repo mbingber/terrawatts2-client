@@ -3,10 +3,9 @@ import { useGame } from "./useGame";
 import { useMe } from "./useMe";
 import { Phase } from "../generatedTypes";
 import { calculateCityCost } from "../logic/cities";
-import { useCityCostHelper } from "./useCityCostHelper";
 
 export interface CityCart {
-  cityInstanceIds: string[];
+  cityIds: string[];
   addToCart: (id: string) => void;
   removeFromCart: (id: string) => void;
   clearCart: () => void;
@@ -17,41 +16,39 @@ export interface CityCart {
 // only call this once, pass stuff down as props
 // TODO: do this through apollo client
 export const useCityCart = (): CityCart => {
-  const game = useGame();
-  const me = useMe();
-  const costHelper = useCityCostHelper();
-  
-  const [cityInstanceIds, setCityCart] = useState<string[]>([]);
+  const { state, cityCostHelper } = useGame();
+  const me = useMe();  
+  const [cityIds, setCityCart] = useState<string[]>([]);
 
   const addToCart = (id: string): void => {
-    if (!me || game.phase === Phase.POWER) {
+    if (!me || state.info.phase === Phase.POWER) {
       return;
     }
 
-    const myTurnOrder = game.playerOrder.findIndex((p) => p.id === me.id);
-    const activeTurnOrder = game.playerOrder.findIndex((p) => p.id === game.activePlayer.id);
+    const myTurnOrder = state.playerOrder.findIndex((p) => p.username === me.username);
+    const activeTurnOrder = state.playerOrder.findIndex((p) => p.username === state.info.activeUser);
 
-    if (game.phase === Phase.CITY && myTurnOrder > activeTurnOrder) {
+    if (state.info.phase === Phase.CITY && myTurnOrder > activeTurnOrder) {
       return;
     }
 
-    const cityInstance = game.cities.find((ci) => ci.id === id);
+    const cityInstance = state.cityList.find((ci) => ci.cityId === id);
 
-    if (cityInstance.players.length >= game.era) {
+    if (cityInstance.occupants.length >= state.info.era) {
       return;
     }
 
-    if (cityInstance.players.some((p) => p.id === me.id)) {
+    if (cityInstance.occupants.some((p) => p === me.username)) {
       return;
     }
     
-    setCityCart([...cityInstanceIds, id]);
+    setCityCart([...cityIds, id]);
   }
 
-  const removeFromCart = (id: string): void => setCityCart(cityInstanceIds.filter((cartId) => cartId !== id));
+  const removeFromCart = (id: string): void => setCityCart(cityIds.filter((cartId) => cartId !== id));
 
   const toggleInCart = (id: string): void => {
-    if (cityInstanceIds.includes(id)) {
+    if (cityIds.includes(id)) {
       removeFromCart(id);
     } else {
       addToCart(id);
@@ -60,25 +57,25 @@ export const useCityCart = (): CityCart => {
 
   const clearCart = (): void => setCityCart([]);
 
-  const cost = calculateCityCost(game, me, cityInstanceIds, costHelper);
+  const cost = calculateCityCost(state, me, cityIds, JSON.parse(cityCostHelper));
 
   useEffect(() => {
     // if cities get bought by someone else, we might need to remove it from the cart
-    if (game.phase === Phase.CITY) {
-      const citiesToRemove = cityInstanceIds.reduce<Record<string, boolean>>((acc, id) => {
-        const cityInstance = game.cities.find((ci) => ci.id === id);
-        if (cityInstance.players.length >= game.era) {
+    if (state.info.phase === Phase.CITY) {
+      const citiesToRemove = cityIds.reduce<Record<string, boolean>>((acc, id) => {
+        const cityInstance = state.cityList.find((ci) => ci.cityId === id);
+        if (cityInstance.occupants.length >= state.info.era) {
           acc[id] = true;
         }
         return acc;
       }, {});
 
-      setCityCart(cityInstanceIds.filter(id => !citiesToRemove[id]));
+      setCityCart(cityIds.filter(id => !citiesToRemove[id]));
     }
-  }, [game]);
+  }, [state]);
 
   return {
-    cityInstanceIds,
+    cityIds,
     addToCart,
     removeFromCart,
     toggleInCart,

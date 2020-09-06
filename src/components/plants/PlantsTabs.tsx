@@ -4,11 +4,13 @@ import { Tab } from "semantic-ui-react";
 import { useGame } from "../../hooks/useGame";
 import { PlantMarket } from "./PlantMarket";
 import { PlantList } from "./PlantList";
+import { usePlantGetter } from "../../hooks/usePlantGetter";
 
 interface PlantsTabsProps {}
 
 export const PlantsTabs: React.FC<PlantsTabsProps> = () => {
-  const { deckCount, discardedPlants, era3Plants, possibleDeck, map } = useGame();
+  const { state: { deckCount, discardedPlants, era3Plants, possibleDeck }, map } = useGame();
+  const getPlant = usePlantGetter();
 
   const panes = [{
     menuItem: "Market",
@@ -18,21 +20,21 @@ export const PlantsTabs: React.FC<PlantsTabsProps> = () => {
   if (possibleDeck.length) {
     panes.push({
       menuItem: map.name === 'China' ? 'Deck' : `Deck (${deckCount})`,
-      render: () => <PlantList plants={possibleDeck} />
+      render: () => <PlantList plants={possibleDeck.map(getPlant)} />
     })
   }
 
   if (era3Plants.length) {
     panes.push({
       menuItem: "Era 3",
-      render: () => <PlantList plants={era3Plants} />
+      render: () => <PlantList plants={era3Plants.map(getPlant)} />
     })
   }
 
   if (discardedPlants.length) {
     panes.push({
       menuItem: "Discard",
-      render: () => <PlantList plants={discardedPlants} />
+      render: () => <PlantList plants={discardedPlants.map(getPlant)} />
     })
   };
   

@@ -1,16 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { renderToString } from "react-dom/server";
-import { Game_cities, FetchMap_fetchMap_cities, Game_playerOrder, Color } from "../../generatedTypes";
+import { FetchMap_fetchMap_cities, Color } from "../../generatedTypes";
 import { Marker } from "react-leaflet";
 import { divIcon } from "leaflet";
 import { CityIcon } from "./CityIcon";
 import { playerColors } from "../../constants";
 
 interface CityMarkerProps {
-  cityInstance: Game_cities;
   city: FetchMap_fetchMap_cities;
-  players: Game_playerOrder[];
+  colors: Color[];
   era: number;
   isSelected: boolean;
   selectedColor: Color;
@@ -19,13 +18,16 @@ interface CityMarkerProps {
   hasNuclearPower: boolean;
 }
 
-export const CityMarker: React.FC<CityMarkerProps> = ({ cityInstance, city, players, era, isSelected, selectedColor, onClick, tempPositions, hasNuclearPower }) => {
-  const colors = cityInstance.players
-    .map((player) => (
-      players.find((p) => p.id === player.id)
-    ))
-    .map(p => p ? p.color : Color.BLACK);
-
+export const CityMarker: React.FC<CityMarkerProps> = ({
+  city,
+  colors,
+  era,
+  isSelected,
+  selectedColor,
+  onClick,
+  tempPositions,
+  hasNuclearPower,
+}) => {
   const iconHtml = renderToString(<City
     city={city}
     era={era}
@@ -41,7 +43,7 @@ export const CityMarker: React.FC<CityMarkerProps> = ({ cityInstance, city, play
     <Marker
       position={position}
       onClick={onClick}
-      icon={divIcon({iconSize: [60, 30], className: `city-icon-${cityInstance.id}`, html: iconHtml })}
+      icon={divIcon({iconSize: [60, 30], className: `city-icon-${city.id}`, html: iconHtml })}
     />
   );
 }

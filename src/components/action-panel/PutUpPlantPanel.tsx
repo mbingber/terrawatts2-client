@@ -14,7 +14,7 @@ interface PutUpPlantPanelProps {
 }
 
 export const PutUpPlantPanel: React.FC<PutUpPlantPanelProps> = ({ plantCart }) => {
-  const { selectedPlantInstance } = plantCart;
+  const { selectedPlant } = plantCart;
 
   const game = useGame();
   const me = useMe();
@@ -24,8 +24,8 @@ export const PutUpPlantPanel: React.FC<PutUpPlantPanelProps> = ({ plantCart }) =
   const [bid, setBid] = React.useState<number>(null);
 
   React.useEffect(() => {
-    setBid(plantCart.selectedPlantInstance && plantCart.selectedPlantInstance.plant.rank);
-  }, [plantCart.selectedPlantInstance]);
+    setBid(plantCart.selectedPlant && plantCart.selectedPlant.rank);
+  }, [plantCart.selectedPlant]);
 
   const handleBidChange = (e: React.ChangeEvent) => {
     const newBid = Number((e.target as HTMLInputElement).value);
@@ -35,14 +35,14 @@ export const PutUpPlantPanel: React.FC<PutUpPlantPanelProps> = ({ plantCart }) =
   const handleSubmit = (isPass: boolean = false) => {
     const plantInstanceId = isPass ?
       null :
-      (plantCart.selectedPlantInstance && plantCart.selectedPlantInstance.id);
+      (plantCart.selectedPlant && plantCart.selectedPlant.id);
 
     setIsPass(isPass);
     
     putUpPlant({
       variables: {
         gameId: game.id,
-        plantInstanceId: +plantInstanceId,
+        plantId: selectedPlant.id,
         bid: isPass ? null : Math.ceil(bid)
       }
     });
@@ -51,25 +51,25 @@ export const PutUpPlantPanel: React.FC<PutUpPlantPanelProps> = ({ plantCart }) =
   return (
     <Container>
       <div className="heading">Choose a power plant</div>
-      {selectedPlantInstance ? (
-        <PlantCard {...selectedPlantInstance.plant} height={32} we={me.user.we} />
+      {selectedPlant ? (
+        <PlantCard {...selectedPlant} height={32} />
       ) : (
         <PlantFrame />
       )}
       <div className="bid">
-        {selectedPlantInstance && (
+        {selectedPlant && (
           <React.Fragment>
             <Button
               primary
-              disabled={bid < plantCart.selectedPlantInstance.plant.rank || bid > me.money || loading}
+              disabled={bid < plantCart.selectedPlant.rank || bid > me.money || loading}
               loading={loading && !isPassState}
               onClick={() => handleSubmit()}
             >Bid</Button>
-            <Input type="number" onChange={handleBidChange} value={bid || ""} min={plantCart.selectedPlantInstance.plant.rank} step={1} />
+            <Input type="number" onChange={handleBidChange} value={bid || ""} min={plantCart.selectedPlant.rank} step={1} />
           </React.Fragment>
         )}
       </div>
-      {game.turn > 1 && (
+      {game.state.info.turn > 1 && (
         <div className="pass">
           <Button
             secondary

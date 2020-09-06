@@ -16,12 +16,12 @@ const actionTypeToText: Record<ActionType, string> = {
 };
 
 export const WaitingPanel: React.FC<WaitingPanelProps> = () => {
-  const game = useGame();
+  const { state: { playerOrder, info } } = useGame();
 
-  const { user: { username }, color } = game.playerOrder
-    .find((player) => player.id === game.activePlayer.id);
+  const { username, color } = playerOrder
+    .find((player) => player.username === info.activeUser);
 
-  const text = `${username} ${actionTypeToText[game.actionType]}`;
+  const text = `${username} ${actionTypeToText[info.actionType]}`;
   
   return (
     <Container color={color}>
