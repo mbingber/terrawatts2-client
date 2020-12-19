@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Segment, Header, Input, Icon, Button, Card, Dropdown } from "semantic-ui-react";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/client";
 import { GET_ONLINE_USERNAMES_QUERY } from "../../graphql/getOnlineUsernamesQuery";
 import { GetOnlineUsernames, GetCurrentUser, CreateGame, CreateGameVariables, GetMyRecentGames } from "../../generatedTypes";
 import { GET_CURRENT_USER_QUERY } from "../../graphql/getCurrentUser";

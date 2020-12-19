@@ -15,6 +15,7 @@ export const useGameState = () => {
       document: GAME_STATE_SUBSCRIPTION,
       variables: { gameId },
       updateQuery: (prev, { subscriptionData }) => {
+        console.log("UPDATING", subscriptionData);
         if (
           !subscriptionData ||
           !subscriptionData.data ||

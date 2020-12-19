@@ -4,7 +4,7 @@ import { PowerCart } from "../../hooks/usePowerCart";
 import { useGame } from "../../hooks/useGame";
 import { useMe } from "../../hooks/useMe";
 import { CityIcon, Arrow } from "../cities/CityIcon";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { GET_REVENUES_QUERY } from "../../graphql/getRevenuesQuery";
 import { GetRevenues, PlantResourceType, PowerUp, PowerUpVariables } from "../../generatedTypes";
 import { getNumCitiesPowered, hasEnoughResources, getHybridChoices } from "../../logic/power";

@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { GetGame, GetGameVariables } from "../generatedTypes";
 import { GAME_QUERY } from "../graphql/gameQuery";
 

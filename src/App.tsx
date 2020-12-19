@@ -11,7 +11,7 @@ import { LoginForm } from "./components/auth/Login";
 import { Home } from "./components/home/Home";
 import { Navbar } from "./components/home/Navbar";
 import { Profile } from "./components/home/Profile";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { GetCurrentUser } from "./generatedTypes";
 import { GET_CURRENT_USER_QUERY } from "./graphql/getCurrentUser";
 

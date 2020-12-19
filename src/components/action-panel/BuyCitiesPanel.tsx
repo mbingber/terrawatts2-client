@@ -14,7 +14,7 @@ interface BuyCitiesPanelProps {
 }
 
 export const BuyCitiesPanel: React.FC<BuyCitiesPanelProps> = ({ cityCart }) => {
-  const { map, state: { cityList }, id } = useGame();
+  const { map, id } = useGame();
   const me = useMe();
   const actionOnMe = useActionOnMe(ActionType.BUY_CITIES);
   const [buyCities, { loading }] = useGameMutation<BuyCities, BuyCitiesVariables>(BUY_CITIES_MUTATION, cityCart.clearCart);

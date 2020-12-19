@@ -1,17 +1,13 @@
-import { split } from 'apollo-link';
-import { HttpLink } from 'apollo-link-http';
-import { setContext } from 'apollo-link-context';
-import { WebSocketLink } from 'apollo-link-ws';
-import { getMainDefinition } from 'apollo-utilities';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloClient } from 'apollo-client';
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { getMainDefinition } from '@apollo/client/utilities';
+import { ApolloClient, split, HttpLink, InMemoryCache } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 import Cookies from "js-cookie";
 
 const isProd = process.env.NODE_ENV === "production";
 
-const url = isProd ? "terrawatts2-server.herokuapp.com" : "localhost:4000"
+const url = isProd ? "terrawatts2-server.herokuapp.com" : "192.168.1.6:4000"
 
-const cache = new InMemoryCache();
 
 // Create an http link:
 const httpLink = new HttpLink({
@@ -54,6 +50,6 @@ const link = split(
 );
 
 export const client = new ApolloClient({
-  cache,
-  link
+  link,
+  cache: new InMemoryCache(),
 });

@@ -4,7 +4,7 @@ import { resourceColors } from '../../constants';
 import { ResourceIcon } from '../resources/ResourceIcon';
 import { PlantResourceType, GetCurrentUser } from '../../generatedTypes';
 import { CityIcon } from '../cities/CityIcon';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import { GET_CURRENT_USER_QUERY } from '../../graphql/getCurrentUser';
 
 const ASPECT_RATIO = 3;
@@ -22,7 +22,7 @@ interface PlantCardProps {
 
 export const PlantCard: React.FC<PlantCardProps> = (props) => {
   const { data } = useQuery<GetCurrentUser>(GET_CURRENT_USER_QUERY);
-  const { we } = data.getCurrentUser;
+  const we = data && data.getCurrentUser && data.getCurrentUser.we;
   
   const rankDisplay = props.rank > 9 ? props.rank : ('0' + props.rank).slice(-2);
 

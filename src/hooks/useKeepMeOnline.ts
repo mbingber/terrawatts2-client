@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { useEffect } from "react";
 import { KEEP_ME_ONLINE_MUTATION } from "../graphql/keepMeOnlineMutation";
 import { KeepMeOnline } from "../generatedTypes";

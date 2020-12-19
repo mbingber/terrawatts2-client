@@ -43,13 +43,10 @@ export const calculateCityCost = (
   }
 
   const occupancyCost = cart.reduce((acc, purchaseId) => {
-    const numOccupants = state
-      .cityList
-      .find(cityInstance => cityInstance.cityId === purchaseId)
-      .occupants
-      .length;
+    const { occupants = [] } = state.cityList
+      .find(cityInstance => cityInstance.cityId === purchaseId) || {};
 
-    return acc + 10 + 5 * numOccupants;
+    return acc + 10 + 5 * occupants.length;
   }, 0);
 
   return connectionCost + occupancyCost;

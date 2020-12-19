@@ -1,6 +1,6 @@
 import { useGame } from "./useGame";
 import { GetCurrentUser, GameState_playerOrder } from "../generatedTypes";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { GET_CURRENT_USER_QUERY } from "../graphql/getCurrentUser";
 
 export const useMe = (): GameState_playerOrder => {

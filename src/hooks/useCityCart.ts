@@ -32,13 +32,13 @@ export const useCityCart = (): CityCart => {
       return;
     }
 
-    const cityInstance = state.cityList.find((ci) => ci.cityId === id);
+    const { occupants = [] } = state.cityList.find((ci) => ci.cityId === id) || {};
 
-    if (cityInstance.occupants.length >= state.info.era) {
+    if (occupants.length >= state.info.era) {
       return;
     }
 
-    if (cityInstance.occupants.some((p) => p === me.username)) {
+    if (occupants.some((p) => p === me.username)) {
       return;
     }
     
@@ -64,7 +64,7 @@ export const useCityCart = (): CityCart => {
     if (state.info.phase === Phase.CITY) {
       const citiesToRemove = cityIds.reduce<Record<string, boolean>>((acc, id) => {
         const cityInstance = state.cityList.find((ci) => ci.cityId === id);
-        if (cityInstance.occupants.length >= state.info.era) {
+        if (cityInstance && cityInstance.occupants.length >= state.info.era) {
           acc[id] = true;
         }
         return acc;

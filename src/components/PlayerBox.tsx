@@ -32,7 +32,6 @@ export const PlayerBox: React.FC<PlayerBoxProps> = ({ player }) => {
   const plants = player.plantIds ?
     player.plantIds
       .map(getPlant)
-      // .filter((p) => p.rank !== plantRankBought) // TODO
       .sort((a, b) => a.rank - b.rank) :
     [];
   const plantsOrFrames = Array(is2P ? 4 : 3).fill(true).map((_, i) => plants[i] || null);

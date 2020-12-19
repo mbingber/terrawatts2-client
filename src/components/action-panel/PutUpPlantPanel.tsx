@@ -33,7 +33,7 @@ export const PutUpPlantPanel: React.FC<PutUpPlantPanelProps> = ({ plantCart }) =
   }
 
   const handleSubmit = (isPass: boolean = false) => {
-    const plantInstanceId = isPass ?
+    const plantId = isPass ?
       null :
       (plantCart.selectedPlant && plantCart.selectedPlant.id);
 
@@ -42,7 +42,7 @@ export const PutUpPlantPanel: React.FC<PutUpPlantPanelProps> = ({ plantCart }) =
     putUpPlant({
       variables: {
         gameId: game.id,
-        plantId: selectedPlant.id,
+        plantId,
         bid: isPass ? null : Math.ceil(bid)
       }
     });

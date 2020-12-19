@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useGame } from "../hooks/useGame";
 import { Button, Icon, Modal } from "semantic-ui-react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { GetRevenues } from "../generatedTypes";
 import { GET_REVENUES_QUERY } from "../graphql/getRevenuesQuery";
 import { CityIcon, Arrow } from "./cities/CityIcon";

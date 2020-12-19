@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Button, Input } from "semantic-ui-react";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { CreateUser, CreateUserVariables } from "../../generatedTypes";
 import { CREATE_USER_MUTATION } from "../../graphql/createUserMutation";
 import { useLogin } from "./useLogin";

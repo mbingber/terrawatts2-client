@@ -1,5 +1,5 @@
 import React from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { GetPlants, GetPlants_fetchPlants } from "../generatedTypes";
 import { PLANTS_QUERY } from "../graphql/plantsQuery";
 
