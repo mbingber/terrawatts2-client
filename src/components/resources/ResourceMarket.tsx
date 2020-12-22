@@ -8,14 +8,16 @@ import { ActionType } from "../../generatedTypes";
 import { useMe } from "../../hooks/useMe";
 import { hasPlantForResource, canFitOneMoreResource } from "../../logic/resources";
 import { CartsContext } from "../CartsContext";
+import { usePlantGetter } from "../../hooks/usePlantGetter";
 
 interface ResourceMarketProps {}
 
 export const ResourceMarket: React.FC<ResourceMarketProps> = () => {
-  const { resourceMarket, era, restockRates } = useGame();
+  const { state, restockRates } = useGame();
   const { resourceCart } = React.useContext(CartsContext);
   const me = useMe();
   const actionOnMe = useActionOnMe(ActionType.BUY_RESOURCES);
+  const getPlant = usePlantGetter();
 
   const getRatesForResource = (resourceType: ResourceType) => {
     return [restockRates.era1, restockRates.era2, restockRates.era3]
@@ -30,13 +32,13 @@ export const ResourceMarket: React.FC<ResourceMarketProps> = () => {
         <ResourceDial
           key={resourceType}
           resourceType={resourceType}
-          era={era}
-          inStock={resourceMarket[resourceType]}
+          era={state.info.era}
+          inStock={state.resourceMarket[resourceType]}
           restockRates={getRatesForResource(resourceType)}
           inCart={resourceCart.resources[resourceType]}
           setInCart={resourceCart.setResource(resourceType)}
-          showIncrementor={actionOnMe && hasPlantForResource(resourceType, me)}
-          disablePlus={!canFitOneMoreResource(resourceType, me, resourceCart.resources, resourceMarket)}
+          showIncrementor={actionOnMe && hasPlantForResource(resourceType, me, getPlant)}
+          disablePlus={!canFitOneMoreResource(resourceType, me, resourceCart.resources, state.resourceMarket, getPlant)}
         />
       ))}
     </Container>

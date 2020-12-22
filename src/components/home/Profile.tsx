@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/client";
 import { GetCurrentUser, Color, SetUserPreferences, SetUserPreferencesVariables } from "../../generatedTypes";
 import { GET_CURRENT_USER_QUERY } from "../../graphql/getCurrentUser";
 import { Header, Dropdown, Input, Button } from "semantic-ui-react";

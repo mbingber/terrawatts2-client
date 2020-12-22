@@ -1,24 +1,24 @@
-import { Game_plantMarket, Game_cities, ResourcesInput, HybridChoiceInput, PlantResourceType } from "../generatedTypes";
+import { GetPlants_fetchPlants, GameState_cityList, ResourcesInput, HybridChoiceInput, PlantResourceType } from "../generatedTypes";
 
-export const getNumCitiesPowered = (plants: Game_plantMarket[], cities: Game_cities[], meId: string): number => {
+export const getNumCitiesPowered = (plants: GetPlants_fetchPlants[], cities: GameState_cityList[], myName: string): number => {
   const powerCapacity = plants.reduce<number>((acc, plant) => {
-    return acc + plant.plant.numCities;
+    return acc + plant.numCities;
   }, 0);
 
   const numCities = cities.filter((cityInstance) => (
-    cityInstance.players.some((p) => p.id === meId)
+    cityInstance.occupants.some((p) => p === myName)
   )).length;
 
   return Math.min(powerCapacity, numCities);
 }
 
 export const hasEnoughResources = (
-  plants: Game_plantMarket[],
+  plants: GetPlants_fetchPlants[],
   resources: ResourcesInput
 ): boolean => {
   const resourcesNeeded = plants
-    .reduce<Partial<Record<PlantResourceType, number>>>((acc, plantInstance) => {
-      const { resourceType, resourceBurn } = plantInstance.plant;
+    .reduce<Partial<Record<PlantResourceType, number>>>((acc, plant) => {
+      const { resourceType, resourceBurn } = plant;
 
       if (resourceType !== PlantResourceType.WIND) {
         acc[resourceType] = acc[resourceType] || 0;
@@ -53,7 +53,7 @@ export const hasEnoughResources = (
 }
 
 export const getHybridChoices = (
-  plants: Game_plantMarket[],
+  plants: GetPlants_fetchPlants[],
   resources: ResourcesInput
 ): HybridChoiceInput[] => {
   let myCoal = resources.coal;
@@ -61,16 +61,16 @@ export const getHybridChoices = (
   let hybridNeeded = 0;
 
   plants.forEach((plant) => {
-    if (plant.plant.resourceType === PlantResourceType.COAL) {
-      myCoal -= plant.plant.resourceBurn;
+    if (plant.resourceType === PlantResourceType.COAL) {
+      myCoal -= plant.resourceBurn;
     }
 
-    if (plant.plant.resourceType === PlantResourceType.OIL) {
-      myOil -= plant.plant.resourceBurn;
+    if (plant.resourceType === PlantResourceType.OIL) {
+      myOil -= plant.resourceBurn;
     }
 
-    if (plant.plant.resourceType === PlantResourceType.HYBRID) {
-      hybridNeeded += plant.plant.resourceBurn;
+    if (plant.resourceType === PlantResourceType.HYBRID) {
+      hybridNeeded += plant.resourceBurn;
     }
   });
 

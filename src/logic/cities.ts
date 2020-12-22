@@ -1,25 +1,21 @@
-import { Game, Game_playerOrder } from "../generatedTypes";
+import { GameState, GameState_playerOrder } from "../generatedTypes";
 
 export const calculateCityCost = (
-  game: Game,
-  me: Game_playerOrder,
+  state: GameState,
+  me: GameState_playerOrder,
   cart: string[],
   costHelper: Record<number, Record<number, number>>
 ): number => {
   if (!costHelper || !me) {
     return null;
   }
-
-  const purchaseIds = cart.map((cityInstanceId) => {
-    return game.cities.find((c) => c.id === cityInstanceId).city.id;
-  });
   
-  let remainingPurchaseIds = purchaseIds.slice();
+  let remainingPurchaseIds = cart.slice();
 
-  const network: string[] = game.cities
+  const network: string[] = state.cityList
     .filter((cityInstance) =>
-      cityInstance.players.some(p => p.id === me.id)
-    ).map((cityInstance) => cityInstance.city.id);
+      cityInstance.occupants.some(p => p === me.username)
+    ).map((cityInstance) => cityInstance.cityId);
 
   let connectionCost = 0;
   while (remainingPurchaseIds.length > 0) {
@@ -46,14 +42,11 @@ export const calculateCityCost = (
     remainingPurchaseIds = remainingPurchaseIds.filter(id => id !== cheapestPurchaseId);
   }
 
-  const occupancyCost = purchaseIds.reduce((acc, purchaseId) => {
-    const numOccupants = game
-      .cities
-      .find(cityInstance => cityInstance.city.id === purchaseId)
-      .players
-      .length;
+  const occupancyCost = cart.reduce((acc, purchaseId) => {
+    const { occupants = [] } = state.cityList
+      .find(cityInstance => cityInstance.cityId === purchaseId) || {};
 
-    return acc + 10 + 5 * numOccupants;
+    return acc + 10 + 5 * occupants.length;
   }, 0);
 
   return connectionCost + occupancyCost;

@@ -1,24 +1,24 @@
 import { useState, useEffect } from "react";
-import { Game_plantMarket } from "../generatedTypes";
+import { GetPlants_fetchPlants } from "../generatedTypes";
 import { useGame } from "./useGame";
 
 export interface PowerCart {
-  plants: Game_plantMarket[];
-  togglePlant: (plant: Game_plantMarket) => void;
+  plants: GetPlants_fetchPlants[];
+  togglePlant: (plant: GetPlants_fetchPlants) => void;
 }
 
 export const usePowerCart = (): PowerCart => {
-  const game = useGame();
-  const [plants, setPlants] = useState<Game_plantMarket[]>([]);
+  const { state } = useGame();
+  const [plants, setPlants] = useState<GetPlants_fetchPlants[]>([]);
 
   useEffect(() => {
     setPlants([]);
-  }, [game && game.actionType]);
+  }, [state.info.actionType]);
 
-  const addPlant = (plant: Game_plantMarket) => setPlants([...plants, plant]);
-  const removePlant = (plant: Game_plantMarket) => setPlants(plants.filter(p => p.id !== plant.id));
+  const addPlant = (plant: GetPlants_fetchPlants) => setPlants([...plants, plant]);
+  const removePlant = (plant: GetPlants_fetchPlants) => setPlants(plants.filter(p => p.id !== plant.id));
 
-  const togglePlant = (plant: Game_plantMarket) => {
+  const togglePlant = (plant: GetPlants_fetchPlants) => {
     if (plants.some(p => p.id === plant.id)) {
       removePlant(plant);
     } else {

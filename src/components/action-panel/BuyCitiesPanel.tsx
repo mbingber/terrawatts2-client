@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useGame } from "../../hooks/useGame";
-import { useMapData } from "../../hooks/useMapData";
-import { FetchMap_fetchMap_cities, ActionType, BuyCities, BuyCitiesVariables } from "../../generatedTypes";
+import { ActionType, BuyCities, BuyCitiesVariables, Game_map_cities } from "../../generatedTypes";
 import { useActionOnMe } from "../../hooks/useActionOnMe";
 import { useMe } from "../../hooks/useMe";
 import { useGameMutation } from "../../hooks/useGameMutation";
@@ -15,32 +14,21 @@ interface BuyCitiesPanelProps {
 }
 
 export const BuyCitiesPanel: React.FC<BuyCitiesPanelProps> = ({ cityCart }) => {
-  const { data } = useMapData();
-  const game = useGame();
+  const { map, id } = useGame();
   const me = useMe();
   const actionOnMe = useActionOnMe(ActionType.BUY_CITIES);
   const [buyCities, { loading }] = useGameMutation<BuyCities, BuyCitiesVariables>(BUY_CITIES_MUTATION, cityCart.clearCart);
 
-  const cities = (data && data.fetchMap && data.fetchMap.cities) || [];
-  const cityInstances = (game && game.cities) || [];
+  const cities = map.cities || [];
 
   const cityLookup = React.useMemo(() => {
-    return cities.reduce<Record<string, FetchMap_fetchMap_cities>>((acc, city) => {
+    return cities.reduce<Record<string, Game_map_cities>>((acc, city) => {
       acc[city.id] = city;
       return acc;
     }, {});
   }, [cities]);
 
-  const cityInstanceToName = React.useMemo(() => {
-    return cityInstances.reduce<Record<string, string>>((acc, cityInstance) => {
-      if (cityLookup[cityInstance.city.id]) {
-        acc[cityInstance.id] = cityLookup[cityInstance.city.id].name;
-      }
-      return acc;
-    }, {});
-  }, [cities, cityInstances]);
-
-  const cityNames = cityCart.cityInstanceIds.map((id) => cityInstanceToName[id]);
+  const cityNames = cityCart.cityIds.map((id) => cityLookup[id].name);
 
   const displayedCost = cityCart.cost === null ? "--" : `$${cityCart.cost}`;
 
@@ -49,8 +37,8 @@ export const BuyCitiesPanel: React.FC<BuyCitiesPanelProps> = ({ cityCart }) => {
   const handleSubmit = () => {
     buyCities({
       variables: {
-        gameId: game.id,
-        cityInstanceIds: cityCart.cityInstanceIds,
+        gameId: id,
+        cityIds: cityCart.cityIds,
         cost: cityCart.cost
       }
     })

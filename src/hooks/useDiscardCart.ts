@@ -1,23 +1,21 @@
 import { useState, useEffect } from "react";
-import { Game_plantMarket } from "../generatedTypes";
 import { useGame } from "./useGame";
+import { GetPlants_fetchPlants } from "../generatedTypes";
 
 export interface DiscardCart {
-  selectedPlant: Game_plantMarket;
-  togglePlant: (plant: Game_plantMarket) => void;
+  selectedPlant: GetPlants_fetchPlants;
+  togglePlant: (plant: GetPlants_fetchPlants) => void;
 }
 
 export const useDiscardCart = (): DiscardCart => {
-  const game = useGame();
-  const [selectedPlant, setSelectedPlant] = useState<Game_plantMarket>(null);
-
-  const actionType = game && game.actionType;
+  const { state } = useGame();
+  const [selectedPlant, setSelectedPlant] = useState<GetPlants_fetchPlants>(null);
 
   useEffect(() => {
     setSelectedPlant(null);
-  }, [actionType]);
+  }, [state.info.actionType]);
 
-  const togglePlant = (plant: Game_plantMarket) => {
+  const togglePlant = (plant: GetPlants_fetchPlants) => {
     if (selectedPlant && plant.id === selectedPlant.id) {
       setSelectedPlant(null);
     } else {

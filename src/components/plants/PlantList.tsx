@@ -1,15 +1,14 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { PlantCard } from "./PlantCard";
-import { useMe } from "../../hooks/useMe";
-import { Game_plantMarket } from "../../generatedTypes";
+import { GetPlants_fetchPlants, GetCurrentUser } from "../../generatedTypes";
 
 interface PlantListProps {
-  plants: Game_plantMarket[];
-  emptyPlantInstanceIds?: string[];
+  plants: GetPlants_fetchPlants[];
+  emptyPlantIds?: string[];
   isAvailable?: (idx: number) => boolean;
   hoverable?: boolean;
-  handlePlantClick?: (plant: Game_plantMarket, index: number) => () => void;
+  handlePlantClick?: (plant: GetPlants_fetchPlants, index: number) => () => void;
 }
 
 export const PlantList: React.FC<PlantListProps> = ({
@@ -17,26 +16,24 @@ export const PlantList: React.FC<PlantListProps> = ({
   isAvailable = () => true,
   hoverable = false,
   handlePlantClick = () => () => null,
-  emptyPlantInstanceIds = [],
+  emptyPlantIds = [],
 }) => {
-  const me = useMe();
-
   const height = 36;
 
   return (
     <Container>
       <Plants>
-        {plants.map((plantInstance, idx) => (
+        {plants.map((plant, idx) => (
           <PlantContainer
             available={isAvailable(idx)}
             hoverable={hoverable} 
-            key={plantInstance.id}
-            onClick={handlePlantClick(plantInstance, idx)}
+            key={plant.id}
+            onClick={handlePlantClick(plant, idx)}
           >
-            {emptyPlantInstanceIds.includes(plantInstance.id) ? (
+            {emptyPlantIds.includes(plant.id) ? (
               <PlantFrame height={height} />
             ) : (
-              <PlantCard {...plantInstance.plant} height={height} we={me && me.user.we} />
+              <PlantCard {...plant} height={height} />
             )}
           </PlantContainer>
         ))}

@@ -3,11 +3,10 @@ import styled from "styled-components";
 import { Map as ReactLeaflet, TileLayer } from "react-leaflet";
 
 import "leaflet/dist/leaflet.css";
-import { FetchMap_fetchMap_cities } from "../../generatedTypes";
+import { FetchMap_fetchMap_cities, Color } from "../../generatedTypes";
 import { Connections } from "./Connections";
 import { useGame } from "../../hooks/useGame";
 import { CityMarker } from "./CityMarker";
-import { useMapData } from "../../hooks/useMapData";
 import { useMe } from "../../hooks/useMe";
 import { getMapConfig } from "./mapConfig";
 import { CartsContext } from "../CartsContext";
@@ -23,30 +22,28 @@ const tempPositions: Record<string, [number, number]> = {
 };
 
 export const GameMap: React.FC<MapProps> = () => {
-  const game = useGame();
+  const { state: { cityList, playerOrder, info }, map } = useGame();
   const me = useMe();
   const { cityCart } = React.useContext(CartsContext);
   
-  const { data } = useMapData();
-
   const cityLookup = React.useMemo(() => {
-    const { cities = [] } = data ? data.fetchMap : {};
-    return cities.reduce<Record<string, FetchMap_fetchMap_cities>>((acc, city) => {
+    return map.cities.reduce<Record<string, FetchMap_fetchMap_cities>>((acc, city) => {
       acc[city.id] = city;
       return acc;
     }, {});
-  }, [data]);
+  }, [map.cities]);
 
-  if (
-    !data ||
-    !data.fetchMap ||
-    !data.fetchMap.connections ||
-    !data.fetchMap.cities
-  ) {
-    return null;
-  }
+  const colorsLookup = React.useMemo(() => {
+    return map.cities.reduce<Record<string, Color[]>>((acc, city) => {
+      const cityInstance = cityList.find(c => c.cityId === city.id);
+      const occupants = cityInstance ? cityInstance.occupants : [];
+      const colors = occupants.map(name => playerOrder.find(p => p.username === name).color);
+      acc[city.id] = colors;
+      return acc;
+    }, {});
+  }, [map, cityList, playerOrder]);
 
-  const { center, minZoom, maxZoom, maxBounds } = getMapConfig(game.map.name);
+  const { center, minZoom, maxZoom, maxBounds } = getMapConfig(map.name);
   
   return (
     <Container>
@@ -62,32 +59,27 @@ export const GameMap: React.FC<MapProps> = () => {
         zoomDelta={0.25}
       >
         <TileLayer url={tileUrl} />
-        {game.cities.map((cityInstance) => {
-          const city = cityLookup[cityInstance.city.id];
-          if (!city) {
-            return null;
-          }
+        {map.cities.map((city) => {
 
           const onClick = () => {
-            cityCart.toggleInCart(cityInstance.id);
+            cityCart.toggleInCart(city.id);
           }
           
           return (
             <CityMarker
               onClick={onClick}
-              key={cityInstance.id}
+              key={city.id}
               city={city}
-              cityInstance={cityInstance}
-              era={game.era}
-              players={game.playerOrder}
-              isSelected={cityCart.cityInstanceIds.includes(cityInstance.id)}
+              colors={colorsLookup[city.id]}
+              era={info.era}
+              isSelected={cityCart.cityIds.includes(city.id)}
               selectedColor={me && me.color}
               tempPositions={tempPositions}
-              hasNuclearPower={game.map.name === 'Northern Europe' && city.region > 2}
+              hasNuclearPower={map.name === 'Northern Europe' && city.region > 2}
             />
           )
         })}}
-        <Connections cityLookup={cityLookup} connections={data.fetchMap.connections} tempPositions={tempPositions} />
+        <Connections cityLookup={cityLookup} connections={map.connections} tempPositions={tempPositions} />
       </ReactLeaflet>
     </Container>
   );

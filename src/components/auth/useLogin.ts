@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { Login, LoginVariables } from "../../generatedTypes";
 import { LOGIN_MUTATION } from "../../graphql/loginMutation";
 import { useHistory, useLocation } from "react-router-dom";

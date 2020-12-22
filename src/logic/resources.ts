@@ -1,4 +1,4 @@
-import { Game_playerOrder, PlantResourceType, Game_playerOrder_plants } from "../generatedTypes";
+import { GameState_playerOrder, PlantResourceType, GetPlants_fetchPlants } from "../generatedTypes";
 import { ResourceType } from "../constants";
 
 type Resources = Record<ResourceType, number>;
@@ -32,29 +32,39 @@ export const getTotalResourceCost = (market: Resources, purchase: Resources) => 
     }, 0)
 };
 
-export const hasPlantForResource = (resourceType: ResourceType, player: Game_playerOrder): boolean => {
-  return player.plants.some((plantInstance) => {
-    const isHybridPlant = plantInstance.plant.resourceType === PlantResourceType.HYBRID;
+export const hasPlantForResource = (
+  resourceType: ResourceType,
+  player: GameState_playerOrder,
+  getPlant: (plantId: string) => GetPlants_fetchPlants,
+): boolean => {
+  return player.plantIds.some((plantId) => {
+    const plant = getPlant(plantId);
+    const isHybridPlant = plant.resourceType === PlantResourceType.HYBRID;
     const isCoalOrOil = ["coal", "oil"].includes(resourceType);
-    const typeMatches = plantInstance.plant.resourceType === resourceType.toUpperCase() as PlantResourceType;
+    const typeMatches = plant.resourceType === resourceType.toUpperCase() as PlantResourceType;
 
     return (isHybridPlant && isCoalOrOil) || typeMatches;
   });
 }
 
 export const getResourceCapacity = (
-  plants: Game_playerOrder_plants[] = []
+  plants: GetPlants_fetchPlants[] = []
 ): Record<PlantResourceType, number> => {
   return plants
-    .reduce<Record<PlantResourceType, number>>((acc, plantInstance) => {
-      const { resourceType, resourceBurn } = plantInstance.plant;
+    .reduce<Record<PlantResourceType, number>>((acc, plant) => {
+      const { resourceType, resourceBurn } = plant;
       acc[resourceType] = acc[resourceType] || 0;
       acc[resourceType] += resourceBurn * 2;
       return acc;
     }, { COAL: 0, OIL: 0, TRASH: 0, URANIUM: 0, WIND: 0, HYBRID: 0 });
 }
 
-const canFitResources = (player: Game_playerOrder, purchase: Resources, market: Resources): boolean => {
+const canFitResources = (
+  player: GameState_playerOrder,
+  purchase: Resources,
+  market: Resources,
+  getPlant: (plantId: string) => GetPlants_fetchPlants,
+): boolean => {
   if (!player) {
     return false;
   }
@@ -72,7 +82,7 @@ const canFitResources = (player: Game_playerOrder, purchase: Resources, market: 
     return false;
   }
   
-  const resourceCapacity = getResourceCapacity(player.plants);
+  const resourceCapacity = getResourceCapacity(player.plantIds.map(getPlant));
   
   const resourcesAfterPurchase: Resources = {
     coal: player.resources.coal + (purchase.coal || 0),
@@ -113,27 +123,15 @@ const canFitResources = (player: Game_playerOrder, purchase: Resources, market: 
 
 export const canFitOneMoreResource = (
   resourceType: ResourceType,
-  player: Game_playerOrder,
+  player: GameState_playerOrder,
   cart: Resources,
-  market: Resources
+  market: Resources,
+  getPlant: (plantId: string) => GetPlants_fetchPlants,
 ): boolean => {
   const updatedCart = {
     ...cart,
     [resourceType]: cart[resourceType] + 1
   };
 
-  return canFitResources(player, updatedCart, market);
+  return canFitResources(player, updatedCart, market, getPlant);
 }
-
-// export const getResourceCapacity = (
-//   plants: Game_playerOrder_plants[],
-//   resources: Game_playerOrder_resources
-// ): Game_playerOrder_resources => {
-//   return plants
-//     .reduce((acc, plantInstance) => {
-//       const { resourceType, resourceBurn } = plantInstance.plant;
-//       acc[resourceType] = acc[resourceType] || 0;
-//       acc[resourceType] += resourceBurn * 2;
-//       return acc;
-//     }, {});
-// }

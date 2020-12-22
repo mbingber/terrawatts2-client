@@ -1,36 +1,37 @@
 import React from "react";
 import { useGame } from "../../hooks/useGame";
 import { useActionOnMe } from "../../hooks/useActionOnMe";
-import { ActionType, Game_plantMarket } from "../../generatedTypes";
+import { ActionType, GetPlants_fetchPlants } from "../../generatedTypes";
 import { PlantList } from "./PlantList";
 import { CartsContext } from "../CartsContext";
+import { usePlantGetter } from "../../hooks/usePlantGetter";
 
 interface PlantMarketProps {}
 
 export const PlantMarket: React.FC<PlantMarketProps> = () => {
-  const game = useGame();
+  const { state: { plantMarket, info, auction }, map } = useGame();
   const { plantCart } = React.useContext(CartsContext);
+  const getPlants = usePlantGetter();
   const actionOnMe = useActionOnMe(ActionType.PUT_UP_PLANT);
-  const auctionPlantInstanceId = game.auction && game.auction.plant.id;
-  const isAvailable = (idx: number) => (game.plantMarket.length - idx) < 5 || game.era === 3 || game.map.name === 'China';
+  const isAvailable = (idx: number) => (plantMarket.length - idx) < 5 || info.era === 3 || map.name === 'China';
 
-  const handlePlantClick = (plantInstance: Game_plantMarket, idx: number) => () => {
+  const handlePlantClick = (plant: GetPlants_fetchPlants, idx: number) => () => {
     if (actionOnMe && isAvailable(idx)) {
-      if (plantCart.selectedPlantInstance && plantInstance.id === plantCart.selectedPlantInstance.id) {
-        plantCart.setSelectedPlantInstance(null);
+      if (plantCart.selectedPlant && plant.id === plantCart.selectedPlant.id) {
+        plantCart.setSelectedPlant(null);
       } else {
-        plantCart.setSelectedPlantInstance(plantInstance);
+        plantCart.setSelectedPlant(plant);
       }
     }
   }
   
   return (
     <PlantList
-      plants={game.plantMarket.slice().reverse()}
+      plants={plantMarket.slice().reverse().map(getPlants)}
       isAvailable={isAvailable}
       hoverable={actionOnMe}
       handlePlantClick={handlePlantClick}
-      emptyPlantInstanceIds={[auctionPlantInstanceId]}
+      emptyPlantIds={auction && auction.plantId ? [auction.plantId] : []}
     />
   );
 }

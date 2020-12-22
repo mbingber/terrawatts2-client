@@ -4,7 +4,7 @@ import { PowerCart } from "../../hooks/usePowerCart";
 import { useGame } from "../../hooks/useGame";
 import { useMe } from "../../hooks/useMe";
 import { CityIcon, Arrow } from "../cities/CityIcon";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { GET_REVENUES_QUERY } from "../../graphql/getRevenuesQuery";
 import { GetRevenues, PlantResourceType, PowerUp, PowerUpVariables } from "../../generatedTypes";
 import { getNumCitiesPowered, hasEnoughResources, getHybridChoices } from "../../logic/power";
@@ -18,12 +18,12 @@ interface PowerUpPanelProps {
 }
 
 export const PowerUpPanel: React.FC<PowerUpPanelProps> = ({ powerCart }) => {
-  const { cities, id } = useGame();
+  const { state: { cityList }, id } = useGame();
   const me = useMe();
   const { data } = useQuery<GetRevenues>(GET_REVENUES_QUERY);
   const [powerUp, { loading }] = useGameMutation<PowerUp, PowerUpVariables>(POWER_UP_MUTATION);
 
-  const numPowered = getNumCitiesPowered(powerCart.plants, cities, me.id);
+  const numPowered = getNumCitiesPowered(powerCart.plants, cityList, me.username);
   const earnings = numPowered ? (data ? data.getRevenues[numPowered] : null) : 10;
 
   const hasResources = hasEnoughResources(powerCart.plants, me.resources);
@@ -43,7 +43,7 @@ export const PowerUpPanel: React.FC<PowerUpPanelProps> = ({ powerCart }) => {
     powerUp({
       variables: {
         gameId: id,
-        plantInstanceIds: powerCart.plants.map((p) => p.id),
+        plantIds: powerCart.plants.map((p) => p.id),
         hybridChoice
       }
     });

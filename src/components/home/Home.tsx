@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Segment, Header, Input, Icon, Button, Card, Dropdown } from "semantic-ui-react";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/client";
 import { GET_ONLINE_USERNAMES_QUERY } from "../../graphql/getOnlineUsernamesQuery";
 import { GetOnlineUsernames, GetCurrentUser, CreateGame, CreateGameVariables, GetMyRecentGames } from "../../generatedTypes";
 import { GET_CURRENT_USER_QUERY } from "../../graphql/getCurrentUser";
@@ -22,8 +22,8 @@ export const Home: React.FC = () => {
 
   const [startGame, { loading: gameLoading }] = useMutation<CreateGame, CreateGameVariables>(CREATE_GAME_MUTATION, {
     onCompleted: (data) => {
-      if (data && data.createGame && data.createGame.id) {
-        history.push(`/game/${data.createGame.id}`);
+      if (data && data.createGame) {
+        history.push(`/game/${data.createGame}`);
       }
     }
   });

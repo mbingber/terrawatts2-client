@@ -4,29 +4,33 @@ import { useGame } from "../../hooks/useGame";
 import { DiscardCart } from "../../hooks/useDiscardCart";
 import { PlantCard } from "../plants/PlantCard";
 import { getResourceCapacity } from "../../logic/resources";
-import { Game, Game_plantMarket, PlantResourceType } from "../../generatedTypes";
+import { PlantResourceType, GameState_playerOrder, GetPlants_fetchPlants } from "../../generatedTypes";
 import { useGameMutation } from "../../hooks/useGameMutation";
 import { DiscardPlant, DiscardPlantVariables } from "../../generatedTypes";
 import { DISCARD_PLANT_MUTATION } from "../../graphql/discardPlantMutation";
 import { useMe } from "../../hooks/useMe";
 import { ResourceIcon } from "../resources/ResourceIcon";
 import { Button } from "semantic-ui-react";
+import { usePlantGetter } from "../../hooks/usePlantGetter";
 
 interface DiscardPlantPanelProps {
   discardCart: DiscardCart;
 }
 
-const getResourceLoss = (game: Game, discardedPlant: Game_plantMarket): Array<{ type: PlantResourceType; amount: number }> => {
-  const player = game.playerOrder.find((p) => p.id === game.activePlayer.id);
-  const plantsAfterDiscard = player.plants.filter((p) => p.id !== discardedPlant.id);
+const getResourceLoss = (
+  me: GameState_playerOrder,
+  discardedPlant: GetPlants_fetchPlants,
+  getPlant: (plantId: string) => GetPlants_fetchPlants,
+): Array<{ type: PlantResourceType; amount: number }> => {
+  const plantsAfterDiscard = me.plantIds.filter((id) => id !== discardedPlant.id).map(getPlant);
   const newCapacity = getResourceCapacity(plantsAfterDiscard);
 
-  const uranium = Math.max(player.resources.uranium - newCapacity.URANIUM, 0);
-  const trash = Math.max(player.resources.trash - newCapacity.TRASH, 0);
+  const uranium = Math.max(me.resources.uranium - newCapacity.URANIUM, 0);
+  const trash = Math.max(me.resources.trash - newCapacity.TRASH, 0);
 
   // TODO: resource choice
-  const coal = Math.max(player.resources.coal - newCapacity.COAL, 0);
-  const oil = Math.max(player.resources.oil - newCapacity.OIL, 0);
+  const coal = Math.max(me.resources.coal - newCapacity.COAL, 0);
+  const oil = Math.max(me.resources.oil - newCapacity.OIL, 0);
 
   return [{
     type: PlantResourceType.COAL,
@@ -63,17 +67,18 @@ const getResourceLoss = (game: Game, discardedPlant: Game_plantMarket): Array<{ 
 export const DiscardPlantPanel: React.FC<DiscardPlantPanelProps> = ({ discardCart }) => {
   const game = useGame();
   const me = useMe();
+  const getPlant = usePlantGetter();
   const [discardPlant, { loading }] = useGameMutation<DiscardPlant, DiscardPlantVariables>(DISCARD_PLANT_MUTATION);
 
   const { selectedPlant } = discardCart;
 
-  const resourceLoss = selectedPlant ? getResourceLoss(game, selectedPlant) : [];
+  const resourceLoss = selectedPlant ? getResourceLoss(me, selectedPlant, getPlant) : [];
 
   const handleSubmit = (): void => {
     discardPlant({
       variables: {
         gameId: game.id,
-        plantInstanceId: +selectedPlant.id
+        plantId: selectedPlant.id
       }
     })
   };
@@ -82,7 +87,7 @@ export const DiscardPlantPanel: React.FC<DiscardPlantPanelProps> = ({ discardCar
     <Container>
       <div className="heading">Discard a power plant</div>
       {selectedPlant ? (
-        <PlantCard {...selectedPlant.plant} height={32} we={me && me.user.we} />
+        <PlantCard {...selectedPlant} height={32} />
       ) : (
         <PlantFrame />
       )}

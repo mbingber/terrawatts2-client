@@ -15,17 +15,14 @@ export interface ResourceCart {
 }
 
 export const useResourceCart = (): ResourceCart => {
-  const game = useGame();
-  
+  const { state } = useGame();
   const [resources, setCart] = useState<Record<ResourceType, number>>({ ...emptyCart });
 
-  const activePlayerId = game && game.activePlayer.id;
-
   useEffect(() => {
-    if (activePlayerId) {
+    if (state.info.activeUser) {
       setCart({ ...emptyCart });
     }
-  }, [activePlayerId]);
+  }, [state.info.activeUser]);
 
   const setResource = (resourceType: ResourceType) => (inCart: number) => {
     setCart({

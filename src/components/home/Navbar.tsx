@@ -1,7 +1,7 @@
 import React from "react";
 import { Menu, Header } from "semantic-ui-react";
 import { Link, useHistory } from "react-router-dom";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { GetCurrentUser } from "../../generatedTypes";
 import { GET_CURRENT_USER_QUERY } from "../../graphql/getCurrentUser";
 import { useKeepMeOnline } from "../../hooks/useKeepMeOnline";

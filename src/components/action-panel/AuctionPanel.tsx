@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Game_playerOrder, ActionType, BidOnPlant, BidOnPlantVariables } from "../../generatedTypes";
+import { ActionType, BidOnPlant, BidOnPlantVariables, GameState_playerOrder } from "../../generatedTypes";
 import { playerColors } from "../../constants";
 import { PlantCard } from "../plants/PlantCard";
 import { useGame } from "../../hooks/useGame";
@@ -9,13 +9,16 @@ import { useActionOnMe } from "../../hooks/useActionOnMe";
 import { BID_ON_PLANT_MUTATION } from "../../graphql/bidOnPlantMutation";
 import { useGameMutation } from "../../hooks/useGameMutation";
 import { Button, Input, Checkbox } from "semantic-ui-react";
+import { usePlantGetter } from "../../hooks/usePlantGetter";
 
 interface AuctionPanelProps {}
 
 export const AuctionPanel: React.FC<AuctionPanelProps> = () => {
-  const { playerOrder: players, auction, id, plantPhaseEvents } = useGame();
+  const { id, state } = useGame();
+  const { auction, playerOrder: players, plantPhaseEvents } = state;
   const me = useMe();
   const actionOnMe = useActionOnMe(ActionType.BID_ON_PLANT);
+  const getPlant = usePlantGetter();
 
   const [bidOnPlant, { loading }] = useGameMutation<BidOnPlant, BidOnPlantVariables>(BID_ON_PLANT_MUTATION);
   const [isPassState, setIsPass] = React.useState<boolean>(false);
@@ -43,14 +46,14 @@ export const AuctionPanel: React.FC<AuctionPanelProps> = () => {
     }
   });
   
-  const { clockwiseOrder = 0 } = me && players.find((p) => p.id === me.id) || {};
+  const { clockwiseOrder = 0 } = me && players.find((p) => p.username === me.username) || {};
 
-  const getRelativeOrder = (p: Game_playerOrder) =>
+  const getRelativeOrder = (p: GameState_playerOrder) =>
     (p.clockwiseOrder + players.length - clockwiseOrder) % players.length;
   
   const auctionOrder = players
-    .filter((player) => (plantPhaseEvents || []).every((e) => e.player.id !== player.id))
-    .filter((player) => (auction.passedPlayers || []).every((p) => p.id !== player.id))
+    .filter((player) => (plantPhaseEvents || []).every((e) => e.username !== player.username))
+    .filter((player) => (auction.passed || []).every((p) => p !== player.username))
     .sort((a, b) => getRelativeOrder(a) - getRelativeOrder(b));
 
   const handleInputChange = (e: React.ChangeEvent) => {
@@ -74,7 +77,7 @@ export const AuctionPanel: React.FC<AuctionPanelProps> = () => {
     });
   }
   
-  const drawSector = (player: Game_playerOrder, index: number) => {
+  const drawSector = (player: GameState_playerOrder, index: number) => {
     const numRemaining = auctionOrder.length;
     const theta = 2 * Math.PI / numRemaining;
     const R = 0.9;
@@ -90,14 +93,14 @@ export const AuctionPanel: React.FC<AuctionPanelProps> = () => {
     const yBid = 0.7 * R * Math.sin(theta0);
 
     const textRotation = theta0 * 180 / Math.PI + 90;
-    const { username } = player.user;
+    const { username } = player;
     const name = `${username.slice(0, 12)}${username.length > 12 ? "..." : ""}`;
 
-    const isActive = auction.activePlayer.id === player.id;
-    const isLeading = auction.leadingPlayer.id === player.id;
+    const isActive = auction.active === username;
+    const isLeading = auction.leader === username;
 
     return (
-      <React.Fragment key={player.id}>
+      <React.Fragment key={player.username}>
         <path
           fill={playerColors[player.color]}
           d={`
@@ -107,7 +110,7 @@ export const AuctionPanel: React.FC<AuctionPanelProps> = () => {
             Z
           `}
         />
-        {(!me || index > 0 || auctionOrder[0].id !== me.id) && (
+        {(!me || index > 0 || auctionOrder[0].username !== me.username) && (
           <g transform={`translate(${xName}, ${yName}) rotate(${textRotation})`}>
             <text x={0} y={0} textAnchor="middle" style={{ fontSize: "0.125" }}>{name}</text>
           </g>
@@ -129,10 +132,10 @@ export const AuctionPanel: React.FC<AuctionPanelProps> = () => {
           {auctionOrder.map(drawSector)}
         </svg>
         <PlantSpacer>
-          <PlantCard height={28} {...auction.plant.plant} we={me && me.user.we} />
+          <PlantCard height={28} {...getPlant(auction.plantId)} />
         </PlantSpacer>
       </SvgContainer>
-      {me && auctionOrder[0].id === me.id && (
+      {me && auctionOrder[0].username === me.username && (
         <BidForm>
           <Checkbox label="Autobid" checked={isAutobid} onClick={() => setAutobid(!isAutobid)} />
           <div>

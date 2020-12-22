@@ -3,16 +3,16 @@ import { useGame } from "./useGame";
 import { useMe } from "./useMe";
 
 export const useActionOnMe = (actionType: ActionType): boolean => {
-  const game = useGame();
+  const { state } = useGame();
   const me = useMe();
 
   if (!me) {
     return false;
   }
 
-  if (game.auction && actionType === ActionType.BID_ON_PLANT) {
-    return game.auction.activePlayer.id === me.id;
+  if (state.auction && actionType === ActionType.BID_ON_PLANT) {
+    return state.auction.active === me.username;
   }
 
-  return game.activePlayer.id === me.id && actionType === game.actionType;
+  return state.info.activeUser === me.username && actionType === state.info.actionType;
 }

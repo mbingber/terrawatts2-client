@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { Game_playerOrder, Game_plantMarket, PlantResourceType, Color, ActionType, Phase } from "../generatedTypes";
+import { PlantResourceType, Color, ActionType, Phase, GameState_playerOrder, GetCurrentUser, GetPlants_fetchPlants } from "../generatedTypes";
 import { PlantCard } from "./plants/PlantCard";
 import { playerColors, ResourceType } from "../constants";
 import { useMe } from "../hooks/useMe";
@@ -9,34 +9,38 @@ import { CityIcon } from "./cities/CityIcon";
 import { useGame } from "../hooks/useGame";
 import { useActionOnMe } from "../hooks/useActionOnMe";
 import { CartsContext } from "./CartsContext";
+import { usePlantGetter } from "../hooks/usePlantGetter";
 
 interface PlayerBoxProps {
-  player: Game_playerOrder;
+  player: GameState_playerOrder;
 }
 
 export const PlayerBox: React.FC<PlayerBoxProps> = ({ player }) => {
   const me = useMe();
-  const { cities, playerOrder, plantRankBought, plantPhaseEvents, phase } = useGame();
+  const isMe = me && me.username === player.username;
+  const { state } = useGame();
+  const { plantPhaseEvents, playerOrder, cityList, info: { phase } } = state;
   const powerActionOnMe = useActionOnMe(ActionType.POWER_UP);
   const discardActionOnMe = useActionOnMe(ActionType.DISCARD_PLANT);
   const { discardCart, powerCart, cityCart } = React.useContext(CartsContext);
+  const getPlant = usePlantGetter();
 
-  const plantEvent = plantPhaseEvents.find((e) => e.player.id === player.id);
+  const plantEvent = plantPhaseEvents.find((e) => e.username === player.username);
 
   const is2P = playerOrder.length === 2;
 
-  const plants = player.plants ?
-    player.plants
-      .filter((p) => p.plant.rank !== plantRankBought)
-      .sort((a, b) => a.plant.rank - b.plant.rank) :
+  const plants = player.plantIds ?
+    player.plantIds
+      .map(getPlant)
+      .sort((a, b) => a.rank - b.rank) :
     [];
   const plantsOrFrames = Array(is2P ? 4 : 3).fill(true).map((_, i) => plants[i] || null);
 
   const numCities = React.useMemo(() => {
-    return cities.filter((cityInstance) => (
-      cityInstance.players.some((p) => p.id === player.id)
+    return cityList.filter((cityInstance) => (
+      cityInstance.occupants.some((name) => name === player.username)
     )).length
-  }, [cities]);
+  }, [cityList]);
 
   const resourceDisplay: Array<{ type: ResourceType; owned: number }> = Object.keys(player.resources)
     .filter((resourceType) => player.resources[resourceType as ResourceType] > 0)
@@ -45,9 +49,9 @@ export const PlayerBox: React.FC<PlayerBoxProps> = ({ player }) => {
       owned: player.resources[resourceType as ResourceType],
     }));
 
-  const isPlantSelectable = (powerActionOnMe || discardActionOnMe) && me && me.id === player.id;
+  const isPlantSelectable = (powerActionOnMe || discardActionOnMe) && isMe;
 
-  const isPlantSelected = (plant: Game_plantMarket): boolean => {
+  const isPlantSelected = (plant: GetPlants_fetchPlants): boolean => {
     if (powerActionOnMe) {
       return powerCart.plants.some(p => p.id === plant.id)
     }
@@ -59,28 +63,28 @@ export const PlayerBox: React.FC<PlayerBoxProps> = ({ player }) => {
     return false;
   }
 
-  const handlePlantClick = (plant: Game_plantMarket): void => {
-    if (powerActionOnMe && me && me.id === player.id) {
+  const handlePlantClick = (plant: GetPlants_fetchPlants): void => {
+    if (powerActionOnMe && isMe) {
       powerCart.togglePlant(plant);
-    } else if (discardActionOnMe && me && me.id === player.id) {
+    } else if (discardActionOnMe && isMe) {
       discardCart.togglePlant(plant);
     }
   }
 
   let adjustedMoney = player.money;
   let adjustedCities = numCities;
-  if (me && me.id === player.id) {
+  if (isMe) {
     adjustedMoney -= cityCart.cost;
-    adjustedCities += cityCart.cityInstanceIds.length;
+    adjustedCities += cityCart.cityIds.length;
   }
 
   return (
     <Container color={player.color} is2P={is2P}>
       {phase === Phase.PLANT && plantEvent && <PlantEventNotifier color={player.color}>
-        {plantEvent.plant ? `Bought the ${plantEvent.plant.plant.rank}` : "Passed"}
+        {plantEvent.plantId ? `Bought the ${getPlant(plantEvent.plantId).rank}` : "Passed"}
       </PlantEventNotifier>}
       <Name>
-        {`${player.user.username}${me && player.id === me.id ? " (you)" : ""}`}
+        {`${player.username}${isMe ? " (you)" : ""}`}
       </Name>
       <MoneyAndCities is2P={is2P}>
         <NumberStrikethrough struck={adjustedMoney !== player.money}>
@@ -103,15 +107,14 @@ export const PlayerBox: React.FC<PlayerBoxProps> = ({ player }) => {
             {plantsOrFrames.map((plant, idx) => (
               plant ? (
                 <PlantContainer
-                  key={plant.plant.rank}
+                  key={plant.rank}
                   selectable={isPlantSelectable}
                   onClick={() => handlePlantClick(plant)}
                   isSelected={isPlantSelected(plant)}
                 >
                   <PlantCard
                     height={32}
-                    {...plant.plant}
-                    we={me && me.user.we}
+                    {...plant}
                   />
                 </PlantContainer>
               ) : (

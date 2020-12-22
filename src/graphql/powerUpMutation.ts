@@ -1,13 +1,13 @@
 import gql from "graphql-tag";
-import { GameFragment } from "./gameFragment";
+import { GameStateFragment } from "./gameStateFragment";
 
 export const POWER_UP_MUTATION = gql`
-  mutation PowerUp($gameId: ID!, $plantInstanceIds: [ID!]!, $hybridChoice: HybridChoiceInput) {
-    powerUp(gameId: $gameId, plantInstanceIds: $plantInstanceIds, hybridChoice: $hybridChoice) {
-      ...Game
+  mutation PowerUp($gameId: ID!, $plantIds: [String!]!, $hybridChoice: HybridChoiceInput) {
+    powerUp(gameId: $gameId, plantIds: $plantIds, hybridChoice: $hybridChoice) {
+      ...GameState
     }
   }
 
   # Fragments
-  ${GameFragment}
+  ${GameStateFragment}
 `;

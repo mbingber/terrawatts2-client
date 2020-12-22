@@ -1,9 +1,9 @@
 import gql from "graphql-tag";
 import { GameStateFragment } from "./gameStateFragment";
 
-export const BID_ON_PLANT_MUTATION = gql`
-  mutation BidOnPlant($gameId: ID!, $bid: Int) {
-    bidOnPlant(gameId: $gameId, bid: $bid) {
+export const GAME_STATE_SUBSCRIPTION = gql`
+  subscription GameStateUpdated($gameId: ID!) {
+    gameStateUpdated(gameId: $gameId) {
       ...GameState
     }
   }

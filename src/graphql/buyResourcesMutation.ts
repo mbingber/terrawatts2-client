@@ -1,13 +1,13 @@
 import gql from "graphql-tag";
-import { GameFragment } from "./gameFragment";
+import { GameStateFragment } from "./gameStateFragment";
 
 export const BUY_RESOURCES_MUTATION = gql`
   mutation BuyResources($gameId: ID!, $resources: ResourcesInput!, $cost: Int!) {
     buyResources(gameId: $gameId, resources: $resources, cost: $cost) {
-      ...Game
+      ...GameState
     }
   }
 
   # Fragments
-  ${GameFragment}
+  ${GameStateFragment}
 `;

@@ -2,8 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { resourceColors } from '../../constants';
 import { ResourceIcon } from '../resources/ResourceIcon';
-import { PlantResourceType } from '../../generatedTypes';
+import { PlantResourceType, GetCurrentUser } from '../../generatedTypes';
 import { CityIcon } from '../cities/CityIcon';
+import { useQuery } from '@apollo/client';
+import { GET_CURRENT_USER_QUERY } from '../../graphql/getCurrentUser';
 
 const ASPECT_RATIO = 3;
 const RADIUS_RATIO = 0.05;
@@ -16,14 +18,16 @@ interface PlantCardProps {
   resourceBurn: number;
   numCities: number;
   height: number;
-  we: boolean;
 }
 
 export const PlantCard: React.FC<PlantCardProps> = (props) => {
+  const { data } = useQuery<GetCurrentUser>(GET_CURRENT_USER_QUERY);
+  const we = data && data.getCurrentUser && data.getCurrentUser.we;
+  
   const rankDisplay = props.rank > 9 ? props.rank : ('0' + props.rank).slice(-2);
 
   const resourceStack = props.resourceType === PlantResourceType.HYBRID ? (
-    <ResourceStack {...props}>
+    <ResourceStack {...props} we={we}>
       {Array(props.resourceBurn).fill(true).map((_, idx) => (
         <div key={idx}>
           <div>
@@ -33,7 +37,7 @@ export const PlantCard: React.FC<PlantCardProps> = (props) => {
       ))}
     </ResourceStack>
   ) : (
-    <ResourceStack {...props}>
+    <ResourceStack {...props} we={we}>
       <div>
         <div>
           <ResourceIcon type={props.resourceType} />
@@ -110,7 +114,7 @@ const Container = styled.div<PlantCardProps>`
   }
 `;
 
-const ResourceStack = styled.div<PlantCardProps>`
+const ResourceStack = styled.div<PlantCardProps & { we: boolean }>`
   display: ${({ we, resourceType }) => resourceType === PlantResourceType.WIND && !we ? "none" : "flex"};
   flex-direction: column;
   height: ${({ height }) => height * 0.9}px;

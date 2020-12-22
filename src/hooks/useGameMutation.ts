@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { toast } from "react-toastify";
 
 export function useGameMutation<T, TVariables>(mutation: any, onCompleted?: () => void) {

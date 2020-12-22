@@ -3,7 +3,6 @@ import { ToastContainer } from "react-toastify";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 import { Game } from "./components/Game";
-import { AllPlants } from "./components/plants/AllPlants";
 import "react-toastify/dist/ReactToastify.css";
 import "semantic-ui-css/semantic.min.css";
 import "./App.css";
@@ -12,7 +11,7 @@ import { LoginForm } from "./components/auth/Login";
 import { Home } from "./components/home/Home";
 import { Navbar } from "./components/home/Navbar";
 import { Profile } from "./components/home/Profile";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { GetCurrentUser } from "./generatedTypes";
 import { GET_CURRENT_USER_QUERY } from "./graphql/getCurrentUser";
 

@@ -1,13 +1,13 @@
 import gql from "graphql-tag";
-import { GameFragment } from "./gameFragment";
+import { GameStateFragment } from "./gameStateFragment";
 
 export const DISCARD_PLANT_MUTATION = gql`
-  mutation DiscardPlant($gameId: ID!, $plantInstanceId: Int!, $fossilFuelDiscard: HybridChoiceInput) {
-    discardPlant(gameId: $gameId, plantInstanceId: $plantInstanceId, fossilFuelDiscard: $fossilFuelDiscard) {
-      ...Game
+  mutation DiscardPlant($gameId: ID!, $plantId: String!, $hybridChoice: HybridChoiceInput) {
+    discardPlant(gameId: $gameId, plantId: $plantId, hybridChoice: $hybridChoice) {
+      ...GameState
     }
   }
 
   # Fragments
-  ${GameFragment}
+  ${GameStateFragment}
 `;
