@@ -20,6 +20,8 @@ export const Home: React.FC = () => {
     pollInterval: 2000
   });
 
+  console.log("RENDERING HOME");
+
   const [startGame, { loading: gameLoading }] = useMutation<CreateGame, CreateGameVariables>(CREATE_GAME_MUTATION, {
     onCompleted: (data) => {
       if (data && data.createGame) {
