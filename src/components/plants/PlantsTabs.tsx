@@ -8,9 +8,20 @@ import { usePlantGetter } from "../../hooks/usePlantGetter";
 
 interface PlantsTabsProps {}
 
+const chinaRemoval: Record<number, number[]> = {
+  2: [3, 4, 9, 11, 16, 18, 20, 24, 30, 33, 46],
+  3: [3, 4, 9, 11, 16, 18, 20, 24, 30, 33, 46],
+  4: [3, 4, 11, 18, 24, 33, 46],
+  5: [3, 4, 33],
+  6: [3, 4, 33]
+};
+
 export const PlantsTabs: React.FC<PlantsTabsProps> = () => {
-  const { state: { deckCount, discardedPlants, era3Plants, possibleDeck }, map } = useGame();
+  const { state: { deckCount, discardedPlants, era3Plants, possibleDeck, playerOrder }, map } = useGame();
   const getPlant = usePlantGetter();
+  
+  const removedChinaPlants = chinaRemoval[playerOrder.length];
+  const deck = map.name === 'China' ? possibleDeck.filter(plantId => !removedChinaPlants.includes(+plantId)) : possibleDeck;
 
   const panes = [{
     menuItem: "Market",
@@ -20,7 +31,7 @@ export const PlantsTabs: React.FC<PlantsTabsProps> = () => {
   if (possibleDeck.length) {
     panes.push({
       menuItem: map.name === 'China' ? 'Deck' : `Deck (${deckCount})`,
-      render: () => <PlantList plants={possibleDeck.map(getPlant)} />
+      render: () => <PlantList plants={deck.map(getPlant)} />
     })
   }
 
