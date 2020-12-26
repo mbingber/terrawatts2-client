@@ -21,7 +21,6 @@ export const PlantsTabs: React.FC<PlantsTabsProps> = () => {
   const getPlant = usePlantGetter();
   
   const removedChinaPlants = chinaRemoval[playerOrder.length];
-  const deck = map.name === 'China' ? possibleDeck.filter(plantId => !removedChinaPlants.includes(+plantId)) : possibleDeck;
 
   const panes = [{
     menuItem: "Market",
@@ -31,7 +30,12 @@ export const PlantsTabs: React.FC<PlantsTabsProps> = () => {
   if (possibleDeck.length) {
     panes.push({
       menuItem: map.name === 'China' ? 'Deck' : `Deck (${deckCount})`,
-      render: () => <PlantList plants={deck.map(getPlant)} />
+      render: () => <PlantList plants={possibleDeck.map(getPlant).filter(plant => {
+        if (map.name !== 'China') {
+          return true;
+        }
+        return !removedChinaPlants.includes(plant.rank);
+      })} />
     })
   }
 
