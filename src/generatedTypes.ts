@@ -69,6 +69,7 @@ export interface BidOnPlant_bidOnPlant {
   cityList: BidOnPlant_bidOnPlant_cityList[];
   auction: BidOnPlant_bidOnPlant_auction | null;
   plantPhaseEvents: BidOnPlant_bidOnPlant_plantPhaseEvents[];
+  isOver: boolean;
 }
 
 export interface BidOnPlant {
@@ -150,6 +151,7 @@ export interface BuyCities_buyCities {
   cityList: BuyCities_buyCities_cityList[];
   auction: BuyCities_buyCities_auction | null;
   plantPhaseEvents: BuyCities_buyCities_plantPhaseEvents[];
+  isOver: boolean;
 }
 
 export interface BuyCities {
@@ -232,6 +234,7 @@ export interface BuyResources_buyResources {
   cityList: BuyResources_buyResources_cityList[];
   auction: BuyResources_buyResources_auction | null;
   plantPhaseEvents: BuyResources_buyResources_plantPhaseEvents[];
+  isOver: boolean;
 }
 
 export interface BuyResources {
@@ -354,6 +357,7 @@ export interface DiscardPlant_discardPlant {
   cityList: DiscardPlant_discardPlant_cityList[];
   auction: DiscardPlant_discardPlant_auction | null;
   plantPhaseEvents: DiscardPlant_discardPlant_plantPhaseEvents[];
+  isOver: boolean;
 }
 
 export interface DiscardPlant {
@@ -488,6 +492,7 @@ export interface GetGame_getGame_state {
   cityList: GetGame_getGame_state_cityList[];
   auction: GetGame_getGame_state_auction | null;
   plantPhaseEvents: GetGame_getGame_state_plantPhaseEvents[];
+  isOver: boolean;
 }
 
 export interface GetGame_getGame {
@@ -579,6 +584,7 @@ export interface GameStateUpdated_gameStateUpdated {
   cityList: GameStateUpdated_gameStateUpdated_cityList[];
   auction: GameStateUpdated_gameStateUpdated_auction | null;
   plantPhaseEvents: GameStateUpdated_gameStateUpdated_plantPhaseEvents[];
+  isOver: boolean;
 }
 
 export interface GameStateUpdated {
@@ -606,6 +612,35 @@ export interface GetCurrentUser_getCurrentUser {
 
 export interface GetCurrentUser {
   getCurrentUser: GetCurrentUser_getCurrentUser | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetGameOverData
+// ====================================================
+
+export interface GetGameOverData_getGameOverData_winOrder {
+  username: string;
+  color: Color;
+  numPowered: number;
+  money: number;
+  won: boolean;
+}
+
+export interface GetGameOverData_getGameOverData {
+  isOver: boolean;
+  winOrder: GetGameOverData_getGameOverData_winOrder[];
+}
+
+export interface GetGameOverData {
+  getGameOverData: GetGameOverData_getGameOverData | null;
+}
+
+export interface GetGameOverDataVariables {
+  id: string;
 }
 
 
@@ -818,6 +853,7 @@ export interface PowerUp_powerUp {
   cityList: PowerUp_powerUp_cityList[];
   auction: PowerUp_powerUp_auction | null;
   plantPhaseEvents: PowerUp_powerUp_plantPhaseEvents[];
+  isOver: boolean;
 }
 
 export interface PowerUp {
@@ -900,6 +936,7 @@ export interface PutUpPlant_putUpPlant {
   cityList: PutUpPlant_putUpPlant_cityList[];
   auction: PutUpPlant_putUpPlant_auction | null;
   plantPhaseEvents: PutUpPlant_putUpPlant_plantPhaseEvents[];
+  isOver: boolean;
 }
 
 export interface PutUpPlant {
@@ -1056,6 +1093,7 @@ export interface Game_state {
   cityList: Game_state_cityList[];
   auction: Game_state_auction | null;
   plantPhaseEvents: Game_state_plantPhaseEvents[];
+  isOver: boolean;
 }
 
 export interface Game {
@@ -1139,6 +1177,7 @@ export interface GameState {
   cityList: GameState_cityList[];
   auction: GameState_auction | null;
   plantPhaseEvents: GameState_plantPhaseEvents[];
+  isOver: boolean;
 }
 
 

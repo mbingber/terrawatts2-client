@@ -15,9 +15,13 @@ import { CartsContext } from "../CartsContext";
 interface ActionPanelProps {}
 
 export const ActionPanel: React.FC<ActionPanelProps> = () => {
-  const { state: { info: { actionType } } } = useGame();
+  const { state: { info: { actionType }, isOver } } = useGame();
   const actionOnMe = useActionOnMe(actionType);
   const carts = React.useContext(CartsContext);
+
+  if (isOver) {
+    return <Container />;
+  }
 
   if (!actionOnMe && actionType !== ActionType.BID_ON_PLANT) {
     return (<Container><WaitingPanel /></Container>);

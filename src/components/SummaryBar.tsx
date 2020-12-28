@@ -6,11 +6,12 @@ import { useQuery } from "@apollo/client";
 import { GetRevenues } from "../generatedTypes";
 import { GET_REVENUES_QUERY } from "../graphql/getRevenuesQuery";
 import { CityIcon, Arrow } from "./cities/CityIcon";
+import { GameEndModal } from "./game-end/GameEndModal";
 
 interface SummaryBarProps {}
 
 export const SummaryBar: React.FC<SummaryBarProps> = () => {
-  const { state, era2Start, gameEnd } = useGame();
+  const { state, era2Start, gameEnd, map } = useGame();
 
   const phaseText = `${state.info.phase[0]}${state.info.phase.slice(1).toLowerCase()}`;
 
@@ -24,7 +25,7 @@ export const SummaryBar: React.FC<SummaryBarProps> = () => {
       <div>{phaseText} Phase</div>
       <div>Era 2 start: {era2Start} <CityIcon color="black" height={16} empty /></div>
       <div>Game end: {gameEnd} <CityIcon color="black" height={16} empty /></div>
-      <div>
+      <div className="trigger">
         <Modal
           trigger={<Button icon><Icon name="dollar" /></Button>}
           size="small"
@@ -42,6 +43,11 @@ export const SummaryBar: React.FC<SummaryBarProps> = () => {
           </Modal.Content>
         </Modal>
       </div>
+      {state.isOver && (
+        <div className="trigger">
+          <GameEndModal mapName={map.name} />
+        </div>
+      )}
     </Container>
   );
 }
@@ -52,7 +58,7 @@ const Container = styled.div`
   align-items: center;
   height: 24px;
   background-color: #ddd;
-  z-index: 9000;
+  z-index: 1000;
   border: 1px solid black;
 
   > div {
@@ -71,7 +77,7 @@ const Container = styled.div`
     border-left: none;
   }
 
-  > div:last-child {
+  .trigger {
     padding: 0;
 
     button {

@@ -6,8 +6,7 @@ import Cookies from "js-cookie";
 
 const isProd = process.env.NODE_ENV === "production";
 
-const url = isProd ? "terrawatts2-server.herokuapp.com" : "192.168.1.6:4000"
-
+const url = isProd ? "terrawatts2-server.herokuapp.com" : "localhost:4000"
 
 // Create an http link:
 const httpLink = new HttpLink({
