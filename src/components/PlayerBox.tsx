@@ -1,6 +1,14 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { PlantResourceType, Color, ActionType, Phase, GameState_playerOrder, GetCurrentUser, GetPlants_fetchPlants } from "../generatedTypes";
+import {
+  PlantResourceType,
+  Color,
+  ActionType,
+  Phase,
+  GameState_playerOrder,
+  GetPlants_fetchPlants,
+  GameState_plantPhaseEvents,
+} from "../generatedTypes";
 import { PlantCard } from "./plants/PlantCard";
 import { playerColors, ResourceType } from "../constants";
 import { useMe } from "../hooks/useMe";
@@ -9,11 +17,18 @@ import { CityIcon } from "./cities/CityIcon";
 import { useGame } from "../hooks/useGame";
 import { useActionOnMe } from "../hooks/useActionOnMe";
 import { CartsContext } from "./CartsContext";
-import { usePlantGetter } from "../hooks/usePlantGetter";
+import { usePlantGetter, PlantGetter } from "../hooks/usePlantGetter";
 
 interface PlayerBoxProps {
   player: GameState_playerOrder;
 }
+
+const getPlantEventText = (event: GameState_plantPhaseEvents, getPlant: PlantGetter): string => {
+  if (!event.plantId) {
+    return "Passed";
+  }
+  return `Bought the ${getPlant(event.plantId).rank} for $${event.cost}`;
+};
 
 export const PlayerBox: React.FC<PlayerBoxProps> = ({ player }) => {
   const me = useMe();
@@ -81,7 +96,7 @@ export const PlayerBox: React.FC<PlayerBoxProps> = ({ player }) => {
   return (
     <Container color={player.color} is2P={is2P}>
       {phase === Phase.PLANT && plantEvent && <PlantEventNotifier color={player.color}>
-        {plantEvent.plantId ? `Bought the ${getPlant(plantEvent.plantId).rank}` : "Passed"}
+        {getPlantEventText(plantEvent, getPlant)}
       </PlantEventNotifier>}
       <Name>
         {`${player.username}${isMe ? " (you)" : ""}`}
