@@ -20,21 +20,21 @@ export const PlantsTabs: React.FC<PlantsTabsProps> = () => {
   if (possibleDeck.length) {
     panes.push({
       menuItem: map.name === 'China' ? 'Deck' : `Deck (${deckCount})`,
-      render: () => <PlantList plants={possibleDeck.map(getPlant)} />
+      render: () => <PlantList plants={possibleDeck.map(getPlant).sort((a, b) => a.rank - b.rank)} />
     })
   }
 
   if (era3Plants.length) {
     panes.push({
       menuItem: "Era 3",
-      render: () => <PlantList plants={era3Plants.map(getPlant)} />
+      render: () => <PlantList plants={era3Plants.map(getPlant).sort((a, b) => a.rank - b.rank)} />
     })
   }
 
   if (discardedPlants.length) {
     panes.push({
       menuItem: "Discard",
-      render: () => <PlantList plants={discardedPlants.map(getPlant)} />
+      render: () => <PlantList plants={discardedPlants.map(getPlant).sort((a, b) => a.rank - b.rank)} />
     })
   };
   

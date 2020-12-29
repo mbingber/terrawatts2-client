@@ -27,7 +27,7 @@ export const PlantMarket: React.FC<PlantMarketProps> = () => {
   
   return (
     <PlantList
-      plants={plantMarket.slice().reverse().map(getPlants)}
+      plants={plantMarket.slice().reverse().map(getPlants).sort((a, b) => b.rank - a.rank)}
       isAvailable={isAvailable}
       hoverable={actionOnMe}
       handlePlantClick={handlePlantClick}
