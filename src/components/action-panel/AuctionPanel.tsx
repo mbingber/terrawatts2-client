@@ -44,7 +44,7 @@ export const AuctionPanel: React.FC<AuctionPanelProps> = () => {
         },
       })
     }
-  });
+  }, [state]);
   
   const { clockwiseOrder = 0 } = me && players.find((p) => p.username === me.username) || {};
 
