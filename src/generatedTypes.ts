@@ -628,6 +628,10 @@ export interface GetGameOverData_getGameOverData_winOrder {
   numPowered: number;
   money: number;
   won: boolean;
+  totalPlantSpend: number;
+  totalResourceSpend: number;
+  totalCitySpend: number;
+  totalEarn: number;
 }
 
 export interface GetGameOverData_getGameOverData {

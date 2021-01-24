@@ -10,6 +10,10 @@ export const GET_GAME_OVER_DATA_QUERY = gql`
         numPowered
         money
         won
+        totalPlantSpend
+        totalResourceSpend
+        totalCitySpend
+        totalEarn
       }
     }
   }
