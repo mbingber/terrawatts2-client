@@ -29,7 +29,7 @@ export const GameEndModal: React.FC<GameEndModalProps> = ({ mapName }) => {
   const { winOrder } = data.getGameOverData;
   
   return (
-    <Modal size="mini" defaultOpen trigger={<Button icon><Icon name="chart line" /></Button>}>
+    <Modal size="small" defaultOpen trigger={<Button icon><Icon name="chart line" /></Button>}>
       <Container>
         <Message>{messages[mapName] || 'Game over'}</Message>
         {winOrder.map(player => (
@@ -41,6 +41,10 @@ export const GameEndModal: React.FC<GameEndModalProps> = ({ mapName }) => {
             <PlayerStats>
               <CityIcon color="black" empty height={32} number={player.numPowered} strokeWidth={0.2} />
               <Money>${player.money}</Money>
+              Plants:<Money>${player.totalPlantSpend}</Money>
+              Resources:<Money>${player.totalResourceSpend}</Money>
+              Cities:<Money>${player.totalCitySpend}</Money>
+              Earned:<Money>${player.totalEarn}</Money>
             </PlayerStats>
           </Player>
         ))}
@@ -72,13 +76,13 @@ const PlayerName = styled.div`
 
 const PlayerStats = styled.div`
   display: flex;
-  justify-content: flex-end;
   align-items: center;
 `;
   
 const Money = styled.span`
   margin-left: 8px;
   font-size: 14px;
+  width: 50px;
 `;
 
 const Trophy = styled.img.attrs({ src: require('../../assets/trophy.svg') })`
