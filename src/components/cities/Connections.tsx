@@ -8,35 +8,30 @@ import styled from "styled-components";
 interface ConnectionsProps {
   cityLookup: Record<string, FetchMap_fetchMap_cities>;
   connections: FetchMap_fetchMap_connections[];
-  tempPositions: Record<string, [number, number]>
 }
 
-
-export const Connections: React.FC<ConnectionsProps> = ({ cityLookup, connections, tempPositions }) => {
-  const getLat = (city: FetchMap_fetchMap_cities) => tempPositions[city.name] ? tempPositions[city.name][0] : city.lat;
-  const getLng = (city: FetchMap_fetchMap_cities) => tempPositions[city.name] ? tempPositions[city.name][1] : city.lng;
-  
+export const Connections: React.FC<ConnectionsProps> = ({ cityLookup, connections }) => {
   return (
     <React.Fragment>
       {connections.map((connection) => {
         const cities = connection.cities.map(({ id }) => cityLookup[id]);
 
         const midpoint = {
-          lat: 0.5 * (getLat(cities[0]) + getLat(cities[1])),
-          lng: 0.5 * (getLng(cities[0]) + getLng(cities[1]))
+          lat: 0.5 * (cities[0].lat + cities[1].lat),
+          lng: 0.5 * (cities[0].lng + cities[1].lng),
         };
 
         return (
           <div key={connection.id}>
             <Polyline
-              positions={cities.map(c => ({ lat: getLat(c), lng: getLng(c) }))}
+              positions={cities.map(c => ({ lat: c.lat, lng: c.lng }))}
               color="#333"
               weight={3}
               dashArray="20"
               lineCap="butt"
             />
             <Polyline
-              positions={cities.map(c => ({ lat: getLat(c), lng: getLng(c) }))}
+              positions={cities.map(c => ({ lat: c.lat, lng: c.lng }))}
               color="#bbb"
               weight={3}
               dashArray="20"

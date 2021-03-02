@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
-export const MAP_QUERY = gql`
-  query FetchMap($mapName: String!, $regions: [Int!]) {
-    fetchMap(mapName: $mapName, regions: $regions) {
+export const SAVE_MAP_MUTATION = gql`
+  mutation SaveMap($mapInput: MapInput!) {
+    saveMap(mapInput: $mapInput) {
       id
       name
       cities {

@@ -9,24 +9,28 @@ import { playerColors } from "../../constants";
 
 interface CityMarkerProps {
   city: FetchMap_fetchMap_cities;
-  colors: Color[];
-  era: number;
-  isSelected: boolean;
-  selectedColor: Color;
-  onClick: () => void;
-  tempPositions: Record<string, [number, number]>;
+  colors?: Color[];
+  era?: number;
+  isSelected?: boolean;
+  selectedColor?: Color;
+  onClick?: () => void;
   hasNuclearPower: boolean;
+  isDraggable?: boolean;
+  onDragEnd?: (pos: { lat: number; lng: number }) => void;
 }
+
+const noop = () => {};
 
 export const CityMarker: React.FC<CityMarkerProps> = ({
   city,
-  colors,
-  era,
-  isSelected,
-  selectedColor,
-  onClick,
-  tempPositions,
+  colors = [],
+  era = 3,
+  isSelected = false,
+  selectedColor = Color.BLUE,
+  onClick = noop,
   hasNuclearPower,
+  isDraggable = false,
+  onDragEnd,
 }) => {
   const iconHtml = renderToString(<City
     city={city}
@@ -37,13 +41,13 @@ export const CityMarker: React.FC<CityMarkerProps> = ({
     hasNuclearPower={hasNuclearPower}
   />);
   
-  const position = tempPositions[city.name] || [city.lat, city.lng]; // TEMP
-
   return (
     <Marker
-      position={position}
+      position={[city.lat, city.lng]}
       onClick={onClick}
       icon={divIcon({iconSize: [60, 30], className: `city-icon-${city.id}`, html: iconHtml })}
+      draggable={isDraggable}
+      onDragEnd={(e: any) => onDragEnd && onDragEnd(e.target._latlng)}
     />
   );
 }

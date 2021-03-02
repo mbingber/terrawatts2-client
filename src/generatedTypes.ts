@@ -753,6 +753,7 @@ export interface FetchMap_fetchMap_connections {
 }
 
 export interface FetchMap_fetchMap {
+  id: string;
   name: string;
   cities: FetchMap_fetchMap_cities[];
   connections: FetchMap_fetchMap_connections[];
@@ -764,7 +765,7 @@ export interface FetchMap {
 
 export interface FetchMapVariables {
   mapName: string;
-  regions: number[];
+  regions?: number[] | null;
 }
 
 
@@ -951,6 +952,47 @@ export interface PutUpPlantVariables {
   gameId: string;
   plantId?: string | null;
   bid?: number | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: SaveMap
+// ====================================================
+
+export interface SaveMap_saveMap_cities {
+  id: string;
+  name: string;
+  lat: number;
+  lng: number;
+  region: number;
+}
+
+export interface SaveMap_saveMap_connections_cities {
+  id: string;
+}
+
+export interface SaveMap_saveMap_connections {
+  id: string;
+  cost: number;
+  cities: SaveMap_saveMap_connections_cities[];
+}
+
+export interface SaveMap_saveMap {
+  id: string;
+  name: string;
+  cities: SaveMap_saveMap_cities[];
+  connections: SaveMap_saveMap_connections[];
+}
+
+export interface SaveMap {
+  saveMap: SaveMap_saveMap;
+}
+
+export interface SaveMapVariables {
+  mapInput: MapInput;
 }
 
 
@@ -1252,6 +1294,20 @@ export interface ResourcesInput {
 export interface HybridChoiceInput {
   coal: number;
   oil: number;
+}
+
+// 
+export interface MapInput {
+  id: string;
+  name: string;
+  cities: CityInput[];
+}
+
+// 
+export interface CityInput {
+  id: string;
+  lat: number;
+  lng: number;
 }
 
 //==============================================================
