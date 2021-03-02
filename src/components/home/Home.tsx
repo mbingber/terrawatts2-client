@@ -20,8 +20,6 @@ export const Home: React.FC = () => {
     pollInterval: 2000
   });
 
-  console.log("RENDERING HOME");
-
   const [startGame, { loading: gameLoading }] = useMutation<CreateGame, CreateGameVariables>(CREATE_GAME_MUTATION, {
     onCompleted: (data) => {
       if (data && data.createGame) {
@@ -51,7 +49,7 @@ export const Home: React.FC = () => {
 
   const [selectedMap, setSelectedMap] = React.useState("USA");
 
-  const mapDropdownOptions = ["USA", "Germany", "Italy", "Seattle", "Northern Europe", "China"]
+  const mapDropdownOptions = ["USA", "Germany", "Italy", "Seattle", "Northern Europe", "China", "France"]
     .map(mapName => ({
       key: mapName,
       value: mapName,
