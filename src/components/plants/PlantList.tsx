@@ -1,12 +1,12 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { PlantCard } from "./PlantCard";
-import { GetPlants_fetchPlants, GetCurrentUser } from "../../generatedTypes";
+import { GetPlants_fetchPlants } from "../../generatedTypes";
 
 interface PlantListProps {
   plants: GetPlants_fetchPlants[];
   emptyPlantIds?: string[];
-  isAvailable?: (idx: number) => boolean;
+  isAvailable?: (plant: GetPlants_fetchPlants, idx: number) => boolean;
   hoverable?: boolean;
   handlePlantClick?: (plant: GetPlants_fetchPlants, index: number) => () => void;
 }
@@ -25,7 +25,7 @@ export const PlantList: React.FC<PlantListProps> = ({
       <Plants>
         {plants.map((plant, idx) => (
           <PlantContainer
-            available={isAvailable(idx)}
+            available={isAvailable(plant, idx)}
             hoverable={hoverable} 
             key={plant.id}
             onClick={handlePlantClick(plant, idx)}
