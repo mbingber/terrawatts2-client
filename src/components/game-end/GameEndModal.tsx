@@ -13,11 +13,14 @@ const messages: Record<string, string> = {
   Seattle: 'Nice work, Bezos',
   China: '好游戏',
   ['Northern Europe']: 'Hyvä peli',
+  France: 'Bien joué',
 };
 
 interface GameEndModalProps {
   mapName: string;
 }
+
+const sum = (nums: number[]) => nums.reduce((a, b) => a + b, 0);
 
 export const GameEndModal: React.FC<GameEndModalProps> = ({ mapName }) => {
   const { loading, error, data } = useGameOverData();
@@ -41,10 +44,10 @@ export const GameEndModal: React.FC<GameEndModalProps> = ({ mapName }) => {
             <PlayerStats>
               <CityIcon color="black" empty height={32} number={player.numPowered} strokeWidth={0.2} />
               <Money>${player.money}</Money>
-              Plants:<Money>${player.totalPlantSpend}</Money>
-              Resources:<Money>${player.totalResourceSpend}</Money>
-              Cities:<Money>${player.totalCitySpend}</Money>
-              Earned:<Money>${player.totalEarn}</Money>
+              Plants:<Money>${sum(player.spendData.PLANT)}</Money>
+              Resources:<Money>${sum(player.spendData.RESOURCE)}</Money>
+              Cities:<Money>${sum(player.spendData.CITY)}</Money>
+              Earned:<Money>${sum(player.spendData.POWER)}</Money>
             </PlayerStats>
           </Player>
         ))}

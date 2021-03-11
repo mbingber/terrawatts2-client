@@ -7,13 +7,16 @@ export const GET_GAME_OVER_DATA_QUERY = gql`
       winOrder {
         username
         color
-        numPowered
         money
         won
-        totalPlantSpend
-        totalResourceSpend
-        totalCitySpend
-        totalEarn
+        numPowered
+        numCities
+        spendData {
+          PLANT
+          RESOURCE
+          CITY
+          POWER
+        }
       }
     }
   }

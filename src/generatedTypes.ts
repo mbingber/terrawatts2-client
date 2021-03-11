@@ -622,16 +622,21 @@ export interface GetCurrentUser {
 // GraphQL query operation: GetGameOverData
 // ====================================================
 
+export interface GetGameOverData_getGameOverData_winOrder_spendData {
+  PLANT: number[];
+  RESOURCE: number[];
+  CITY: number[];
+  POWER: number[];
+}
+
 export interface GetGameOverData_getGameOverData_winOrder {
   username: string;
   color: Color;
-  numPowered: number;
   money: number;
   won: boolean;
-  totalPlantSpend: number;
-  totalResourceSpend: number;
-  totalCitySpend: number;
-  totalEarn: number;
+  numPowered: number;
+  numCities: number;
+  spendData: GetGameOverData_getGameOverData_winOrder_spendData;
 }
 
 export interface GetGameOverData_getGameOverData {

@@ -4,7 +4,8 @@ import { ApolloClient, split, HttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import Cookies from "js-cookie";
 
-const isProd = process.env.NODE_ENV === "production";
+// const isProd = process.env.NODE_ENV === "production";
+const isProd = true; // TEMP
 
 const url = isProd ? "terrawatts2-server.herokuapp.com" : "localhost:4000"
 
