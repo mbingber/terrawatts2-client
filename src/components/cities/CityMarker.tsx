@@ -6,6 +6,7 @@ import { Marker } from "react-leaflet";
 import { divIcon } from "leaflet";
 import { CityIcon } from "./CityIcon";
 import { playerColors } from "../../constants";
+import { useDebouncedCallback } from 'use-debounce';
 
 interface CityMarkerProps {
   city: FetchMap_fetchMap_cities;
@@ -40,11 +41,13 @@ export const CityMarker: React.FC<CityMarkerProps> = ({
     selectedColor={selectedColor}
     hasNuclearPower={hasNuclearPower}
   />);
+
+  const debouncedOnClick = useDebouncedCallback(onClick, 20)
   
   return (
     <Marker
       position={[city.lat, city.lng]}
-      onClick={onClick}
+      onClick={debouncedOnClick}
       icon={divIcon({iconSize: [60, 30], className: `city-icon-${city.id}`, html: iconHtml })}
       draggable={isDraggable}
       onDragEnd={(e: any) => onDragEnd && onDragEnd(e.target._latlng)}
