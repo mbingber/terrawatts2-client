@@ -4,7 +4,7 @@ import { GetPlants, GetPlants_fetchPlants } from "../generatedTypes";
 import { PLANTS_QUERY } from "../graphql/plantsQuery";
 
 type PlantMap = Record<string, GetPlants_fetchPlants>;
-type PlantGetter = (plantId: string) => GetPlants_fetchPlants | null;
+export type PlantGetter = (plantId: string) => GetPlants_fetchPlants | null;
 
 const Context = React.createContext<PlantGetter>(() => null);
 

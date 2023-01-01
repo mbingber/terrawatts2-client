@@ -6,27 +6,32 @@ import { Marker } from "react-leaflet";
 import { divIcon } from "leaflet";
 import { CityIcon } from "./CityIcon";
 import { playerColors } from "../../constants";
+import { useDebouncedCallback } from 'use-debounce';
 
 interface CityMarkerProps {
   city: FetchMap_fetchMap_cities;
-  colors: Color[];
-  era: number;
-  isSelected: boolean;
-  selectedColor: Color;
-  onClick: () => void;
-  tempPositions: Record<string, [number, number]>;
+  colors?: Color[];
+  era?: number;
+  isSelected?: boolean;
+  selectedColor?: Color;
+  onClick?: () => void;
   hasNuclearPower: boolean;
+  isDraggable?: boolean;
+  onDragEnd?: (pos: { lat: number; lng: number }) => void;
 }
+
+const noop = () => {};
 
 export const CityMarker: React.FC<CityMarkerProps> = ({
   city,
-  colors,
-  era,
-  isSelected,
-  selectedColor,
-  onClick,
-  tempPositions,
+  colors = [],
+  era = 3,
+  isSelected = false,
+  selectedColor = Color.BLUE,
+  onClick = noop,
   hasNuclearPower,
+  isDraggable = false,
+  onDragEnd,
 }) => {
   const iconHtml = renderToString(<City
     city={city}
@@ -36,14 +41,16 @@ export const CityMarker: React.FC<CityMarkerProps> = ({
     selectedColor={selectedColor}
     hasNuclearPower={hasNuclearPower}
   />);
-  
-  const position = tempPositions[city.name] || [city.lat, city.lng]; // TEMP
 
+  const debouncedOnClick = useDebouncedCallback(onClick, 20)
+  
   return (
     <Marker
-      position={position}
-      onClick={onClick}
+      position={[city.lat, city.lng]}
+      onClick={debouncedOnClick}
       icon={divIcon({iconSize: [60, 30], className: `city-icon-${city.id}`, html: iconHtml })}
+      draggable={isDraggable}
+      onDragEnd={(e: any) => onDragEnd && onDragEnd(e.target._latlng)}
     />
   );
 }

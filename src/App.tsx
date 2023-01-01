@@ -14,6 +14,7 @@ import { Profile } from "./components/home/Profile";
 import { useQuery } from "@apollo/client";
 import { GetCurrentUser } from "./generatedTypes";
 import { GET_CURRENT_USER_QUERY } from "./graphql/getCurrentUser";
+import { MapEditor } from "./components/cities/MapEditor";
 
 export const App: React.FC = () => {
   const { loading } = useQuery<GetCurrentUser>(GET_CURRENT_USER_QUERY);
@@ -31,6 +32,7 @@ export const App: React.FC = () => {
           <Route exact path="/signup" children={<Signup />} />
           <Route exact path="/login" children={<LoginForm />} />
           <Route exact path="/game/:gameId" children={<Game />} />
+          <Route exact path="/map-editor/:mapName" children={<MapEditor />} />
           {/* <Route path="/all-plants" children={<AllPlants />}></Route> */}
           <Route exact path="/profile" children={<Profile />} />
           <Route exact path="/" children={<Home />} />

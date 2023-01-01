@@ -44,6 +44,7 @@ export const GameStateFragment = gql`
       cost
       username
     }
+    isOver
   }
 
   # Fragments

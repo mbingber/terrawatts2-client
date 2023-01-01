@@ -69,6 +69,7 @@ export interface BidOnPlant_bidOnPlant {
   cityList: BidOnPlant_bidOnPlant_cityList[];
   auction: BidOnPlant_bidOnPlant_auction | null;
   plantPhaseEvents: BidOnPlant_bidOnPlant_plantPhaseEvents[];
+  isOver: boolean;
 }
 
 export interface BidOnPlant {
@@ -150,6 +151,7 @@ export interface BuyCities_buyCities {
   cityList: BuyCities_buyCities_cityList[];
   auction: BuyCities_buyCities_auction | null;
   plantPhaseEvents: BuyCities_buyCities_plantPhaseEvents[];
+  isOver: boolean;
 }
 
 export interface BuyCities {
@@ -232,6 +234,7 @@ export interface BuyResources_buyResources {
   cityList: BuyResources_buyResources_cityList[];
   auction: BuyResources_buyResources_auction | null;
   plantPhaseEvents: BuyResources_buyResources_plantPhaseEvents[];
+  isOver: boolean;
 }
 
 export interface BuyResources {
@@ -354,6 +357,7 @@ export interface DiscardPlant_discardPlant {
   cityList: DiscardPlant_discardPlant_cityList[];
   auction: DiscardPlant_discardPlant_auction | null;
   plantPhaseEvents: DiscardPlant_discardPlant_plantPhaseEvents[];
+  isOver: boolean;
 }
 
 export interface DiscardPlant {
@@ -488,6 +492,7 @@ export interface GetGame_getGame_state {
   cityList: GetGame_getGame_state_cityList[];
   auction: GetGame_getGame_state_auction | null;
   plantPhaseEvents: GetGame_getGame_state_plantPhaseEvents[];
+  isOver: boolean;
 }
 
 export interface GetGame_getGame {
@@ -579,6 +584,7 @@ export interface GameStateUpdated_gameStateUpdated {
   cityList: GameStateUpdated_gameStateUpdated_cityList[];
   auction: GameStateUpdated_gameStateUpdated_auction | null;
   plantPhaseEvents: GameStateUpdated_gameStateUpdated_plantPhaseEvents[];
+  isOver: boolean;
 }
 
 export interface GameStateUpdated {
@@ -606,6 +612,44 @@ export interface GetCurrentUser_getCurrentUser {
 
 export interface GetCurrentUser {
   getCurrentUser: GetCurrentUser_getCurrentUser | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetGameOverData
+// ====================================================
+
+export interface GetGameOverData_getGameOverData_winOrder_spendData {
+  PLANT: number[];
+  RESOURCE: number[];
+  CITY: number[];
+  POWER: number[];
+}
+
+export interface GetGameOverData_getGameOverData_winOrder {
+  username: string;
+  color: Color;
+  money: number;
+  won: boolean;
+  numPowered: number;
+  numCities: number;
+  spendData: GetGameOverData_getGameOverData_winOrder_spendData;
+}
+
+export interface GetGameOverData_getGameOverData {
+  isOver: boolean;
+  winOrder: GetGameOverData_getGameOverData_winOrder[];
+}
+
+export interface GetGameOverData {
+  getGameOverData: GetGameOverData_getGameOverData | null;
+}
+
+export interface GetGameOverDataVariables {
+  id: string;
 }
 
 
@@ -714,6 +758,7 @@ export interface FetchMap_fetchMap_connections {
 }
 
 export interface FetchMap_fetchMap {
+  id: string;
   name: string;
   cities: FetchMap_fetchMap_cities[];
   connections: FetchMap_fetchMap_connections[];
@@ -725,7 +770,7 @@ export interface FetchMap {
 
 export interface FetchMapVariables {
   mapName: string;
-  regions: number[];
+  regions?: number[] | null;
 }
 
 
@@ -818,6 +863,7 @@ export interface PowerUp_powerUp {
   cityList: PowerUp_powerUp_cityList[];
   auction: PowerUp_powerUp_auction | null;
   plantPhaseEvents: PowerUp_powerUp_plantPhaseEvents[];
+  isOver: boolean;
 }
 
 export interface PowerUp {
@@ -900,6 +946,7 @@ export interface PutUpPlant_putUpPlant {
   cityList: PutUpPlant_putUpPlant_cityList[];
   auction: PutUpPlant_putUpPlant_auction | null;
   plantPhaseEvents: PutUpPlant_putUpPlant_plantPhaseEvents[];
+  isOver: boolean;
 }
 
 export interface PutUpPlant {
@@ -910,6 +957,47 @@ export interface PutUpPlantVariables {
   gameId: string;
   plantId?: string | null;
   bid?: number | null;
+}
+
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: SaveMap
+// ====================================================
+
+export interface SaveMap_saveMap_cities {
+  id: string;
+  name: string;
+  lat: number;
+  lng: number;
+  region: number;
+}
+
+export interface SaveMap_saveMap_connections_cities {
+  id: string;
+}
+
+export interface SaveMap_saveMap_connections {
+  id: string;
+  cost: number;
+  cities: SaveMap_saveMap_connections_cities[];
+}
+
+export interface SaveMap_saveMap {
+  id: string;
+  name: string;
+  cities: SaveMap_saveMap_cities[];
+  connections: SaveMap_saveMap_connections[];
+}
+
+export interface SaveMap {
+  saveMap: SaveMap_saveMap;
+}
+
+export interface SaveMapVariables {
+  mapInput: MapInput;
 }
 
 
@@ -1056,6 +1144,7 @@ export interface Game_state {
   cityList: Game_state_cityList[];
   auction: Game_state_auction | null;
   plantPhaseEvents: Game_state_plantPhaseEvents[];
+  isOver: boolean;
 }
 
 export interface Game {
@@ -1139,6 +1228,7 @@ export interface GameState {
   cityList: GameState_cityList[];
   auction: GameState_auction | null;
   plantPhaseEvents: GameState_plantPhaseEvents[];
+  isOver: boolean;
 }
 
 
@@ -1209,6 +1299,20 @@ export interface ResourcesInput {
 export interface HybridChoiceInput {
   coal: number;
   oil: number;
+}
+
+// 
+export interface MapInput {
+  id: string;
+  name: string;
+  cities: CityInput[];
+}
+
+// 
+export interface CityInput {
+  id: string;
+  lat: number;
+  lng: number;
 }
 
 //==============================================================

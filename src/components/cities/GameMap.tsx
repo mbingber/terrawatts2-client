@@ -15,12 +15,6 @@ const tileUrl = `https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?acce
 
 interface MapProps {}
 
-const tempPositions: Record<string, [number, number]> = {
-  // Phoenix: [33.4, -112],
-  // Boston: [44, -71],
-  // "New York": [41.7, -73.5]
-};
-
 export const GameMap: React.FC<MapProps> = () => {
   const { state: { cityList, playerOrder, info }, map } = useGame();
   const me = useMe();
@@ -74,12 +68,11 @@ export const GameMap: React.FC<MapProps> = () => {
               era={info.era}
               isSelected={cityCart.cityIds.includes(city.id)}
               selectedColor={me && me.color}
-              tempPositions={tempPositions}
               hasNuclearPower={map.name === 'Northern Europe' && city.region > 2}
             />
           )
         })}}
-        <Connections cityLookup={cityLookup} connections={map.connections} tempPositions={tempPositions} />
+        <Connections cityLookup={cityLookup} connections={map.connections} />
       </ReactLeaflet>
     </Container>
   );

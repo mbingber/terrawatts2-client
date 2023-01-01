@@ -36,6 +36,11 @@ const configs: Record<string, MapConfig> = {
     center: [35.9, 104.2],
     minZoom: 4.5,
     maxZoom: 6.5,
+  },
+  France: {
+    center: [46.2, 2.2],
+    minZoom: 6,
+    maxZoom: 8.5,
   }
 };
 
