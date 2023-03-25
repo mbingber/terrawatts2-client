@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "24ba01ee35358672850383eec2c2dfe8",
+    "revision": "2fac1244ae784500675bffd3b7769cdd",
     "url": "/terrawatts2-client/index.html"
   },
   {
-    "revision": "5db786dfb5b10360568c",
+    "revision": "85dcb1595d85e6a243e0",
     "url": "/terrawatts2-client/static/css/2.34ccf2ed.chunk.css"
   },
   {
-    "revision": "95f32251e25ed17d34ec",
+    "revision": "c0db2a3f140ffffe3f4c",
     "url": "/terrawatts2-client/static/css/main.2034073b.chunk.css"
   },
   {
-    "revision": "5db786dfb5b10360568c",
-    "url": "/terrawatts2-client/static/js/2.00a53186.chunk.js"
+    "revision": "85dcb1595d85e6a243e0",
+    "url": "/terrawatts2-client/static/js/2.4c0c9509.chunk.js"
   },
   {
-    "revision": "95f32251e25ed17d34ec",
-    "url": "/terrawatts2-client/static/js/main.8c8f7fc6.chunk.js"
+    "revision": "c0db2a3f140ffffe3f4c",
+    "url": "/terrawatts2-client/static/js/main.ee4be7c0.chunk.js"
   },
   {
     "revision": "645568d5cc4994b959c0",
