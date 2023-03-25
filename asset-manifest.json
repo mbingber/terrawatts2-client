@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/terrawatts2-client/static/css/main.2034073b.chunk.css",
-    "main.js": "/terrawatts2-client/static/js/main.ee4be7c0.chunk.js",
-    "main.js.map": "/terrawatts2-client/static/js/main.ee4be7c0.chunk.js.map",
+    "main.js": "/terrawatts2-client/static/js/main.901e65e3.chunk.js",
+    "main.js.map": "/terrawatts2-client/static/js/main.901e65e3.chunk.js.map",
     "runtime-main.js": "/terrawatts2-client/static/js/runtime-main.b1030d21.js",
     "runtime-main.js.map": "/terrawatts2-client/static/js/runtime-main.b1030d21.js.map",
     "static/css/2.34ccf2ed.chunk.css": "/terrawatts2-client/static/css/2.34ccf2ed.chunk.css",
-    "static/js/2.4c0c9509.chunk.js": "/terrawatts2-client/static/js/2.4c0c9509.chunk.js",
-    "static/js/2.4c0c9509.chunk.js.map": "/terrawatts2-client/static/js/2.4c0c9509.chunk.js.map",
+    "static/js/2.5a126b2c.chunk.js": "/terrawatts2-client/static/js/2.5a126b2c.chunk.js",
+    "static/js/2.5a126b2c.chunk.js.map": "/terrawatts2-client/static/js/2.5a126b2c.chunk.js.map",
     "index.html": "/terrawatts2-client/index.html",
-    "precache-manifest.395dabaed87430b44b31786a143423e5.js": "/terrawatts2-client/precache-manifest.395dabaed87430b44b31786a143423e5.js",
+    "precache-manifest.6d5a3a46d10a552695fbba4630f450e5.js": "/terrawatts2-client/precache-manifest.6d5a3a46d10a552695fbba4630f450e5.js",
     "service-worker.js": "/terrawatts2-client/service-worker.js",
     "static/css/2.34ccf2ed.chunk.css.map": "/terrawatts2-client/static/css/2.34ccf2ed.chunk.css.map",
     "static/css/main.2034073b.chunk.css.map": "/terrawatts2-client/static/css/main.2034073b.chunk.css.map",
@@ -22,8 +22,8 @@
   "entrypoints": [
     "static/js/runtime-main.b1030d21.js",
     "static/css/2.34ccf2ed.chunk.css",
-    "static/js/2.4c0c9509.chunk.js",
+    "static/js/2.5a126b2c.chunk.js",
     "static/css/main.2034073b.chunk.css",
-    "static/js/main.ee4be7c0.chunk.js"
+    "static/js/main.901e65e3.chunk.js"
   ]
 }
