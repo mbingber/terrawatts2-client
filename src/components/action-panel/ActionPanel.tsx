@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useGame } from "../../hooks/useGame";
 import { useActionOnMe } from "../../hooks/useActionOnMe";
@@ -11,48 +11,91 @@ import { PowerUpPanel } from "./PowerUpPanel";
 import { WaitingPanel } from "./WaitingPanel";
 import { DiscardPlantPanel } from "./DiscardPlantPanel";
 import { CartsContext } from "../CartsContext";
+import useSound from "use-sound";
+import boopSfx from "../../assets/sounds/boop.mp3";
 
 interface ActionPanelProps {}
 
 export const ActionPanel: React.FC<ActionPanelProps> = () => {
-  const { state: { info: { actionType }, isOver } } = useGame();
+  const [playSound] = useSound(boopSfx);
+
+  const {
+    state: {
+      info: { actionType },
+      isOver,
+    },
+  } = useGame();
   const actionOnMe = useActionOnMe(actionType);
   const carts = React.useContext(CartsContext);
+
+  useEffect(() => {
+    if (actionOnMe) {
+      playSound();
+    }
+  }, [actionOnMe, playSound]);
 
   if (isOver) {
     return <Container />;
   }
 
   if (!actionOnMe && actionType !== ActionType.BID_ON_PLANT) {
-    return (<Container><WaitingPanel /></Container>);
+    return (
+      <Container>
+        <WaitingPanel />
+      </Container>
+    );
   }
 
   if (actionType === ActionType.PUT_UP_PLANT) {
-    return (<Container><PutUpPlantPanel plantCart={carts.plantCart} /></Container>);
+    return (
+      <Container>
+        <PutUpPlantPanel plantCart={carts.plantCart} />
+      </Container>
+    );
   }
-  
+
   if (actionType === ActionType.BID_ON_PLANT) {
-    return (<Container><AuctionPanel /></Container>);
+    return (
+      <Container>
+        <AuctionPanel />
+      </Container>
+    );
   }
 
   if (actionType === ActionType.DISCARD_PLANT) {
-    return (<Container><DiscardPlantPanel discardCart={carts.discardCart} /></Container>)
+    return (
+      <Container>
+        <DiscardPlantPanel discardCart={carts.discardCart} />
+      </Container>
+    );
   }
-  
+
   if (actionType === ActionType.BUY_RESOURCES) {
-    return (<Container><BuyResourcesPanel resourceCart={carts.resourceCart} /></Container>);
+    return (
+      <Container>
+        <BuyResourcesPanel resourceCart={carts.resourceCart} />
+      </Container>
+    );
   }
 
   if (actionType === ActionType.BUY_CITIES) {
-    return (<Container><BuyCitiesPanel cityCart={carts.cityCart} /></Container>);
+    return (
+      <Container>
+        <BuyCitiesPanel cityCart={carts.cityCart} />
+      </Container>
+    );
   }
 
   if (actionType === ActionType.POWER_UP) {
-    return (<Container><PowerUpPanel powerCart={carts.powerCart} /></Container>);
+    return (
+      <Container>
+        <PowerUpPanel powerCart={carts.powerCart} />
+      </Container>
+    );
   }
 
   return null;
-}
+};
 
 const Container = styled.div`
   height: 208px;
