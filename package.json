@@ -3,15 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "12.13.1",
+    "node": "18.12.1",
     "npm": "6.4.1"
   },
   "homepage": "https://mbingber.github.io/terrawatts2-client",
   "dependencies": {
     "@apollo/client": "3.1.4",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
     "@types/color": "^3.0.1",
     "@types/jest": "^24.0.0",
     "@types/node": "^12.0.0",
@@ -45,7 +42,6 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts --max_old_space_size=4096 build",
-    "test": "react-scripts test",
     "eject": "react-scripts eject",
     "generate-schema": "apollo-codegen introspect-schema http://localhost:4000 --output schema.json",
     "generate-types": "apollo-codegen generate src/graphql/*.ts --schema schema.json --target typescript --output src/generatedTypes.ts",
