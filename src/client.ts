@@ -7,17 +7,17 @@ import Cookies from "js-cookie";
 // const isProd = process.env.NODE_ENV === "production";
 const isProd = true; // TEMP
 
-const url = isProd ? "terrawatts2-server.herokuapp.com" : "localhost:4000"
+const url = isProd ? "terrawatts2-server.fly.dev" : "localhost:4000"
 
 // Create an http link:
 const httpLink = new HttpLink({
-  uri: `http://${url}`,
+  uri: `https://${url}`,
   credentials: 'include'
 });
 
 // Create a WebSocket link:
 const wsLink = new WebSocketLink({
-  uri: `ws://${url}/graphql`,
+  uri: `wss://${url}/graphql`,
   options: {
     reconnect: true
   }
