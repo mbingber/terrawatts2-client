@@ -6,8 +6,9 @@
     "node": "12.13.1",
     "npm": "6.4.1"
   },
+  "homepage": "https://mbingber.github.io/terrawatts2-client",
   "dependencies": {
-    "@apollo/client": "^3.1.4",
+    "@apollo/client": "3.1.4",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -37,6 +38,10 @@
     "typescript": "~3.7.2",
     "use-debounce": "^6.0.1"
   },
+  "devDependencies": {
+    "@types/js-cookie": "^2.2.6",
+    "gh-pages": "^5.0.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts --max_old_space_size=4096 build",
@@ -44,7 +49,9 @@
     "eject": "react-scripts eject",
     "generate-schema": "apollo-codegen introspect-schema http://localhost:4000 --output schema.json",
     "generate-types": "apollo-codegen generate src/graphql/*.ts --schema schema.json --target typescript --output src/generatedTypes.ts",
-    "generate": "yarn generate-schema && yarn generate-types"
+    "generate": "yarn generate-schema && yarn generate-types",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -60,8 +67,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@types/js-cookie": "^2.2.6"
   }
 }

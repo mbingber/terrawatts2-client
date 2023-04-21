@@ -94,7 +94,7 @@ const MapEditorBase: React.FC<{ map: FetchMap_fetchMap }> = ({ map }) => {
               onDragEnd={({ lat, lng }) => setLatLng({ id: city.id, lat, lng })}
             />
           )
-        })}}
+        })}
         <Connections cityLookup={cityLookup} connections={map.connections} />
       </ReactLeaflet>
     </>

@@ -1,6 +1,6 @@
 import React from "react";
 import { ToastContainer } from "react-toastify";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 import { Game } from "./components/Game";
 import "react-toastify/dist/ReactToastify.css";
