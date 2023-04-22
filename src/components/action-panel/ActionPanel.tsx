@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useGame } from "../../hooks/useGame";
 import { useActionOnMe } from "../../hooks/useActionOnMe";
@@ -11,14 +11,10 @@ import { PowerUpPanel } from "./PowerUpPanel";
 import { WaitingPanel } from "./WaitingPanel";
 import { DiscardPlantPanel } from "./DiscardPlantPanel";
 import { CartsContext } from "../CartsContext";
-import useSound from "use-sound";
-import boopSfx from "../../assets/sounds/boop.mp3";
 
 interface ActionPanelProps {}
 
 export const ActionPanel: React.FC<ActionPanelProps> = () => {
-  const [playSound] = useSound(boopSfx);
-
   const {
     state: {
       info: { actionType },
@@ -27,12 +23,6 @@ export const ActionPanel: React.FC<ActionPanelProps> = () => {
   } = useGame();
   const actionOnMe = useActionOnMe(actionType);
   const carts = React.useContext(CartsContext);
-
-  useEffect(() => {
-    if (actionOnMe) {
-      playSound();
-    }
-  }, [actionOnMe, playSound]);
 
   if (isOver) {
     return <Container />;
