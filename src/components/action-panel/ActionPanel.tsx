@@ -15,7 +15,12 @@ import { CartsContext } from "../CartsContext";
 interface ActionPanelProps {}
 
 export const ActionPanel: React.FC<ActionPanelProps> = () => {
-  const { state: { info: { actionType }, isOver } } = useGame();
+  const {
+    state: {
+      info: { actionType },
+      isOver,
+    },
+  } = useGame();
   const actionOnMe = useActionOnMe(actionType);
   const carts = React.useContext(CartsContext);
 
@@ -24,35 +29,63 @@ export const ActionPanel: React.FC<ActionPanelProps> = () => {
   }
 
   if (!actionOnMe && actionType !== ActionType.BID_ON_PLANT) {
-    return (<Container><WaitingPanel /></Container>);
+    return (
+      <Container>
+        <WaitingPanel />
+      </Container>
+    );
   }
 
   if (actionType === ActionType.PUT_UP_PLANT) {
-    return (<Container><PutUpPlantPanel plantCart={carts.plantCart} /></Container>);
+    return (
+      <Container>
+        <PutUpPlantPanel plantCart={carts.plantCart} />
+      </Container>
+    );
   }
-  
+
   if (actionType === ActionType.BID_ON_PLANT) {
-    return (<Container><AuctionPanel /></Container>);
+    return (
+      <Container>
+        <AuctionPanel />
+      </Container>
+    );
   }
 
   if (actionType === ActionType.DISCARD_PLANT) {
-    return (<Container><DiscardPlantPanel discardCart={carts.discardCart} /></Container>)
+    return (
+      <Container>
+        <DiscardPlantPanel discardCart={carts.discardCart} />
+      </Container>
+    );
   }
-  
+
   if (actionType === ActionType.BUY_RESOURCES) {
-    return (<Container><BuyResourcesPanel resourceCart={carts.resourceCart} /></Container>);
+    return (
+      <Container>
+        <BuyResourcesPanel resourceCart={carts.resourceCart} />
+      </Container>
+    );
   }
 
   if (actionType === ActionType.BUY_CITIES) {
-    return (<Container><BuyCitiesPanel cityCart={carts.cityCart} /></Container>);
+    return (
+      <Container>
+        <BuyCitiesPanel cityCart={carts.cityCart} />
+      </Container>
+    );
   }
 
   if (actionType === ActionType.POWER_UP) {
-    return (<Container><PowerUpPanel powerCart={carts.powerCart} /></Container>);
+    return (
+      <Container>
+        <PowerUpPanel powerCart={carts.powerCart} />
+      </Container>
+    );
   }
 
   return null;
-}
+};
 
 const Container = styled.div`
   height: 208px;
