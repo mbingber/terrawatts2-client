@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+
 import { useGame } from "../hooks/useGame";
 import { Button, Icon, Modal } from "semantic-ui-react";
 import { useQuery } from "@apollo/client";
@@ -7,34 +8,59 @@ import { GetRevenues } from "../generatedTypes";
 import { GET_REVENUES_QUERY } from "../graphql/getRevenuesQuery";
 import { CityIcon, Arrow } from "./cities/CityIcon";
 import { GameEndModal } from "./game-end/GameEndModal";
+import { usePing } from "../hooks/usePing";
 
 interface SummaryBarProps {}
 
 export const SummaryBar: React.FC<SummaryBarProps> = () => {
   const { state, era2Start, gameEnd, map } = useGame();
 
-  const phaseText = `${state.info.phase[0]}${state.info.phase.slice(1).toLowerCase()}`;
+  const phaseText = `${state.info.phase[0]}${state.info.phase
+    .slice(1)
+    .toLowerCase()}`;
 
   const { data } = useQuery<GetRevenues>(GET_REVENUES_QUERY);
-  const revenues = data && data.getRevenues ? data.getRevenues.slice(0, -1) : [];
-  
+  const revenues =
+    data && data.getRevenues ? data.getRevenues.slice(0, -1) : [];
+
+  const { isMuted, setMuted } = usePing();
+
   return (
     <Container>
       <div>Era {state.info.era}</div>
       <div>Turn {state.info.turn}</div>
       <div>{phaseText} Phase</div>
-      <div>Era 2 start: {era2Start} <CityIcon color="black" height={16} empty /></div>
-      <div>Game end: {gameEnd} <CityIcon color="black" height={16} empty /></div>
+      <div>
+        Era 2 start: {era2Start} <CityIcon color="black" height={16} empty />
+      </div>
+      <div>
+        Game end: {gameEnd} <CityIcon color="black" height={16} empty />
+      </div>
+      <div className="trigger">
+        <Button onClick={() => setMuted(!isMuted)} icon>
+          <Icon name={isMuted ? "mute" : "unmute"} />
+        </Button>
+      </div>
       <div className="trigger">
         <Modal
-          trigger={<Button icon><Icon name="dollar" /></Button>}
+          trigger={
+            <Button icon>
+              <Icon name="dollar" />
+            </Button>
+          }
           size="small"
         >
           <Modal.Content>
             <InnerModal>
               {revenues.map((money, numPowered) => (
                 <PowerInfo key={money}>
-                  <CityIcon color="black" empty height={40} number={numPowered} strokeWidth={0.5} />
+                  <CityIcon
+                    color="black"
+                    empty
+                    height={40}
+                    number={numPowered}
+                    strokeWidth={0.5}
+                  />
                   <Arrow />
                   <div>${money}</div>
                 </PowerInfo>
@@ -50,7 +76,7 @@ export const SummaryBar: React.FC<SummaryBarProps> = () => {
       )}
     </Container>
   );
-}
+};
 
 const Container = styled.div`
   position: absolute;
