@@ -1,18 +1,21 @@
 {
   "files": {
     "main.css": "/terrawatts2-client/static/css/main.2034073b.chunk.css",
-    "main.js": "/terrawatts2-client/static/js/main.36ded976.chunk.js",
-    "main.js.map": "/terrawatts2-client/static/js/main.36ded976.chunk.js.map",
-    "runtime-main.js": "/terrawatts2-client/static/js/runtime-main.b1030d21.js",
-    "runtime-main.js.map": "/terrawatts2-client/static/js/runtime-main.b1030d21.js.map",
+    "main.js": "/terrawatts2-client/static/js/main.a58d88fe.chunk.js",
+    "main.js.map": "/terrawatts2-client/static/js/main.a58d88fe.chunk.js.map",
+    "runtime-main.js": "/terrawatts2-client/static/js/runtime-main.cf6a88d5.js",
+    "runtime-main.js.map": "/terrawatts2-client/static/js/runtime-main.cf6a88d5.js.map",
     "static/css/2.34ccf2ed.chunk.css": "/terrawatts2-client/static/css/2.34ccf2ed.chunk.css",
-    "static/js/2.5a126b2c.chunk.js": "/terrawatts2-client/static/js/2.5a126b2c.chunk.js",
-    "static/js/2.5a126b2c.chunk.js.map": "/terrawatts2-client/static/js/2.5a126b2c.chunk.js.map",
+    "static/js/2.7d9430a2.chunk.js": "/terrawatts2-client/static/js/2.7d9430a2.chunk.js",
+    "static/js/2.7d9430a2.chunk.js.map": "/terrawatts2-client/static/js/2.7d9430a2.chunk.js.map",
+    "static/js/3.2eb8ee01.chunk.js": "/terrawatts2-client/static/js/3.2eb8ee01.chunk.js",
+    "static/js/3.2eb8ee01.chunk.js.map": "/terrawatts2-client/static/js/3.2eb8ee01.chunk.js.map",
     "index.html": "/terrawatts2-client/index.html",
-    "precache-manifest.d1c758b6b25c1ac2e8e45982b223987c.js": "/terrawatts2-client/precache-manifest.d1c758b6b25c1ac2e8e45982b223987c.js",
+    "precache-manifest.b7570a887f39d53f84335a0d3d9e20e3.js": "/terrawatts2-client/precache-manifest.b7570a887f39d53f84335a0d3d9e20e3.js",
     "service-worker.js": "/terrawatts2-client/service-worker.js",
     "static/css/2.34ccf2ed.chunk.css.map": "/terrawatts2-client/static/css/2.34ccf2ed.chunk.css.map",
     "static/css/main.2034073b.chunk.css.map": "/terrawatts2-client/static/css/main.2034073b.chunk.css.map",
+    "static/media/boop.mp3": "/terrawatts2-client/static/media/boop.b1ac9adc.mp3",
     "static/media/semantic.min.css": "/terrawatts2-client/static/media/outline-icons.ef60a4f6.woff",
     "static/media/oil.png": "/terrawatts2-client/static/media/oil.9fac5c6f.png",
     "static/media/trash.png": "/terrawatts2-client/static/media/trash.a2636ebc.png",
@@ -20,10 +23,10 @@
     "static/media/uranium.png": "/terrawatts2-client/static/media/uranium.4393d723.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.b1030d21.js",
+    "static/js/runtime-main.cf6a88d5.js",
     "static/css/2.34ccf2ed.chunk.css",
-    "static/js/2.5a126b2c.chunk.js",
+    "static/js/2.7d9430a2.chunk.js",
     "static/css/main.2034073b.chunk.css",
-    "static/js/main.36ded976.chunk.js"
+    "static/js/main.a58d88fe.chunk.js"
   ]
 }

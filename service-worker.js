@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/terrawatts2-client/precache-manifest.d1c758b6b25c1ac2e8e45982b223987c.js"
+  "/terrawatts2-client/precache-manifest.b7570a887f39d53f84335a0d3d9e20e3.js"
 );
 
 self.addEventListener('message', (event) => {
