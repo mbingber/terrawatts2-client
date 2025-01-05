@@ -14,7 +14,8 @@ import { CityMarker } from "./CityMarker";
 import { Connections } from "./Connections";
 import { SAVE_MAP_MUTATION } from "../../graphql/saveMapMutation";
 
-const tileUrl = `https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=${process.env.REACT_APP_MAPBOX_API_KEY}`;
+const mapboxKey = 'pk.eyJ1IjoibWJpbmdiZXIiLCJhIjoiY2l6eGcxMmw2MDJreTMycXJqeTVuejNvaSJ9.bA_ZZVqysUAZs7wyw0ckRw'
+const tileUrl = `https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=${mapboxKey}`;
 
 const MapEditorBase: React.FC<{ map: FetchMap_fetchMap }> = ({ map }) => {
   const [state, setState] = React.useState(map);
