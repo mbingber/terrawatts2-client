@@ -44,7 +44,7 @@ export const AuctionPanel: React.FC<AuctionPanelProps> = () => {
         },
       })
     }
-  }, [state, isAutobid]);
+  }, [auction.bid, bidIsDisabled, isAutobid]);
   
   const { clockwiseOrder = 0 } = me && players.find((p) => p.username === me.username) || {};
 
