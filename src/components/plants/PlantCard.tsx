@@ -64,6 +64,7 @@ export const PlantCard: React.FC<PlantCardProps> = (props) => {
             y={0.58}
             textAnchor="middle"
             alignmentBaseline="middle"
+            dominantBaseline="middle"
             fontSize={0.86}
             fill="none"
             strokeWidth={0.03}
