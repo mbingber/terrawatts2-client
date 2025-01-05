@@ -32,6 +32,7 @@ export const CityIcon: React.FC<CityIconProps> = ({ color, height = 16, empty, n
             y={6.5}
             textAnchor="middle"
             alignmentBaseline="middle"
+            dominantBaseline="middle"
             style={{ fontSize: 5 }}
           >{number}</text>
         )}

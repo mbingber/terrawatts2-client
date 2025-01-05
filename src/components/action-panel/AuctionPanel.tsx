@@ -116,10 +116,24 @@ export const AuctionPanel: React.FC<AuctionPanelProps> = () => {
           </g>
         )}
         {isLeading && (
-          <text x={xBid} y={yBid} textAnchor="middle" alignmentBaseline="middle" style={{ fontSize: 0.25 }} >{auction.bid}</text>
+          <text
+            x={xBid}
+            y={yBid}
+            textAnchor="middle"
+            alignmentBaseline="middle"
+            dominantBaseline="middle"
+            style={{ fontSize: 0.25 }}
+          >{auction.bid}</text>
         )}
         {isActive && (
-          <text x={xBid} y={yBid} textAnchor="middle" alignmentBaseline="middle" style={{ fontSize: 0.25 }} >!</text>
+          <text
+            x={xBid}
+            y={yBid}
+            textAnchor="middle"
+            alignmentBaseline="middle"
+            dominantBaseline="middle"
+            style={{ fontSize: 0.25 }}
+          >!</text>
         )}
       </React.Fragment>
     );
