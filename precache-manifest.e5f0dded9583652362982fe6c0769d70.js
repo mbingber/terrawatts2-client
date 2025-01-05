@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "646801ae877a17df39da627b6409fcb5",
+    "revision": "022eb486b7f777dd4e0aaa6fe45c3303",
     "url": "/terrawatts2-client/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/terrawatts2-client/static/css/2.34ccf2ed.chunk.css"
   },
   {
-    "revision": "90b65701280686f12a94",
+    "revision": "f42adc08402ceff4a3df",
     "url": "/terrawatts2-client/static/css/main.2034073b.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/terrawatts2-client/static/js/3.2eb8ee01.chunk.js"
   },
   {
-    "revision": "90b65701280686f12a94",
-    "url": "/terrawatts2-client/static/js/main.a58d88fe.chunk.js"
+    "revision": "f42adc08402ceff4a3df",
+    "url": "/terrawatts2-client/static/js/main.805e759a.chunk.js"
   },
   {
     "revision": "c204b32173513f64014a",
