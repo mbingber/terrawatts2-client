@@ -1,0 +1,2 @@
+const mapboxKey = 'pk.eyJ1IjoibWJpbmdiZXIiLCJhIjoiY2l6eGcxMmw2MDJreTMycXJqeTVuejNvaSJ9.bA_ZZVqysUAZs7wyw0ckRw'
+export const tileUrl = `https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=${mapboxKey}`;

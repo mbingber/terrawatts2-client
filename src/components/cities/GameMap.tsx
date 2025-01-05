@@ -10,8 +10,7 @@ import { CityMarker } from "./CityMarker";
 import { useMe } from "../../hooks/useMe";
 import { getMapConfig } from "./mapConfig";
 import { CartsContext } from "../CartsContext";
-
-const tileUrl = `https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=${process.env.REACT_APP_MAPBOX_API_KEY}`;
+import { tileUrl } from "./tileUrl";
 
 interface MapProps {}
 
@@ -71,7 +70,7 @@ export const GameMap: React.FC<MapProps> = () => {
               hasNuclearPower={map.name === 'Northern Europe' && city.region > 2}
             />
           )
-        })}}
+        })}
         <Connections cityLookup={cityLookup} connections={map.connections} />
       </ReactLeaflet>
     </Container>
